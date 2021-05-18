@@ -1,0 +1,46 @@
+﻿#search {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    @extend .p-t-30;
+    height: 100%;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.7);    
+    -webkit-transition: all 0.5s ease-in-out;
+	-moz-transition: all 0.5s ease-in-out;
+	-o-transition: all 0.5s ease-in-out;
+	-ms-transition: all 0.5s ease-in-out;
+	transition: all 0.5s ease-in-out;
+    -webkit-transform: translate(0px, -100%) scale(0, 0);
+	-moz-transform: translate(0px, -100%) scale(0, 0);
+	-o-transform: translate(0px, -100%) scale(0, 0);
+	-ms-transform: translate(0px, -100%) scale(0, 0);
+	transform: translate(0px, -100%) scale(0, 0);    
+    opacity: 0;
+
+    &.open{
+        -webkit-transform: translate(0px, 0px) scale(1, 1);
+        -moz-transform: translate(0px, 0px) scale(1, 1);
+        -o-transform: translate(0px, 0px) scale(1, 1);
+        -ms-transform: translate(0px, 0px) scale(1, 1);
+        transform: translate(0px, 0px) scale(1, 1); 
+        opacity: 1;
+    }
+
+    .close {
+        position: fixed;
+        top: 15px;
+        right: 15px;
+        color: #fff;
+        opacity: 1;
+        padding: 10px 17px;
+        i{
+            font-size: 30px;
+        }
+    }
+
+    .card{
+        background: $white;
+    }
+}

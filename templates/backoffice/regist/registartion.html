@@ -1,0 +1,87 @@
+{% extends 'backoffice/base.html' %}
+
+{% block title %}
+    Registration
+{% endblock %}
+
+{% block content %}
+    <div class="authentication">
+    <div class="container">
+        <div class="col-md-12 content-center">
+            <div class="row">
+                <div class="col-lg-6 col-md-12">
+                    <div class="company_detail">
+                        <h4 class="logo"><img src="assets/images/logo.svg" alt=""> Alpino</h4>
+                        <h3>The ultimate <strong>Bootstrap 4</strong> Admin Dashboard</h3>
+                        <p>Alpino is fully based on HTML5 + CSS3 Standards. Is fully responsive and clean on every device and every browser</p>
+                        <div class="footer">
+                            <ul  class="social_link list-unstyled">
+                                <li><a href="https://thememakker.com" title="ThemeMakker"><i class="zmdi zmdi-globe"></i></a></li>
+                                <li><a href="https://themeforest.net/user/thememakker" title="Themeforest"><i class="zmdi zmdi-shield-check"></i></a></li>
+                                <li><a href="https://www.linkedin.com/company/thememakker/" title="LinkedIn"><i class="zmdi zmdi-linkedin"></i></a></li>
+                                <li><a href="https://www.facebook.com/thememakkerteam" title="Facebook"><i class="zmdi zmdi-facebook"></i></a></li>
+                                <li><a href="http://twitter.com/thememakker" title="Twitter"><i class="zmdi zmdi-twitter"></i></a></li>
+                                <li><a href="http://plus.google.com/+thememakker" title="Google plus"><i class="zmdi zmdi-google-plus"></i></a></li>
+                                <li><a href="https://www.behance.net/thememakker" title="Behance"><i class="zmdi zmdi-behance"></i></a></li>
+                            </ul>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-md-12 offset-lg-1">
+                    <div class="card-plain">
+                        <div class="header">
+                            <h5>Ro'yxatdan o'tish</h5>
+                            <span>Yangi a'zolikni ro'yxatdan o'tkazing</span>
+                        </div>
+                        <form class="form" method="POST" action="{% url 'registration' %}">
+                            {% csrf_token %}
+                            <div class="input-group">
+                                <input type="text" name="username" class="form-control" placeholder="Enter User Name">
+                                <span class="input-group-addon"><i class="zmdi zmdi-account-circle"></i></span>
+                            </div>
+                            <div class="input-group">
+                                <input type="text" name="company_name" class="form-control" placeholder="Kompaniya nomini kiriting">
+                                <span class="input-group-addon"><i class="zmdi zmdi-home"></i></span>
+                            </div>
+
+                            <div class="input-group demo-masked-input">
+                                <input type="text" name="telephone_number" class="form-control mobile-phone-number" placeholder="Tel: +00 (000) 000-00-00">
+                                <span class="input-group-addon"><i class="zmdi zmdi-phone"></i></span>
+                            </div>
+                            <div class="input-group">
+                                <div class="select-wrapper">
+                                    <span>Kompaniya turi<i class="zmdi zmdi-compare ml-3"></i></span>
+                                    <select class="form-select" name="type_of_company_id" id="">
+                                    {% for type in types %}
+                                        <option value="{{ type.id }}">
+                                            {{ type.name }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="amount_of_staff" placeholder="Xodimlar soni">
+                                <span class="input-group-addon"><i class="zmdi zmdi-accounts"></i></span>
+                            </div>
+                            <div class="input-group">
+                                <input type="password" name="password" placeholder="Password" class="form-control" />
+                                <span class="input-group-addon"><i class="zmdi zmdi-lock"></i></span>
+                            </div>
+                            <div class="checkbox">
+                                <input id="terms" type="checkbox">
+                                <label for="terms">I read and Agree to the <a href="javascript:void(0);">Terms of Usage</a></label>
+                            </div>
+                            <div class="footer">
+                                <button type="submit" class="btn btn-primary btn-round btn-block">SIGN UP</button>
+                            </div>
+                        </form>
+                        <a class="link" href="sign-in.html">You already have a membership?</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

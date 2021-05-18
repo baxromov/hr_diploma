@@ -1,0 +1,167 @@
+﻿$white: #ffffff;
+$blue-grey-400: #78909c !default;
+$grey-900: #22252b !default;
+$black-200: #afafaf !default;
+$black-400: #525a65 !default;
+$black-500: #313740 !default;
+$black-600: #15181d !default;
+$black-900: #22252b !default;
+
+.theme-black{
+    .minileftbar {
+        background: $black-900;
+
+        .btn-neutral{
+            color: $grey-900;
+        }
+    }
+    .minileftbar{
+        .menu_list{
+            li{
+                a{
+                    color: $black-200;
+                }
+            }
+            .notify{
+                .point{
+                    background-color: $white;
+                }
+                .heartbit{
+                    background-color: $black-200;
+                }
+
+            }
+        }
+    }
+
+    .right_menu{
+        .menu-app{
+            a{
+                &:hover{
+                    background: linear-gradient(45deg, $black-500, $black-400);
+                    color: $white;
+                }
+            }
+        }
+    }
+
+    &.menu_sm{
+        .sidebar{
+            .list{
+                li{
+                    .ml-menu{
+                        a{
+                            color: $blue-grey-400;
+                            &::before{
+                                color: $blue-grey-400;
+                            }
+                            &:hover{
+                                background: linear-gradient(45deg, $black-500, $black-400);                                
+                                color: $white;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .btn-primary{
+        background: $black-500;
+        &:active,
+        &:hover,
+        &:focus{
+            background: $black-400;
+        }
+
+        &.btn-simple{
+            border-color: $black-500;
+            color: $black-500;
+            background: transparent;
+        }
+    }
+    .page-loader-wrapper{
+        background: linear-gradient(45deg, $black-500, $black-400);
+    }
+
+    .sidebar{
+        .menu{
+            .list{
+                li.active.open {                   
+                    background: $black-500;                    
+                    a{
+                        color: $black-200;
+                        &::before{
+                            color: $black-200;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .checkbox input[type="checkbox"]:checked+label::after{
+        border-color:$black-500;
+        background: $black-500;
+        color: white;
+    }   
+    .nav-tabs{
+        .nav-link {
+                border: 1px solid $black-200;
+            &.active{
+                border: 1px solid $black-500 !important;
+                background: $black-500;
+                color: $white;
+            }
+        }
+    }
+    .card{
+        .header{
+            h2{
+                &:before{
+                    background: $black-500;
+                }
+            }
+            .dropdown-menu{
+                li{
+                    a{
+                        &:hover{
+                            background-color: $black-500;
+                            color: $white;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .chat-widget{
+        li.left{
+            .message{
+                background: $black-500;
+            }
+        }
+    }
+    .authentication{        
+        background: $black-500 !important;
+    }
+
+    .menu-container{
+        ul > li > ul > li a:hover,
+        ul.normal-sub > li a:hover{
+            background: $black-500;
+        }
+    }
+
+    .fc .fc-toolbar .fc-right .fc-state-active{
+        background:$black-500;
+        color: $white;
+    }
+
+    .form-control:focus,
+    .form-control:focus+.input-group-addon,
+    .form-control:focus ~ .input-group-addon,
+    .input-group-focus .input-group-addon{
+        border-color: $black-500;
+        background: $white;
+    }
+}

@@ -1,0 +1,218 @@
+﻿.minileftbar{
+    width: 50px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    z-index: 99;
+    @extend .align-center;
+
+    .menu_list{
+        list-style: none;
+        @extend .padding-0;
+        @extend .margin-0;
+
+        .navbar-brand{
+            @extend .margin-0;
+        }
+        li{
+            a{
+                @extend .displayblock;
+                padding: 10px;
+                color: $white;
+            }
+            a.bars{
+                display: none;
+            }
+        }
+        .power{
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }  
+        .badgebit{
+            position: relative;
+            .notify{
+                position: absolute;
+                right: 20px;
+                top: 20px;
+            }
+        }      
+    }
+}
+
+.right_menu{
+    .notif-menu, .task-menu, .menu-app{
+        @include transition(all .5s);
+        @extend .inlineblock;
+        @extend .p-l-20;
+        @extend .p-r-20;
+        font-family: $sidebar-font-family;
+        border-radius: $border-radius-small;
+        width: 290px;
+        height: calc(100vh - 20px);
+        margin: 10px;
+        background: #f4f7f6;
+        position: fixed;
+        top: 0px;
+        left: 50px;    
+        z-index: 20;
+        left: -900px;
+
+        &.open{
+            left: 50px;
+        }
+    }
+    ul.menu{
+        li{
+            text-align: left;
+            &.header{
+                padding: 15px;
+                border-bottom: 1px solid $grey-200;
+            }
+            &.footer{
+                border-top: 1px solid $grey-200;
+                @extend .padding-0;
+            }
+            a {
+                padding: 15px;
+                text-decoration: none;
+                -moz-transition: .5s;
+                -o-transition: .5s;
+                -webkit-transition: .5s;
+                transition: .5s;
+                @extend .displayblock;
+
+                .media{
+                    @extend .margin-0;
+                    .media-object{
+                        width: 35px;
+                    }
+                    .media-body{
+                        .name{
+                            @extend .displayblock;
+                            .time{
+                                float: right;
+                                font-size: 12px;
+                            }
+                        }
+                        .message{
+                            font-size: 12px;
+                        }
+                    }
+                    .media-object{
+                        @extend .m-r-10;
+                    }
+                }
+            }
+        }
+    }
+
+    .menu-app{
+        .menu{
+            @extend .m-b-0;
+            a{
+                border-radius: $border-radius-small;
+                line-height: 24px;
+                text-transform: uppercase;
+                text-align: left;
+                transition: all .3s;
+                @extend .displayblock;
+                i{
+                    @extend .m-r-15;   
+                }
+            }
+        }
+    }
+    .messages{
+        @extend .m-b-0;
+        li{
+            @extend .m-b-20;
+            &:last-child{
+                @extend .m-b-0;
+            }
+        }
+        .media{
+            @extend .m-b-0;        
+            .media-object{
+                width: 36px;
+            }
+            .media-body{
+                @extend .m-l-10;        
+
+                .name{
+                    @extend .displayblock;
+                    .time{
+                        float: right;
+                        color: $grey-400;
+                    }
+                }
+                .message{
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    width: 165px;
+                    @extend .m-b-0;
+                }
+            }
+        }
+    }
+    .notification{
+        @extend .m-b-0;
+        li{
+            @extend .m-b-10;
+            @extend .p-l-30;
+            position: relative;
+            &:last-child{
+                @extend .m-b-0;
+            }
+            i{
+                @extend .inlineblock;
+                @extend .align-center;
+                position: absolute;
+                left: 0;
+                top: 0;                
+                line-height: 20px;                
+            }
+            p{
+                @extend .m-b-0;
+            }
+        }
+    }
+    .tasks{
+        .team-info{
+            @extend .m-b-0;
+        }
+    }
+    
+}
+
+
+@media (max-width: 1169px) {
+    .minileftbar{
+        a.menu-sm{
+            display: none !important;
+        }
+    }
+}
+
+@media (max-width: 767px){
+
+    .right_menu{
+        .notif-menu, .task-menu, .menu-app{
+            width: calc(100% - 65px);
+            &.open{
+                left: 40px;
+            }
+        }
+    }
+    .minileftbar{
+        width: 36px;
+        .bars{
+            &::before, &::after{
+                left: 6px;
+            }
+        }
+    }
+}

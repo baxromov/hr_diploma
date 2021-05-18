@@ -1,0 +1,101 @@
+.profile-page{
+
+    .profile-header{
+        @extend .m-b-60;        
+
+        .user_pic{
+            position: absolute;
+            bottom: -70px;
+            z-index: 99;
+        }
+        .detail{
+            margin-left: 250px;
+
+            .u_name{
+                @extend .m-l-20;
+                @extend .m-b--80;
+                color: $grey-400;
+
+                h4{
+                    @extend .m-b-0;
+                    @extend .m-t-0;
+                }
+            }           
+
+            #m_area_chart{
+                height: 250px;
+                margin-bottom: -45px;
+
+                text{
+                   // display: none;
+                }
+            }
+        }
+        .user_earnings{
+            @extend .align-center;
+
+            color: $grey-500;
+            h4{
+                @extend .m-t-0;                
+            }
+            span{
+                @extend .displayblock;
+            }
+
+        }
+    }
+    .profile_tab{
+        margin-left: 290px;
+        margin-top: -50px;
+        @extend .m-b-0;
+        @extend .padding-0;
+        position: relative;
+        z-index: 99;
+        width: calc(100% - 290px);
+        @extend .align-left;
+    }
+}
+
+@media only screen and (max-width: 992px) {
+    .profile-page{
+        .profile-header{
+            margin-bottom: 20px;
+        }
+        .user_earnings{
+            display: none;
+        }
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .profile-page{
+
+        .profile-header{
+            text-align: center;
+            
+            .user_pic{
+                position: relative;
+                top: 0;
+                bottom: auto;
+                margin: 0 auto;
+            }
+            .detail{
+                margin: 0;
+                padding-top: 15px;
+
+                .u_name{
+                    margin: 0;
+                }
+
+                #m_area_chart{
+                    display: none;
+                }
+            }
+        }
+        .profile_tab{
+            margin-left: 0;
+            margin-top: 0;
+            width: 100%;
+        }
+    }
+}

@@ -1,0 +1,27 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>
+            {% block title %}{% endblock %}
+        </title>
+
+
+    {% include 'backoffice/assets/links.html' %}
+</head>
+<body class="theme-black" style="overflow: auto">
+{% if request.path == "/backoffice/login" or request.path == "/backoffice/registration" %}
+
+{% else %}
+    {% include 'backoffice/parts/minileftbar.html' %}
+{% endif %}
+
+{% block content %}{% endblock %}
+
+{% include 'backoffice/assets/scripts.html' %}
+</body>
+</html>

@@ -1,0 +1,162 @@
+﻿.card {
+    @extend .m-b-30;
+    @extend .inlineblock;
+    transition: .5s;    
+    border: 0;
+    position: relative;
+    width: 100%;
+    background: transparent;
+    border-radius: $border-radius-large;    
+    
+    .card-inside-title {
+        @extend .m-t-25;
+        @extend .m-b-15;
+        @extend .displayblock;
+        font-size: 15px;
+        color: $black;
+
+        small {
+            color: $grey-500;
+            @extend .displayblock;
+            font-size: 11px;
+            @extend .m-t-5;
+            a {
+                color: $grey-600;
+                font-weight: $font-weight-700;
+            }
+        }
+    }
+
+    .bg-red,
+    .bg-pink,
+    .bg-purple,
+    .bg-deep-purple,
+    .bg-indigo,
+    .bg-blue,
+    .bg-light-blue,
+    .bg-cyan,
+    .bg-teal,
+    .bg-green,
+    .bg-light-green,
+    .bg-lime,
+    .bg-yellow,
+    .bg-amber,
+    .bg-orange,
+    .bg-deep-orange,
+    .bg-brown,
+    .bg-grey,
+    .bg-blue-grey,
+    .bg-blush,
+    .bg-black {
+
+        border-bottom: none !important;
+        color: $white !important;
+        h2,
+        small,
+        .material-icons {
+            color: $white !important;
+        }
+        .badge {
+            background-color: $white;
+            color: $grey-800;
+        }
+    }
+
+    .header {
+        color: $grey-800;
+        padding:20px 0;
+        position: relative;       
+        box-shadow: none;
+        @extend .m-b-0;
+
+        .header-dropdown {
+            position: absolute;
+            top: 14px;
+            right:0;
+            list-style: none;
+            @extend .margin-0;
+            @extend .padding-0;
+
+            li{
+                @extend .inlineblock;
+                a{
+                    padding: 5px 10px;
+                    @extend .displayblock;
+                }
+
+                .dropdown-menu {                    
+                    border-radius: $border-radius-large;
+                    overflow: hidden;
+                    right: 0 !important;
+                    left: auto !important;
+                    transform: none !important;  
+                    top: 30px !important; 
+                    li {
+                        display: block !important;
+    
+                        a {
+                            padding:10px;
+                            border-radius: $border-radius-small;
+                        }
+                    }
+                }    
+            }
+        }
+        h2 {
+            @extend .margin-0;
+            font-size: 16px;            
+            color: $grey-900;
+            position: relative;
+            
+            small {
+                @extend .displayblock;
+                @extend .m-t-5;
+                font-size: 13px;                
+                color: $grey-500;
+                line-height: 15px;
+
+                a {
+                    font-weight: $font-weight-700;
+                    color: $grey-600;
+                }
+            }
+        }
+    }
+
+    .p-10 {
+        padding: 10px !important;
+    }
+    .p-15 {
+        padding: 15px !important;
+    }
+
+    .body {
+        font-size: 14px;
+        padding: 20px;
+        box-shadow:0 1px 2px 0 rgba(0,0,0,0.2);
+        border-radius: $border-radius-large;
+        background: $white;
+        color: $grey-700;        
+        font-weight: $font-weight-400;
+        transition: all 0.2s ease-in-out;
+
+        &:hover{
+            box-shadow:0 2px 20px 0 rgba(0,0,0,0.1);
+            transition: all 0.2s ease-in-out;
+        }
+
+        &.bg-dark{
+            background: #313740 !important;
+            color: $grey-400 !important;
+
+            .table td, .table th{
+                border-top: 1px solid #4c4c4c;
+                color: $grey-400;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .card .body{ padding: 15px;}
+}

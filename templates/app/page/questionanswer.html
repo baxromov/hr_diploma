@@ -1,0 +1,21 @@
+{% extends 'app/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Question&Answer</h1>
+                <form action="{% url 'question' new_candidate.pk %}" method="post">
+                    {% csrf_token %}
+                    {% for foo in form %}
+                        {{ foo.field|crispy }}
+                    {% endfor %}
+                    <input type="submit" value="Save">
+                </form>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
