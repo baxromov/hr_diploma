@@ -1,8 +1,6 @@
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
-from django.db import transaction
 from django.urls import reverse_lazy
 from django.views import generic
 
@@ -15,18 +13,40 @@ class MainTemplate(LoginRequiredMixin, generic.ListView):
     template_name = 'backoffice/pages/index.html'
 
 
-class StaffListTemplate(LoginRequiredMixin, generic.TemplateView):
-    template_name = 'backoffice/pages/staff/list.html'
-
-
-class StaffDetailTemplate(LoginRequiredMixin, generic.TemplateView):
-    template_name = 'backoffice/pages/staff/detail.html'
-
-
 class TableTemplate(LoginRequiredMixin, generic.TemplateView):
     template_name = 'backoffice/pages/table/table.html'
 
 
+class StaffListTemplate(LoginRequiredMixin, generic.ListView):
+    template_name = 'backoffice/pages/staff/list.html'
+    model = models.Staff
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        staff = super(StaffListTemplate, self).get_context_data(**kwargs)
+        staff['staffs'] = models.Staff.objects.all().order_by('-created_at')
+        return staff
+
+
+class StaffUpdate(LoginRequiredMixin, generic.UpdateView, generic.DetailView):
+    template_name = 'backoffice/pages/staff/detail.html'
+    form_class = forms.StaffModelForm
+    model = models.Staff
+    success_url = reverse_lazy('staff')
+    context_object_name = 'staff'
+    queryset = models.Staff.objects.all()
+
+    def get_context_data(self, **kwargs):
+        return super().get_context_data(**kwargs)
+
+
+#
+# class StaffDetail(LoginRequiredMixin, generic):
+#     template_name = 'backoffice/pages/staff/detail.html'
+#     queryset = models.Staff.objects.all()
+#     context_object_name = 'staff'
+
+
+# Authentication
 class LoginPage(LoginView):
     template_name = 'backoffice/regist/login.html'
     success_url = reverse_lazy('backoffice-main')
@@ -50,12 +70,21 @@ class Registration(generic.FormView):
         return super().form_invalid(form)
 
 
-class PositionCreateView(generic.CreateView):
+# Position
+class PositionCreateView(LoginRequiredMixin, generic.CreateView):
     template_name = 'backoffice/pages/department/create.html'
     form_class = forms.PositionModelForm
+    success_url = reverse_lazy('position')
+
+    def form_valid(self, form):
+        self.position = form.save(commit=False)
+        company = self.request.user.company
+        self.position.company = company
+        self.position.save()
+        return super().form_valid(form)
 
 
-class PositionListView(generic.ListView):
+class PositionListView(LoginRequiredMixin, generic.ListView):
     template_name = 'backoffice/pages/department/list.html'
     queryset = models.Position.objects.all()
 
@@ -65,14 +94,22 @@ class PositionListView(generic.ListView):
         return position
 
 
-class PositionUpdateView(generic.UpdateView):
+class PositionUpdateView(LoginRequiredMixin,generic.UpdateView):
     template_name = 'backoffice/pages/department/update.html'
-    queryset = models.Position.objects.all()
     form_class = forms.PositionModelForm
+    model = models.Position
+    success_url = reverse_lazy('position')
+
+    def form_valid(self, form):
+        self.position = form.save(commit=False)
+        company = self.request.user.company
+        self.position.company = company
+        self.position.save()
+        return super().form_valid(form)
 
 
-class PositionDeleteView(generic.DeleteView):
-    template_name = 'backoffice/pages/department/delete.html'
+class PositionDeleteView(LoginRequiredMixin, generic.DeleteView):
+    # template_name = 'backoffice/pages/department/delete.html'
     queryset = models.Position.objects.all()
     form_class = forms.PositionModelForm
     success_message = "deleted..."

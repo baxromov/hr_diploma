@@ -1,4 +1,5 @@
 from django import forms
+from django.forms.utils import ErrorList
 
 from app import models
 
@@ -28,8 +29,17 @@ class LoginForm(forms.Form):
     password = forms.CharField(max_length=16, widget=forms.PasswordInput())
 
 
+# Position
 class PositionModelForm(forms.ModelForm):
 
     class Meta:
         model = models.Position
+        exclude = ('company', )
+
+
+# Staff
+class StaffModelForm(forms.ModelForm):
+
+    class Meta:
+        model = models.Staff
         exclude = ()

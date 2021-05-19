@@ -46,7 +46,7 @@
                         </ul>
                     </div>
                     <div class="body">
-                        <form action="">
+                        <form action="" method="post">
                             {% csrf_token %}
                             {{ form.as_p }}
                             <button type="submit">Save</button>

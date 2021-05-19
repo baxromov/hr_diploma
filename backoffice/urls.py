@@ -6,7 +6,8 @@ from . import views
 urlpatterns = [
     path('', views.MainTemplate.as_view(), name="backoffice-main"),
     path('xodimlar', views.StaffListTemplate.as_view(), name="staff"),
-    path('xodimlar/baxromov-shahzodbek', views.StaffDetailTemplate.as_view(), name="staff-detail"),
+    path('xodimlar/<int:pk>', views.StaffUpdate.as_view(), name="staff-detail"),
+    # path('xodimlar/update/<int:pk>', views.StaffUpdate.as_view(), name="staff-update"),
     path('table', views.TableTemplate.as_view(), name="table"),
     path('position/create', views.PositionCreateView.as_view(), name="position_create"),
     path('position', views.PositionListView.as_view(), name="position"),
