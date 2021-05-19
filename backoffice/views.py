@@ -1,6 +1,8 @@
+from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
+from django.db import transaction
 from django.urls import reverse_lazy
 from django.views import generic
 
@@ -46,3 +48,40 @@ class Registration(generic.FormView):
 
     def form_invalid(self, form):
         return super().form_invalid(form)
+
+
+class PositionCreateView(generic.CreateView):
+    template_name = 'backoffice/pages/department/create.html'
+    form_class = forms.PositionModelForm
+
+
+class PositionListView(generic.ListView):
+    template_name = 'backoffice/pages/department/list.html'
+    queryset = models.Position.objects.all()
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        position = super(PositionListView, self).get_context_data(**kwargs)
+        position['positions'] = models.Position.objects.all().order_by('-created_at')
+        return position
+
+
+class PositionUpdateView(generic.UpdateView):
+    template_name = 'backoffice/pages/department/update.html'
+    queryset = models.Position.objects.all()
+    form_class = forms.PositionModelForm
+
+
+class PositionDeleteView(generic.DeleteView):
+    template_name = 'backoffice/pages/department/delete.html'
+    queryset = models.Position.objects.all()
+    form_class = forms.PositionModelForm
+    success_message = "deleted..."
+    success_url = '/backoffice/position'
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        name = self.object.name
+        request.session['name'] = name  # name will be change according to your need
+        message = request.session['name'] + ' deleted successfully'
+        messages.success(self.request, message)
+        return super(PositionDeleteView, self).delete(request, *args, **kwargs)
