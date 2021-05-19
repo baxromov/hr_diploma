@@ -36,7 +36,7 @@
                 class="zmdi zmdi-fullscreen"></i></a></li>
         <li class="power">
             <a href="javascript:void(0);" class="js-right-sidebar"><i class="zmdi zmdi-settings zmdi-hc-spin"></i></a>
-            <a href="" class="mega-menu"><i class="zmdi zmdi-power"></i></a>
+            <a href="{% url 'logout' %}" class="mega-menu"><i class="zmdi zmdi-power"></i></a>
         </li>
     </ul>
 </aside>
@@ -373,8 +373,8 @@
                             <a href="" class=" waves-effect waves-block"><img src="{% static 'backoffice/assets/images/profile_av.jpg' %}" alt="User"></a>
                         </div>
                         <div class="detail">
-                            <h6>Baxromov Shahzodbek</h6>
-                            <p class="m-b-0">info@example.com</p>
+                            <h6>{{ user.first_name }} {{ user.last_name }}</h6>
+                            <p class="m-b-0">{{ user.email }}</p>
                             <a href="javascript:void(0);" title="" class=" waves-effect waves-block"><i class="zmdi zmdi-facebook-box"></i></a>
                             <a href="javascript:void(0);" title="" class=" waves-effect waves-block"><i class="zmdi zmdi-linkedin-box"></i></a>
                             <a href="javascript:void(0);" title="" class=" waves-effect waves-block"><i class="zmdi zmdi-instagram"></i></a>

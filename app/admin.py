@@ -26,7 +26,8 @@ class CompanyModelAdmin(admin.ModelAdmin):
 
 @admin.register(models.Staff)
 class StaffModelAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['first_name', 'second_name', 'last_name', 'mobile_phone']
+    search_fields = ['first_name', 'second_name', 'last_name']
 
 
 class AnswerStackedInline(admin.StackedInline):

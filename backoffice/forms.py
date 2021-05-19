@@ -20,3 +20,8 @@ class RegistrationForm(forms.Form):
         type_of_company = models.TypeCompany.objects.filter(id=type_of_company_id).first()
         company = models.Company.objects.create(phone=telephone_number, type=type_of_company, amount_of_staff=amount_of_staff, name=company_name)
         models.User.objects.create_user(username=username, password=password, company=company)
+
+
+class LoginForm(forms.Form):
+    username = forms.CharField(max_length=100)
+    password = forms.CharField(max_length=16, widget=forms.PasswordInput())

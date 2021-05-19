@@ -1,5 +1,7 @@
 import os
 from pathlib import Path
+
+from django.urls import reverse
 from rest_framework.reverse import reverse_lazy
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -182,3 +184,8 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ],
 }
+
+LOGIN_REDIRECT_URL = reverse_lazy('login')
+LOGIN_URL = reverse_lazy('login')
+LOGOUT_REDIRECT_URL = reverse_lazy('login')
+LOGOUT_URL = reverse_lazy('login')

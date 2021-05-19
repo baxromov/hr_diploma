@@ -11,8 +11,11 @@
             </div>
         </div>
         <div class="row">
-            <video width="530" height="440" controls autoplay>
-                <source src="{{ company.video.url }}" type="video/mp4"></source>
+            <video width="530" height="440" controls>
+                {% if company.video %}
+                    <source src="{{ company.video.url }}" type="video/mp4"></source>
+                {% else %}
+                {% endif %}
             </video>
         </div>
     </div>

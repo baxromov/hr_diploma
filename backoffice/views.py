@@ -1,30 +1,33 @@
-import requests
-from django.shortcuts import redirect, render
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
 from django.views import generic
 
-from backoffice import forms
 from app import models
+from backoffice import forms
 
 
-class MainTemplate(generic.TemplateView):
+class MainTemplate(LoginRequiredMixin, generic.ListView):
+    queryset = models.Staff.objects.all()
     template_name = 'backoffice/pages/index.html'
 
 
-class StaffListTemplate(generic.TemplateView):
+class StaffListTemplate(LoginRequiredMixin, generic.TemplateView):
     template_name = 'backoffice/pages/staff/list.html'
 
 
-class StaffDetailTemplate(generic.TemplateView):
+class StaffDetailTemplate(LoginRequiredMixin, generic.TemplateView):
     template_name = 'backoffice/pages/staff/detail.html'
 
 
-class TableTemplate(generic.TemplateView):
+class TableTemplate(LoginRequiredMixin, generic.TemplateView):
     template_name = 'backoffice/pages/table/table.html'
 
 
-class Login(generic.TemplateView):
+class LoginPage(LoginView):
     template_name = 'backoffice/regist/login.html'
+    success_url = reverse_lazy('backoffice-main')
 
 
 class Registration(generic.FormView):

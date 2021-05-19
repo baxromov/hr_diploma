@@ -26,12 +26,6 @@
                                 <li><a href="https://www.behance.net/thememakker" title="Behance"><i class="zmdi zmdi-behance"></i></a></li>
                             </ul>
                             <hr>
-                            <ul>
-                                <li><a href="http://thememakker.com/contact/" target="_blank">Contact Us</a></li>
-                                <li><a href="http://thememakker.com/about/" target="_blank">About Us</a></li>
-                                <li><a href="http://thememakker.com/services/" target="_blank">Services</a></li>
-                                <li><a href="javascript:void(0);">FAQ</a></li>
-                            </ul>
                         </div>
                     </div>
                 </div>
@@ -40,18 +34,32 @@
                         <div class="header">
                             <h5>Log in</h5>
                         </div>
-                        <form class="form">
+                        <form class="form" method="POST">
+                            {% csrf_token %}
+{#                            <div class="input-group">#}
+{#                                <div class="select-wrapper">#}
+{#                                    <span>Kompaniya nomi<i class="zmdi zmdi-compare ml-3"></i></span>#}
+{#                                    <select class="form-select" name="company_id" id="">#}
+{#                                    {% for company in companies %}#}
+{#                                        <option value="{{ company.id }}">#}
+{#                                            {{ company.name }}#}
+{#                                        </option>#}
+{#                                    {% endfor %}#}
+{#                                </select>#}
+{#                                </div>#}
+{#                            </div>#}
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="User Name">
+                                <input type="text" class="form-control" name="username" placeholder="User Name">
                                 <span class="input-group-addon"><i class="zmdi zmdi-account-circle"></i></span>
                             </div>
                             <div class="input-group">
-                                <input type="password" placeholder="Password" class="form-control" />
+                                <input type="password" name="password" placeholder="Password" class="form-control" />
                                 <span class="input-group-addon"><i class="zmdi zmdi-lock"></i></span>
                             </div>
+                            <button type="submit" class="btn btn-primary btn-round btn-block">SIGN IN</button>
+
                         </form>
                         <div class="footer">
-                            <a href="index.html" class="btn btn-primary btn-round btn-block">SIGN IN</a>
                             <a href="sign-up.html" class="btn btn-primary btn-simple btn-round btn-block">SIGN UP</a>
                         </div>
                         <a href="forgot-password.html" class="link">Forgot Password?</a>
