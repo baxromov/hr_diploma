@@ -192,6 +192,20 @@ class Salary(models.Model):
         return self.type_of_work
 
 
+class WorlPlan(models.Model):
+    name = models.CharField(max_length=255)
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, verbose_name='Kompaniya')
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name_plural = "Ish Rejasi"
+
+    def __str__(self):
+        return self.name
+
+
+
 class Staff(models.Model):
     GENDER = (
         ('male', 'Male'),
@@ -219,7 +233,7 @@ class Staff(models.Model):
     department = models.ForeignKey(Department, on_delete=models.CASCADE, verbose_name="Bo'lim")
     position = models.ForeignKey(Position, on_delete=models.CASCADE,  verbose_name="Lavozim")
 
-    note = models.CharField(max_length=255 ,null=True, blank=True, verbose_name="Eslatma")
+    note = models.CharField(max_length=255 , null=True, blank=True, verbose_name="Eslatma")
 
     created_at = models.DateTimeField(auto_now_add=True)
 

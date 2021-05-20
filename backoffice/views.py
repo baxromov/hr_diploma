@@ -23,7 +23,8 @@ class StaffListTemplate(LoginRequiredMixin, generic.ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         staff = super(StaffListTemplate, self).get_context_data(**kwargs)
-        staff['staffs'] = models.Staff.objects.all().order_by('-created_at')
+        company = self.request.user.company
+        staff['staffs'] = models.Staff.objects.filter(company=company).order_by('-created_at')
         return staff
 
 
@@ -36,14 +37,12 @@ class StaffUpdate(LoginRequiredMixin, generic.UpdateView, generic.DetailView):
     queryset = models.Staff.objects.all()
 
     def get_context_data(self, **kwargs):
-        return super().get_context_data(**kwargs)
-
-
-#
-# class StaffDetail(LoginRequiredMixin, generic):
-#     template_name = 'backoffice/pages/staff/detail.html'
-#     queryset = models.Staff.objects.all()
-#     context_object_name = 'staff'
+        ctx = super().get_context_data(**kwargs)
+        company = self.request.user.company
+        ctx['positions'] = models.Position.objects.filter(company=company).order_by('-created_at')
+        ctx['departments'] = models.Department.objects.filter(company=company).order_by('-created_at')
+        ctx['workplans'] = models.WorlPlan.objects.filter(company=company).order_by('-created_at')
+        return ctx
 
 
 # Authentication
@@ -90,11 +89,12 @@ class PositionListView(LoginRequiredMixin, generic.ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         position = super(PositionListView, self).get_context_data(**kwargs)
-        position['positions'] = models.Position.objects.all().order_by('-created_at')
+        company = self.request.user.company
+        position['positions'] = models.Position.objects.filter(company=company).order_by('-created_at')
         return position
 
 
-class PositionUpdateView(LoginRequiredMixin,generic.UpdateView):
+class PositionUpdateView(LoginRequiredMixin, generic.UpdateView):
     template_name = 'backoffice/pages/department/update.html'
     form_class = forms.PositionModelForm
     model = models.Position

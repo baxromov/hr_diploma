@@ -218,13 +218,13 @@
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <input type="text" name="second_name" class="form-control" placeholder="Familiya" value="{{ staff.last_name }}">
+                                                    <input type="text" name="second_name" class="form-control" placeholder="Familiya" value="{{ staff.second_name }}">
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <input type="text" name="last_name" class="form-control"
-                                                           placeholder="Otasining ismi">
+                                                           placeholder="Otasining ismi" value="{{ staff.last_name }}">
                                                 </div>
                                             </div>
 
@@ -233,70 +233,89 @@
                                                 <div class="form-group">
                                                     <label for="birth-date">Tugligan sanasi</label>
                                                     <input type="date" name="birth_date" id="birth-date" class="form-control"
-                                                           placeholder="Tugligan sanasi">
+                                                           placeholder="Tugligan sanasi" value="{{ staff.birth_date|date:"m/d/Y"}}">
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label for="pin-code">Tabel raqami</label>
                                                     <input type="text" name="tabel_number" id="pin-code" class="form-control"
-                                                           placeholder="Tabel raqami">
+                                                           placeholder="Tabel raqami" value="{{ staff.tabel_number }}">
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label for="tab-num">Hisob raqami</label>
                                                     <input type="text" id="tab-num" name="account_number" class="form-control"
-                                                           placeholder="Hisob raqami">
+                                                           placeholder="Hisob raqami" value="{{ staff.account_number }}">
                                                 </div>
                                             </div>
 
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <input type="text" name="email" class="form-control" placeholder="E-mail">
+                                                    <input type="text" name="email" class="form-control" placeholder="E-mail" value="{{ staff.email }}">
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <input type="tel" name="mobile_phone" class="form-control"
-                                                           placeholder="Mobil telefon raqam">
+                                                           placeholder="Mobil telefon raqam" value="{{ staff.mobile_phone }}">
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <input type="tel" name="home_phone" class="form-control" placeholder="Uy telefoni">
+                                                    <input type="tel" name="home_phone" class="form-control" placeholder="Uy telefoni" value="{{ staff.home_phone }}">
                                                 </div>
                                             </div>
 
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <input type="text" name="address" class="form-control" placeholder="Uy manzili">
+                                                    <input type="text" name="address" class="form-control" placeholder="Uy manzili" value="{{ staff.address }}">
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <input type="tel" class="form-control" placeholder="Bo'lim">
+                                                    Bo'lim:
+                                                    <select name="department" id="">
+                                                        {% for department in departments %}
+                                                            <option value="{{ department.id }}">{{ department.name }}</option>
+                                                        {% endfor %}
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <input type="tel" class="form-control" placeholder="Ish jadvali">
+                                                    Lavozim:
+                                                    <select name="department" id="">
+                                                        {% for position in positions %}
+                                                            <option value="{{ position.id }}">{{ position.name }}</option>
+                                                        {% endfor %}
+                                                    </select>
                                                 </div>
                                             </div>
-
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    Ish jadvali:
+                                                    <select name="department" id="">
+                                                        {% for workplan in workplans %}
+                                                            <option value="{{ workplan.id }}">{{ workplan.name }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
                                             <div class="col-md-12">
 
                                                 <div class="form-group">
                                                     <label for="started-work-date">Ish boshlangan sana</label>
                                                     <input type="date" name="start_work_at" id="started-work-date" class="form-control"
-                                                           placeholder="">
+                                                           placeholder="" value="{{ staff.start_work_at|date:"m/d/Y" }}">
                                                 </div>
                                             </div>
 
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                            <textarea rows="4" class="form-control no-resize"
-                                                      placeholder="Izoh" name="note"></textarea>
+                                            <input class="form-control no-resize"
+                                                      placeholder="Izoh" type="text" name="note" value="{{ staff.note }}">
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
