@@ -36,13 +36,44 @@ class StaffUpdate(LoginRequiredMixin, generic.UpdateView, generic.DetailView):
     context_object_name = 'staff'
     queryset = models.Staff.objects.all()
 
+    def form_valid(self, form):
+        form.save()
+        return super(StaffUpdate, self).form_valid(form)
+
+    def form_invalid(self, form):
+        return super(StaffUpdate, self).form_invalid(form)
+
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         company = self.request.user.company
         ctx['positions'] = models.Position.objects.filter(company=company).order_by('-created_at')
         ctx['departments'] = models.Department.objects.filter(company=company).order_by('-created_at')
-        ctx['workplans'] = models.WorlPlan.objects.filter(company=company).order_by('-created_at')
+        # ctx['workplans'] = models.WorlPlan.objects.filter(company=company).order_by('-created_at')
         return ctx
+
+
+class StaffCreate(LoginRequiredMixin, generic.CreateView):
+    template_name = 'backoffice/pages/staff/create.html'
+    model = models.Staff
+    form_class = forms.StaffModelForm
+    success_url = reverse_lazy('staff')
+
+    def get_context_data(self, **kwargs):
+        ctx = super(StaffCreate, self).get_context_data(**kwargs)
+        company = self.request.user.company
+        ctx['departments'] = models.Department.objects.filter(company=company).order_by('-created_at')
+        ctx['positions'] = models.Position.objects.filter(company=company).order_by('-created_at')
+        return ctx
+
+    def form_valid(self, form):
+        self.position = form.save(commit=False)
+        company = self.request.user.company
+        self.position.company = company
+        self.position.save()
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        return super(StaffCreate, self).form_invalid(form)
 
 
 # Authentication
@@ -54,7 +85,7 @@ class LoginPage(LoginView):
 class Registration(generic.FormView):
     template_name = 'backoffice/regist/registartion.html'
     form_class = forms.RegistrationForm
-    success_url = reverse_lazy('login')
+    success_url = reverse_lazy('backoffice-main')
 
     def get_context_data(self, **kwargs):
         response = super(Registration, self).get_context_data(**kwargs)
@@ -122,3 +153,57 @@ class PositionDeleteView(LoginRequiredMixin, generic.DeleteView):
         message = request.session['name'] + ' deleted successfully'
         messages.success(self.request, message)
         return super(PositionDeleteView, self).delete(request, *args, **kwargs)
+
+
+# Departments
+class DepartmentListView(LoginRequiredMixin, generic.ListView):
+    template_name = 'backoffice/pages/departments/list.html'
+    queryset = models.Department.objects.all()
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        ctx = super(DepartmentListView, self).get_context_data(**kwargs)
+        company = self.request.user.company
+        ctx['departments'] = models.Department.objects.filter(company=company).order_by('-created_at')
+        return ctx
+
+
+class DepartmentDeleteView(LoginRequiredMixin, generic.DeleteView):
+    queryset = models.Department.objects.all()
+    form_class = forms.DepartmentsModelForm
+    success_message = "deleted..."
+    success_url = reverse_lazy('department')
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        name = self.object.name
+        request.session['name'] = name
+        message = request.session['name'] + ' deleted successfully'
+        messages.success(self.request, message)
+        return super(DepartmentDeleteView, self).delete(request, *args, **kwargs)
+
+
+class DepartmentUpdateView(LoginRequiredMixin, generic.UpdateView):
+    template_name = 'backoffice/pages/departments/update.html'
+    form_class = forms.DepartmentsModelForm
+    model = models.Department
+    success_url = reverse_lazy('department')
+
+    def form_valid(self, form):
+        self.position = form.save(commit=False)
+        company = self.request.user.company
+        self.position.company = company
+        self.position.save()
+        return super().form_valid(form)
+
+
+class DepartmentCreateView(LoginRequiredMixin, generic.CreateView):
+    template_name = 'backoffice/pages/departments/create.html'
+    form_class = forms.DepartmentsModelForm
+    success_url = reverse_lazy('department')
+
+    def form_valid(self, form):
+        self.position = form.save(commit=False)
+        company = self.request.user.company
+        self.position.company = company
+        self.position.save()
+        return super().form_valid(form)

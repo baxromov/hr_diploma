@@ -368,6 +368,9 @@
         <div class="menu">
             <ul class="list">
                 <li>
+                    <p>{{ request.user.company }}</p>
+                </li>
+                <li>
                     <div class="user-info m-b-20">
                         <div class="image">
                             <a href="" class=" waves-effect waves-block"><img src="{% static 'backoffice/assets/images/profile_av.jpg' %}" alt="User"></a>
@@ -390,6 +393,9 @@
                 <li><a href="{% url 'table' %}" class="menu-toggle waves-effect waves-block"><i class="zmdi zmdi-assignment"></i><span>JADVAL</span> <span class="badge badge-default float-right">15</span></a>
                 </li>
                 <li><a href="{% url 'position' %}" class="menu-toggle waves-effect waves-block"><i class="zmdi zmdi-ticket-star"></i><span>LAVOZIM</span> <span class="badge badge-default float-right">15</span></a>
+                </li>
+                <li>
+                    <a href="{% url 'department' %}" class="menu-toggle waves-effect waves-block"><i class="zmdi zmdi-window-maximize"></i><span>BO'LIM</span> <span class="badge badge-default float-right">15</span></a>
                 </li>
             </ul>
         </div>

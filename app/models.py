@@ -12,6 +12,9 @@ class TypeCompany(models.Model):
     name = models.CharField(max_length=100, verbose_name="Kompaniya turini nomi")
     created_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        verbose_name_plural = "Kompaniya turi"
+
     def __str__(self):
         return self.name
 
@@ -154,7 +157,7 @@ class AdditionalPayments(models.Model):
         verbose_name_plural = "Ushlab qolish yoki to'lov qo'shish"
 
     def __str__(self):
-        return self.staff.full_name
+        return f'{self.staff.first_name} {self.staff.second_name}'
 
 
 class Flow(models.Model):
@@ -167,7 +170,7 @@ class Flow(models.Model):
         verbose_name_plural = "Hodimlarning kelib ketishi"
 
     def __str__(self):
-        return self.staff.full_name
+        return f'{self.staff.first_name} {self.staff.second_name}'
 
 
 class Document(models.Model):
@@ -194,7 +197,6 @@ class Salary(models.Model):
 
 class WorlPlan(models.Model):
     name = models.CharField(max_length=255)
-    company = models.ForeignKey(Company, on_delete=models.CASCADE, verbose_name='Kompaniya')
 
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -205,11 +207,10 @@ class WorlPlan(models.Model):
         return self.name
 
 
-
 class Staff(models.Model):
     GENDER = (
-        ('male', 'Male'),
-        ('female', 'Female')
+        ('male', 'Erkak'),
+        ('female', 'Ayol')
     )
     company = models.ForeignKey(Company, on_delete=models.CASCADE, verbose_name="Kompaniya")
     first_name = models.CharField(null=True, blank=True, max_length=255, verbose_name="Ism")
@@ -233,8 +234,8 @@ class Staff(models.Model):
     department = models.ForeignKey(Department, on_delete=models.CASCADE, verbose_name="Bo'lim")
     position = models.ForeignKey(Position, on_delete=models.CASCADE,  verbose_name="Lavozim")
 
-    note = models.CharField(max_length=255 , null=True, blank=True, verbose_name="Eslatma")
-
+    note = models.CharField(max_length=255, null=True, blank=True, verbose_name="Eslatma")
+    work_plan = models.ForeignKey(WorlPlan, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Ish jadvali")
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

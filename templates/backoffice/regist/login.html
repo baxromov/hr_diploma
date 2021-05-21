@@ -34,20 +34,8 @@
                         <div class="header">
                             <h5>Log in</h5>
                         </div>
-                        <form class="form" method="POST">
+                        <form class="form" action="" method="POST">
                             {% csrf_token %}
-{#                            <div class="input-group">#}
-{#                                <div class="select-wrapper">#}
-{#                                    <span>Kompaniya nomi<i class="zmdi zmdi-compare ml-3"></i></span>#}
-{#                                    <select class="form-select" name="company_id" id="">#}
-{#                                    {% for company in companies %}#}
-{#                                        <option value="{{ company.id }}">#}
-{#                                            {{ company.name }}#}
-{#                                        </option>#}
-{#                                    {% endfor %}#}
-{#                                </select>#}
-{#                                </div>#}
-{#                            </div>#}
                             <div class="input-group">
                                 <input type="text" class="form-control" name="username" placeholder="User Name">
                                 <span class="input-group-addon"><i class="zmdi zmdi-account-circle"></i></span>
@@ -60,9 +48,8 @@
 
                         </form>
                         <div class="footer">
-                            <a href="sign-up.html" class="btn btn-primary btn-simple btn-round btn-block">SIGN UP</a>
+                            <a href="{% url 'registration' %}" class="btn btn-primary btn-simple btn-round btn-block">SIGN UP</a>
                         </div>
-                        <a href="forgot-password.html" class="link">Forgot Password?</a>
                     </div>
                 </div>
             </div>

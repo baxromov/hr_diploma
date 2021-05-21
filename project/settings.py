@@ -176,7 +176,7 @@ REST_FRAMEWORK = {
     ],
 }
 
-LOGIN_REDIRECT_URL = reverse_lazy('login')
+LOGIN_REDIRECT_URL = reverse_lazy('backoffice-main')
 LOGIN_URL = reverse_lazy('login')
 LOGOUT_REDIRECT_URL = reverse_lazy('login')
 LOGOUT_URL = reverse_lazy('login')

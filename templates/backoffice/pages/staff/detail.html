@@ -233,7 +233,7 @@
                                                 <div class="form-group">
                                                     <label for="birth-date">Tugligan sanasi</label>
                                                     <input type="date" name="birth_date" id="birth-date" class="form-control"
-                                                           placeholder="Tugligan sanasi" value="{{ staff.birth_date|date:"m/d/Y"}}">
+                                                           placeholder="Tugligan sanasi" value="{{ staff.birth_date|date:"Y-m-d"}}">
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
@@ -275,6 +275,11 @@
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="form-group">
+                                                    {{ form.gender }}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
                                                     Bo'lim:
                                                     <select name="department" id="">
                                                         {% for department in departments %}
@@ -286,7 +291,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     Lavozim:
-                                                    <select name="department" id="">
+                                                    <select name="position" id="">
                                                         {% for position in positions %}
                                                             <option value="{{ position.id }}">{{ position.name }}</option>
                                                         {% endfor %}
@@ -296,11 +301,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     Ish jadvali:
-                                                    <select name="department" id="">
-                                                        {% for workplan in workplans %}
-                                                            <option value="{{ workplan.id }}">{{ workplan.name }}</option>
-                                                        {% endfor %}
-                                                    </select>
+                                                    {{ form.work_plan }}
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
@@ -308,7 +309,7 @@
                                                 <div class="form-group">
                                                     <label for="started-work-date">Ish boshlangan sana</label>
                                                     <input type="date" name="start_work_at" id="started-work-date" class="form-control"
-                                                           placeholder="" value="{{ staff.start_work_at|date:"m/d/Y" }}">
+                                                           placeholder="" value="{{ staff.start_work_at|date:"Y-m-d" }}">
                                                 </div>
                                             </div>
 

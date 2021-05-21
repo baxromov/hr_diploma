@@ -42,4 +42,13 @@ class StaffModelForm(forms.ModelForm):
 
     class Meta:
         model = models.Staff
-        exclude = ()
+        exclude = ('company', )
+
+
+# Departments
+class DepartmentsModelForm(forms.ModelForm):
+
+    class Meta:
+        model = models.Department
+        exclude = ('company', )
+
