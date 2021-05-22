@@ -22,12 +22,13 @@ class TypeCompany(models.Model):
 class Company(models.Model):
     name = models.CharField(max_length=100, verbose_name="Kompaniya nomi")
     phone = models.CharField(max_length=25, null=True, blank=True, verbose_name="Kompaniya telefon raqami")
-    type = models.ForeignKey(TypeCompany, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Kompaniya turi")
+    type = models.ForeignKey(TypeCompany, on_delete=models.CASCADE, null=True, blank=True,
+                             verbose_name="Kompaniya turi")
     address = models.CharField(max_length=255, null=True, blank=True, verbose_name="Kompaniya manzili")
     creator = models.CharField(max_length=255, null=True, blank=True, verbose_name="Kompaniya asoschisi")
     text = RichTextUploadingField(null=True, blank=True, verbose_name="Kompaniya haqida qisqacha ma'lumot")
     video = models.FileField(upload_to='company/video/', null=True, blank=True,
-                            verbose_name="Kompaniya haqida qisqacha video")
+                             verbose_name="Kompaniya haqida qisqacha video")
     info = models.TextField(null=True, blank=True, verbose_name="Bot uchun qisqacha ma'lumot")
     logo = models.ImageField(upload_to='company/image/', null=True, blank=True, verbose_name="Kompaniya logotipi")
     amount_of_staff = models.IntegerField(verbose_name="Hodimlar soni", default=1)
@@ -183,9 +184,11 @@ class Document(models.Model):
 
 
 class Salary(models.Model):
-    type_of_work = models.CharField(null=True, blank=True, max_length=255, verbose_name="Ishlash turi(soatbay, kunbay, ishbay ...)")
+    type_of_work = models.CharField(null=True, blank=True, max_length=255,
+                                    verbose_name="Ishlash turi(soatbay, kunbay, ishbay ...)")
     amount = models.FloatField(null=True, blank=True, verbose_name="Miqdori")
     attached_date = models.DateField(null=True, blank=True, verbose_name="Biriktirilgan sana")
+    completion_date = models.DateField(null=True, blank=True, verbose_name="Yankunlangan sana")
     staff = models.ForeignKey("Staff", on_delete=models.CASCADE, verbose_name="Xodim")
 
     class Meta:
@@ -195,7 +198,7 @@ class Salary(models.Model):
         return self.type_of_work
 
 
-class WorlPlan(models.Model):
+class WorkPlan(models.Model):
     name = models.CharField(max_length=255)
 
     created_at = models.DateTimeField(auto_now_add=True)
@@ -230,12 +233,13 @@ class Staff(models.Model):
 
     address = models.CharField(null=True, blank=True, max_length=255, verbose_name="Uy manzili")
     image = models.ImageField(upload_to='company/staff/image/', null=True, blank=True, verbose_name="Xodimning rasmi")
+    qr_code = models.ImageField(upload_to='company/staff/qr_code/', null=True, blank=True, verbose_name="Xodimning qr code")
 
     department = models.ForeignKey(Department, on_delete=models.CASCADE, verbose_name="Bo'lim")
-    position = models.ForeignKey(Position, on_delete=models.CASCADE,  verbose_name="Lavozim")
+    position = models.ForeignKey(Position, on_delete=models.CASCADE, verbose_name="Lavozim")
 
     note = models.CharField(max_length=255, null=True, blank=True, verbose_name="Eslatma")
-    work_plan = models.ForeignKey(WorlPlan, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Ish jadvali")
+    work_plan = models.ForeignKey(WorkPlan, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Ish jadvali")
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

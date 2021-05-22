@@ -1,5 +1,4 @@
 from django import forms
-from django.forms.utils import ErrorList
 
 from app import models
 
@@ -20,7 +19,8 @@ class RegistrationForm(forms.Form):
         amount_of_staff = self.cleaned_data['amount_of_staff']
         password = self.cleaned_data['password']
         type_of_company = models.TypeCompany.objects.filter(id=type_of_company_id).first()
-        company = models.Company.objects.create(phone=telephone_number, type=type_of_company, amount_of_staff=amount_of_staff, name=company_name)
+        company = models.Company.objects.create(phone=telephone_number, type=type_of_company,
+                                                amount_of_staff=amount_of_staff, name=company_name)
         models.User.objects.create_user(username=username, password=password, company=company)
 
 
@@ -31,24 +31,27 @@ class LoginForm(forms.Form):
 
 # Position
 class PositionModelForm(forms.ModelForm):
-
     class Meta:
         model = models.Position
-        exclude = ('company', )
+        exclude = ('company',)
 
 
 # Staff
 class StaffModelForm(forms.ModelForm):
-
     class Meta:
         model = models.Staff
-        exclude = ('company', )
+        exclude = ('company',)
 
 
 # Departments
 class DepartmentsModelForm(forms.ModelForm):
-
     class Meta:
         model = models.Department
-        exclude = ('company', )
+        exclude = ('company',)
 
+
+# Salary
+class SalaryModelForm(forms.ModelForm):
+    class Meta:
+        model = models.Salary
+        exclude = ('staff', )

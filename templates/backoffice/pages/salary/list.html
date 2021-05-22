@@ -1,0 +1,123 @@
+{% extends 'backoffice/base.html' %}
+
+{% block title %}
+    Hodimning ish haqqi
+{% endblock %}
+
+
+{% block content %}
+<section class="content">
+    <div class="container-fluid">
+        <div class="block-header">
+            <div class="row clearfix">
+                <div class="col-lg-5 col-md-5 col-sm-12">
+                    <h2>Hodimning ish haqqi</h2>
+                    <ul class="breadcrumb padding-0">
+                        <li class="breadcrumb-item"><a href="backoffice"><i class="zmdi zmdi-home"></i></a></li>
+                        <li class="breadcrumb-item"><a href="javascript:void(0);">Hodimning ish haqqi</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-7 col-md-7 col-sm-12">
+                    <div class="input-group m-b-0">
+                        <input type="text" class="form-control" placeholder="Search...">
+                        <span class="input-group-addon">
+                            <i class="zmdi zmdi-search"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="card">
+                    <div class="header">
+                    </div>
+                    <div class="body">
+                        <div class="button-demo js-modal-buttons">
+                            <button type="button" data-color="pink" data-toggle="modal" data-target="#colorModal" class="btn btn-success waves-effect"><i class="zmdi zmdi-plus"></i> Biriktirish</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="card">
+                    <div class="header">
+                    </div>
+                    <div class="body table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Stavka</th>
+                                    <th>Turi</th>
+                                    <th>Boshlanish sanasi</th>
+                                    <th>Yakunlangan sana</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for salary in salaries %}
+                                <tr>
+                                    <th scope="row">{{ salary.id }}</th>
+                                    <td>{{ salary.amount }}</td>
+                                    <td>{{ salary.type_of_work }}</td>
+                                    <td>{{ salary.attached_date }}</td>
+                                    <td>{{ salary.completion_date }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+    <div class="modal fade" id="colorModal" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content bg-white">
+                <div class="modal-header">
+                    <h4 class="title text-dark">Ish haqqini biriktirish</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="{% url 'salary_create' %}" method="post">
+                        {% csrf_token %}
+                        <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label for="type_of_work" class="text-dark">Ishlash turi(soatbay, kunbay, ishbay ...):</label>
+                                    <input type="text" name="type_of_work" id="type_of_work" class="form-control">
+                                </div>
+                        </div>
+                        <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label for="amount" class="text-dark">Stavka:</label>
+                                    <input type="text" name="amount" id="amount" class="form-control">
+                                </div>
+                        </div>
+                        <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label for="attached_date" class="text-dark">Biriktirilgan sana:</label>
+                                    <input type="date" name="attached_date" id="attached_date" class="form-control">
+                                </div>
+                        </div>
+                        <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label for="completion_date" class="text-dark">Yakunlangan sana:</label>
+                                    <input type="date" name="completion_date" id="completion_date" class="form-control">
+                                </div>
+                        </div>
+                        <button type="submit" class="btn btn-success">Biriktirish</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-round" data-dismiss="modal"><i class="zmdi zmdi-close"></i></button>
+                </div>
+            </div>
+        </div>
+</div>
+{% endblock %}
