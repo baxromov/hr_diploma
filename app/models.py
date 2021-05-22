@@ -113,6 +113,7 @@ class Promotion(models.Model):
 class VacationType(models.Model):
     name = models.CharField(max_length=255, verbose_name="Nomi")
     create_at = models.DateTimeField(auto_now_add=True)
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Kompaniya")
 
     class Meta:
         verbose_name_plural = "Xodimlaring qo'shimcha dam olish turi"
@@ -125,6 +126,7 @@ class Vacation(models.Model):
     per_hour = models.BooleanField(default=False, verbose_name="Soatbay")
     per_day = models.BooleanField(default=False, verbose_name="Kunbay")
     start_at = models.DateField(verbose_name="Boshlash vaqti")
+    end_at = models.DateField(verbose_name="Tugash vaqti")
     vacation_type = models.ForeignKey(VacationType, on_delete=models.CASCADE, verbose_name="Qo'shimcha dam olish turi")
     note = models.CharField(max_length=512, null=True, blank=True, verbose_name="Izoh")
     staff = models.ForeignKey('Staff', on_delete=models.CASCADE, verbose_name="Xodim")

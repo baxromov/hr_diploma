@@ -41,3 +41,11 @@ urlpatterns += [
     path('salary/update/<int:pk>', views.SalaryUpdateView.as_view(), name='salary_update'),
     path('salary/delete/<int:pk>', views.SalaryDeleteView.as_view(), name='salary_delete'),
 ]
+
+# Vacation
+urlpatterns += [
+    path('vacation/<int:pk>', views.VacationListView.as_view(), name='vacation'),
+    path('vacation/create', views.VacationCreateView.as_view(), name='vacation_create'),
+    path('vacation/update/<int:pk>', views.VacationUpdateView.as_view(), name='vacation_update'),
+    path('vacation/delete/<int:pk>', views.VacationDeleteView.as_view(), name='vacation_delete'),
+]

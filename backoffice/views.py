@@ -288,3 +288,55 @@ class SalaryDeleteView(LoginRequiredMixin, generic.DeleteView):
     def get_success_url(self):
         staff_id = self.request.META['HTTP_REFERER'].split("/")[-1]
         return reverse_lazy('salary', kwargs={'pk': staff_id})
+
+
+# Vacation
+class VacationListView(LoginRequiredMixin, generic.ListView):
+    model = models.Vacation
+    template_name = 'backoffice/pages/vacation/list.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        ctx = super(VacationListView, self).get_context_data(**kwargs)
+        company = self.request.user.company
+        staff_id = self.kwargs.get('pk')
+        ctx['vacations'] = models.Vacation.objects.filter(staff_id=staff_id)
+        ctx['vacation_types'] = models.VacationType.objects.filter(company=company)
+        return ctx
+
+
+class VacationCreateView(LoginRequiredMixin, generic.CreateView):
+    form_class = forms.VacationModelForm
+
+    def get_success_url(self):
+        staff_id = self.request.META['HTTP_REFERER'].split("/")[-1]
+        return reverse_lazy('vacation', kwargs={'pk': staff_id})
+
+    def form_valid(self, form):
+        staff_id = self.request.META['HTTP_REFERER'].split("/")[-1]
+        self.object = form.save(commit=False)
+        staff = models.Staff.objects.get(pk=staff_id)
+        self.object.staff = staff
+        self.object.save()
+        return super(VacationCreateView, self).form_valid(form)
+
+    def form_invalid(self, form):
+        return super(VacationCreateView, self).form_invalid(form)
+
+
+class VacationDeleteView(LoginRequiredMixin, generic.DeleteView):
+    queryset = models.Vacation.objects.all()
+    form_class = forms.VacationModelForm
+    success_message = "deleted..."
+
+    def get_success_url(self):
+        staff_id = self.request.META['HTTP_REFERER'].split("/")[-1]
+        return reverse_lazy('vacation', kwargs={'pk': staff_id})
+
+
+class VacationUpdateView(LoginRequiredMixin, generic.UpdateView):
+    form_class = forms.VacationModelForm
+    model = models.Vacation
+
+    def get_success_url(self):
+        staff_id = self.request.META['HTTP_REFERER'].split("/")[-1]
+        return reverse_lazy('vacation', kwargs={'pk': staff_id})

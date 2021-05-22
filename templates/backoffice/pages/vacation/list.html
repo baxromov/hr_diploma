@@ -1,0 +1,240 @@
+{% extends 'backoffice/base.html' %}
+
+{% block title %}
+    Qo'shimcha dam olish
+{% endblock %}
+
+
+{% block content %}
+<section class="content">
+    <div class="container-fluid">
+        <div class="block-header">
+            <div class="row clearfix">
+                <div class="col-lg-5 col-md-5 col-sm-12">
+                    <h2>Qo'shimcha dam olish</h2>
+                    <ul class="breadcrumb padding-0">
+                        <li class="breadcrumb-item"><a href="backoffice"><i class="zmdi zmdi-home"></i></a></li>
+                        <li class="breadcrumb-item"><a href="javascript:void(0);">Qo'shimcha dam olish</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-7 col-md-7 col-sm-12">
+                    <div class="input-group m-b-0">
+                        <input type="text" class="form-control" placeholder="Search...">
+                        <span class="input-group-addon">
+                            <i class="zmdi zmdi-search"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="card">
+                    <div class="header">
+                    </div>
+                    <div class="body">
+                        <div class="button-demo js-modal-buttons">
+                            <button type="button" data-color="pink" data-toggle="modal" data-target="#colorModal" class="btn btn-success waves-effect"><i class="zmdi zmdi-plus"></i> Biriktirish</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="card">
+                    <div class="header">
+                    </div>
+                    <div class="body table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Qo'shimcha dam olish turi</th>
+                                    <th>Boshlash vaqti</th>
+                                    <th>Tugash vaqti</th>
+                                    <th>Izoh</th>
+                                    <th>Soatbay</th>
+                                    <th>Kunbay</th>
+                                    <th>O'chirish</th>
+                                    <th>Taxrirlash</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for vacantion in vacations %}
+                                <tr>
+                                    <th scope="row">{{ vacantion.id }}</th>
+                                    <td>{{ vacantion.vacation_type.name }}</td>
+                                    <td>{{ vacantion.start_at }}</td>
+                                    <td>{{ vacantion.end_at }}</td>
+                                    <td>{{ vacantion.note }}</td>
+                                    <td>{{ vacantion.per_hour }}</td>
+                                    <td>{{ vacantion.per_day }}</td>
+                                    <td>
+                                        <form action="{% url 'vacation_delete' pk=vacantion.pk %}" method="POST">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn btn-neutral"><i class="zmdi zmdi-delete"></i></button>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <button type="button" data-color="pink" data-toggle="modal" data-target="#colorModal{{ vacantion.id }}" class="btn btn-neutral waves-effect"><i class="zmdi zmdi-edit"></i></button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+    <div class="modal fade" id="colorModal" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content bg-white">
+                    <div class="modal-header">
+                        <h4 class="title text-dark">Qo'shimcha dam olish hosil qilish</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{% url 'vacation_create' %}" method="post">
+                            {% csrf_token %}
+                            <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="vacation_type" class="text-dark">Qo'shimcha dam olish turi: </label>
+                                        <select name="vacation_type" id="vacation_type">
+                                            {% for vacation_type in vacation_types %}
+                                                <option value="{{ vacation_type.id }}">
+                                                    {{ vacation_type.name }}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                            </div>
+                            <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <p class="text-dark">Qo'shimcha dam olish:</p>
+                                        <div class="d-flex justify-content-around">
+                                            <div class="checkbox">
+                                            <input id="per_hour" type="checkbox" name="per_hour" class="form-control checked_type" onclick="onlyOne(this)">
+                                            <label for="per_hour" class="text-dark">
+                                                    Soatlik
+                                            </label>
+                                        </div>
+                                            <div class="checkbox">
+                                            <input id="per_day" type="checkbox" name="per_day" class="form-control checked_type" onclick="onlyOne(this)">
+                                            <label for="per_day" class="text-dark">
+                                                    Kunlik
+                                            </label>
+                                        </div>
+                                        </div>
+                                    </div>
+                            </div>
+                            <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="start_at" class="text-dark">Boshlanish:</label>
+                                        <input type="date" name="start_at" id="start_at" class="form-control" required>
+                                    </div>
+                            </div>
+                            <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="end_at" class="text-dark">Tugash:</label>
+                                        <input type="date" name="end_at" id="end_at" class="form-control" required>
+                                    </div>
+                            </div>
+                            <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="note" class="text-dark">Izoh:</label>
+                                        <input type="text" name="note" id="note" class="form-control" required>
+                                    </div>
+                            </div>
+                            <button type="submit" class="btn btn-success">Biriktirish</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary btn-round" data-dismiss="modal"><i class="zmdi zmdi-close"></i></button>
+                    </div>
+                </div>
+            </div>
+    </div>
+    {% for vacation in vacations %}
+        <div class="modal fade" id="colorModal{{ vacation.id }}" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content bg-white">
+                    <div class="modal-header">
+                        <h4 class="title text-dark">Qo'shimcha dam olish hosil qilish</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{% url 'vacation_update' vacation.id %}" method="post">
+                            {% csrf_token %}
+                            <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="vacation_type" class="text-dark">Qo'shimcha dam olish turi: </label>
+                                        <select name="vacation_type" id="vacation_type">
+                                            {% for vacation_type in vacation_types %}
+                                                <option value="{{ vacation_type.id }}">
+                                                    {{ vacation_type.name }}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                            </div>
+{#                            <div class="col-sm-12">#}
+{#                                    <div class="form-group">#}
+{#                                        <p class="text-dark">Qo'shimcha dam olish:</p>#}
+{#                                        <div class="d-flex justify-content-around">#}
+{#                                            <div class="checkbox">#}
+{#                                            <input id="per_hour" type="checkbox" name="per_hour" class="form-control"  checked="{% if vacation.per_hour %}on{% else %}off{% endif %}">#}
+{#                                            <label for="per_hour" class="text-dark">#}
+{#                                                    Soatlik#}
+{#                                            </label>#}
+{#                                        </div>#}
+{#                                            <div class="checkbox">#}
+{#                                            <input id="per_day" type="checkbox" name="per_day" class="form-control" checked="{% if vacation.per_day %}on{% else %}off{% endif %}">#}
+{#                                            <label for="per_day" class="text-dark">#}
+{#                                                    Kunlik#}
+{#                                            </label>#}
+{#                                        </div>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                            </div>#}
+                            <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="start_at" class="text-dark">Boshlanish:</label>
+                                        <input type="date" name="start_at" id="start_at" class="form-control" value="{{ vacation.start_at|date:"Y-m-d" }}" required>
+                                    </div>
+                            </div>
+                            <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="end_at" class="text-dark">Tugash:</label>
+                                        <input type="date" name="end_at" id="end_at" class="form-control" required value="{{ vacation.end_at|date:"Y-m-d" }}">
+                                    </div>
+                            </div>
+                            <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="note" class="text-dark">Izoh:</label>
+                                        <input type="text" name="note" id="note" class="form-control" required value="{{ vacation.note }}">
+                                    </div>
+                            </div>
+                            <button type="submit" class="btn btn-success">Saqlash</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary btn-round" data-dismiss="modal"><i class="zmdi zmdi-close"></i></button>
+                    </div>
+                </div>
+            </div>
+    </div>
+    {% endfor %}
+    <script>
+        function onlyOne(checkbox) {
+            let checkboxes = document.getElementsByClassName('checked_type')
+            checkboxes.forEach((item) => {
+                if (item !== checkbox) item.checked = false
+            })
+        }
+    </script>
+{% endblock %}
