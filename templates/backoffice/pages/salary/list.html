@@ -56,6 +56,8 @@
                                     <th>Turi</th>
                                     <th>Boshlanish sanasi</th>
                                     <th>Yakunlangan sana</th>
+                                    <th>O'chirish</th>
+                                    <th>Taxrirlash</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -66,6 +68,15 @@
                                     <td>{{ salary.type_of_work }}</td>
                                     <td>{{ salary.attached_date }}</td>
                                     <td>{{ salary.completion_date }}</td>
+                                    <td>
+                                        <form action="{% url 'salary_delete' pk=salary.id %}" method="POST">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn btn-neutral"><i class="zmdi zmdi-delete"></i></button>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <button type="button" data-color="pink" data-toggle="modal" data-target="#colorModal{{ salary.id }}" class="btn btn-neutral waves-effect"><i class="zmdi zmdi-edit"></i></button>
+                                    </td>
                                 </tr>
                             {% endfor %}
                             </tbody>
@@ -120,4 +131,49 @@
             </div>
         </div>
 </div>
+    {% for salary in salaries %}
+        <div class="modal fade" id="colorModal{{ salary.id }}" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content bg-white">
+                    <div class="modal-header">
+                        <h4 class="title text-dark">Ish haqqini biriktirish</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{% url 'salary_update' salary.id %}" method="post">
+                            {% csrf_token %}
+                            <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="type_of_work" class="text-dark">Ishlash turi(soatbay, kunbay, ishbay ...):</label>
+                                        <input type="text" name="type_of_work" id="type_of_work" class="form-control" value="{{ salary.type_of_work }}">
+                                    </div>
+                            </div>
+                            <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="amount" class="text-dark">Stavka:</label>
+                                        <input type="text" name="amount" id="amount" class="form-control" value="{{ salary.amount }}">
+                                    </div>
+                            </div>
+                            <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="attached_date" class="text-dark">Biriktirilgan sana:</label>
+                                        <input type="date" name="attached_date" id="attached_date" class="form-control" value="{{ salary.attached_date|date:"Y-m-d" }}">
+                                    </div>
+                            </div>
+                            <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="completion_date" class="text-dark">Yakunlangan sana:</label>
+                                        <input type="date" name="completion_date" id="completion_date" class="form-control" value="{{ salary.completion_date|date:"Y-m-d" }}">
+                                    </div>
+                            </div>
+                            <button type="submit" class="btn btn-success">O'zgartirishni saqlash</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary btn-round" data-dismiss="modal"><i class="zmdi zmdi-close"></i></button>
+                    </div>
+                </div>
+            </div>
+    </div>
+    {% endfor %}
+
 {% endblock %}

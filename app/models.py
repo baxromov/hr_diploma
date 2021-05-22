@@ -107,7 +107,7 @@ class Promotion(models.Model):
         verbose_name_plural = "Xodimlarga jarima mukofot e'lon qilish"
 
     def __str__(self):
-        return self.staff.full_name
+        return f'{self.staff.first_name} {self.staff.second_name} {self.staff.last_name}'
 
 
 class VacationType(models.Model):
@@ -133,7 +133,7 @@ class Vacation(models.Model):
         verbose_name_plural = "Xodimlaring qo'shimcha dam olish bo'limi"
 
     def __str__(self):
-        return self.staff.full_name
+        return f'{self.staff.first_name} {self.staff.second_name} {self.staff.last_name}'
 
 
 class AdditionalPaymentType(models.Model):

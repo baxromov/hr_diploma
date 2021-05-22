@@ -36,7 +36,7 @@ urlpatterns += [
 
 # Salary
 urlpatterns += [
-    path('salary/<int:id>', views.SalaryListView.as_view(), name='salary'),
+    path('salary/<int:pk>', views.SalaryListView.as_view(), name='salary'),
     path('salary/create', views.SalaryCreateView.as_view(), name='salary_create'),
     path('salary/update/<int:pk>', views.SalaryUpdateView.as_view(), name='salary_update'),
     path('salary/delete/<int:pk>', views.SalaryDeleteView.as_view(), name='salary_delete'),

@@ -33,8 +33,8 @@
                         <div class="body bg-dark profile-header">
                             <div class="row">
                                 <div class="col-lg-10 col-md-12">
-                                    <img src="{% static 'backoffice/assets/images/profile_av.jpg' %}"
-                                         class="user_pic rounded img-raised" alt="User">
+                                    <img src="{{ staff.qr_code.url }}"
+                                         class="user_pic rounded img-raised" style="width: 180px;height: 180px;" alt="User">
                                     <div class="detail">
                                         <div class="u_name">
                                             <h4><strong>{{ staff.second_name }}</strong> {{ staff.first_name }}</h4>

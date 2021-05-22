@@ -1,13 +1,14 @@
-import json
-from PIL import Image, ImageDraw
 from io import BytesIO
-from django.core.files import File
+
+import qrcode
+from PIL import Image, ImageDraw
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
-from django.urls import reverse_lazy, reverse
+from django.core.files import File
+from django.urls import reverse_lazy
 from django.views import generic
-import qrcode
+
 from app import models
 from backoffice import forms
 
@@ -221,6 +222,9 @@ class DepartmentUpdateView(LoginRequiredMixin, generic.UpdateView):
         self.position.company = company
         self.position.save()
         return super().form_valid(form)
+    
+    def form_invalid(self, form):
+        return super(DepartmentUpdateView, self).form_invalid(form)
 
 
 class DepartmentCreateView(LoginRequiredMixin, generic.CreateView):
@@ -243,23 +247,23 @@ class SalaryListView(LoginRequiredMixin, generic.ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         ctx = super(SalaryListView, self).get_context_data(**kwargs)
-        staff_id = self.kwargs.get('id')
+        staff_id = self.kwargs.get('pk')
         ctx['salaries'] = models.Salary.objects.filter(staff_id=staff_id)
         return ctx
 
 
 class SalaryCreateView(LoginRequiredMixin, generic.CreateView):
-    template_name = 'backoffice/pages/salary/list.html'
     form_class = forms.SalaryModelForm
-    success_url = reverse_lazy('salary')
+
+    def get_success_url(self):
+        staff_id = self.request.META['HTTP_REFERER'].split("/")[-1]
+        return reverse_lazy('salary', kwargs={'pk': staff_id})
 
     def form_valid(self, form):
         staff_id = self.request.META['HTTP_REFERER'].split("/")[-1]
         self.object = form.save(commit=False)
         staff = models.Staff.objects.get(pk=staff_id)
         self.object.staff = staff
-        # form.cleaned_data['staff'] = staff
-        # form.cleaned_data['staff'].save()
         self.object.save()
         return super(SalaryCreateView, self).form_valid(form)
 
@@ -268,8 +272,19 @@ class SalaryCreateView(LoginRequiredMixin, generic.CreateView):
 
 
 class SalaryUpdateView(LoginRequiredMixin, generic.UpdateView):
-    pass
+    form_class = forms.SalaryModelForm
+    model = models.Salary
+
+    def get_success_url(self):
+        staff_id = self.request.META['HTTP_REFERER'].split("/")[-1]
+        return reverse_lazy('salary', kwargs={'pk': staff_id})
 
 
 class SalaryDeleteView(LoginRequiredMixin, generic.DeleteView):
-    pass
+    queryset = models.Salary.objects.all()
+    form_class = forms.SalaryModelForm
+    success_message = "deleted..."
+
+    def get_success_url(self):
+        staff_id = self.request.META['HTTP_REFERER'].split("/")[-1]
+        return reverse_lazy('salary', kwargs={'pk': staff_id})

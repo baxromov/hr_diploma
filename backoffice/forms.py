@@ -55,3 +55,8 @@ class SalaryModelForm(forms.ModelForm):
     class Meta:
         model = models.Salary
         exclude = ('staff', )
+
+
+# Vacation
+class VacationModelForm(forms.ModelForm):
+    pass
