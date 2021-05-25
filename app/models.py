@@ -123,8 +123,11 @@ class VacationType(models.Model):
 
 
 class Vacation(models.Model):
-    per_hour = models.BooleanField(default=False, verbose_name="Soatbay")
-    per_day = models.BooleanField(default=False, verbose_name="Kunbay")
+    vocation_period_type = (
+        ('per_hour', 'Soatbay'),
+        ('per_day', 'Kunbay')
+    )
+    vocation_period_types = models.CharField(choices=vocation_period_type, null=True, blank=True, max_length=255, verbose_name="Turi")
     start_at = models.DateField(verbose_name="Boshlash vaqti")
     end_at = models.DateField(verbose_name="Tugash vaqti")
     vacation_type = models.ForeignKey(VacationType, on_delete=models.CASCADE, verbose_name="Qo'shimcha dam olish turi")
@@ -140,21 +143,29 @@ class Vacation(models.Model):
 
 class AdditionalPaymentType(models.Model):
     name = models.CharField(max_length=255, verbose_name="Nomi")
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Kompaniya")
     create_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        verbose_name_plural = "Ushlab qolish yoki qo'shimcha to'lovlar"
+        verbose_name_plural = "Ushlab qolish yoki qo'shimcha to'lovlar nomi"
 
     def __str__(self):
         return self.name
 
 
 class AdditionalPayments(models.Model):
+    additional_payment = (
+        ('find', "Ushlab qolish"),
+        ('additional_payment', "Qo'shimcha to'lov")
+    )
     apt = models.ForeignKey(AdditionalPaymentType, on_delete=models.CASCADE, verbose_name="Turi")
     attached_date = models.DateField(null=True, blank=True, verbose_name="Biriktirilgan sana")
-    find = models.BooleanField(default=False, verbose_name="Ushlab qolish")
-    additional_payment = models.BooleanField(default=False, verbose_name="Qo'shimcha to'lov")
+    type_of_additional_payment = models.CharField(choices=additional_payment, max_length=225)
+    amount = models.DecimalField(decimal_places=2 , max_digits=16, verbose_name="Summasi")
+    note = models.TextField(verbose_name="Ta'rifi")
     staff = models.ForeignKey('Staff', on_delete=models.CASCADE, verbose_name="Xodim")
+
+    create_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         verbose_name_plural = "Ushlab qolish yoki to'lov qo'shish"
@@ -180,9 +191,17 @@ class Document(models.Model):
     name = models.CharField(max_length=255, verbose_name="Nomi")
     date_of_issue = models.DateField(verbose_name="Berilgan sana")
     validity_period = models.DateField(verbose_name="Amal qilish mudati")
-    document = models.FileField(upload_to=get_directory, verbose_name="Hujjat(file)")
+    document = models.FileField(upload_to='documents/', verbose_name="Hujjat(file)")
     note = models.CharField(max_length=255)
     staff = models.ForeignKey("Staff", on_delete=models.CASCADE)
+
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+
+    class Meta:
+        verbose_name_plural = "Hodim hujjatlari"
+
+    def __str__(self):
+        return self.name
 
 
 class Salary(models.Model):

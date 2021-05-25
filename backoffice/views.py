@@ -291,27 +291,26 @@ class SalaryDeleteView(LoginRequiredMixin, generic.DeleteView):
 
 
 # Vacation
-class VacationListView(LoginRequiredMixin, generic.ListView):
-    model = models.Vacation
+class VacationCreateView(LoginRequiredMixin, generic.CreateView):
     template_name = 'backoffice/pages/vacation/list.html'
+    form_class = forms.VacationModelForm
+    model = models.Vacation
 
     def get_context_data(self, *, object_list=None, **kwargs):
-        ctx = super(VacationListView, self).get_context_data(**kwargs)
-        company = self.request.user.company
+        ctx = super(VacationCreateView, self).get_context_data(**kwargs)
         staff_id = self.kwargs.get('pk')
+        company = self.request.user.company
         ctx['vacations'] = models.Vacation.objects.filter(staff_id=staff_id)
         ctx['vacation_types'] = models.VacationType.objects.filter(company=company)
+        ctx['staff_id'] = staff_id
         return ctx
-
-
-class VacationCreateView(LoginRequiredMixin, generic.CreateView):
-    form_class = forms.VacationModelForm
 
     def get_success_url(self):
         staff_id = self.request.META['HTTP_REFERER'].split("/")[-1]
         return reverse_lazy('vacation', kwargs={'pk': staff_id})
 
     def form_valid(self, form):
+        print("123")
         staff_id = self.request.META['HTTP_REFERER'].split("/")[-1]
         self.object = form.save(commit=False)
         staff = models.Staff.objects.get(pk=staff_id)
@@ -340,3 +339,103 @@ class VacationUpdateView(LoginRequiredMixin, generic.UpdateView):
     def get_success_url(self):
         staff_id = self.request.META['HTTP_REFERER'].split("/")[-1]
         return reverse_lazy('vacation', kwargs={'pk': staff_id})
+
+
+# AdditionalPayments
+class AdditionalPaymentsCreateView(LoginRequiredMixin, generic.CreateView):
+    template_name = 'backoffice/pages/additional_payments/list.html'
+    form_class = forms.AdditionalPaymentsModelForm
+    model = models.AdditionalPayments
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        ctx = super(AdditionalPaymentsCreateView, self).get_context_data(**kwargs)
+        staff_id = self.kwargs.get('pk')
+        company = self.request.user.company
+        ctx['additional_payments'] = models.AdditionalPayments.objects.filter(staff_id=staff_id)
+        ctx['additional_payments_type'] = models.AdditionalPaymentType.objects.filter(company=company)
+        ctx['staff_id'] = staff_id
+        return ctx
+
+    def get_success_url(self):
+        staff_id = self.request.META['HTTP_REFERER'].split("/")[-1]
+        return reverse_lazy('additional_payment', kwargs={'pk': staff_id})
+
+    def form_valid(self, form):
+        print("123")
+        staff_id = self.request.META['HTTP_REFERER'].split("/")[-1]
+        self.object = form.save(commit=False)
+        staff = models.Staff.objects.get(pk=staff_id)
+        self.object.staff = staff
+        self.object.save()
+        return super(AdditionalPaymentsCreateView, self).form_valid(form)
+
+    def form_invalid(self, form):
+        return super(AdditionalPaymentsCreateView, self).form_invalid(form)
+
+
+class AdditionalPaymentsDeleteView(LoginRequiredMixin, generic.DeleteView):
+    queryset = models.AdditionalPayments.objects.all()
+    form_class = forms.AdditionalPaymentsModelForm
+    success_message = "deleted..."
+
+    def get_success_url(self):
+        staff_id = self.request.META['HTTP_REFERER'].split("/")[-1]
+        return reverse_lazy('additional_payment', kwargs={'pk': staff_id})
+
+
+class AdditionalPaymentsUpdateView(LoginRequiredMixin, generic.UpdateView):
+    form_class = forms.AdditionalPaymentsModelForm
+    model = models.AdditionalPayments
+
+    def get_success_url(self):
+        staff_id = self.request.META['HTTP_REFERER'].split("/")[-1]
+        return reverse_lazy('additional_payment', kwargs={'pk': staff_id})
+
+
+# Document
+class DocumentListCreateView(LoginRequiredMixin, generic.CreateView):
+    template_name = 'backoffice/pages/document/list.html'
+    form_class = forms.DocumentModelForm
+    model = models.Document
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        ctx = super(DocumentListCreateView, self).get_context_data(**kwargs)
+        staff_id = self.kwargs.get('pk')
+        ctx['documents'] = models.Document.objects.filter(staff_id=staff_id)
+        ctx['staff_id'] = staff_id
+        return ctx
+
+    def get_success_url(self):
+        staff_id = self.request.META['HTTP_REFERER'].split("/")[-1]
+        return reverse_lazy('document', kwargs={'pk': staff_id})
+
+    def form_valid(self, form):
+        print("123")
+        staff_id = self.request.META['HTTP_REFERER'].split("/")[-1]
+        self.object = form.save(commit=False)
+        staff = models.Staff.objects.get(pk=staff_id)
+        self.object.staff = staff
+        self.object.save()
+        return super(DocumentListCreateView, self).form_valid(form)
+
+    def form_invalid(self, form):
+        return super(DocumentListCreateView, self).form_invalid(form)
+
+
+class DocumentDeleteView(LoginRequiredMixin, generic.DeleteView):
+    queryset = models.Document.objects.all()
+    form_class = forms.DocumentModelForm
+    success_message = "deleted..."
+
+    def get_success_url(self):
+        staff_id = self.request.META['HTTP_REFERER'].split("/")[-1]
+        return reverse_lazy('document', kwargs={'pk': staff_id})
+
+
+class DocumentUpdateView(LoginRequiredMixin, generic.UpdateView):
+    form_class = forms.DocumentModelForm
+    model = models.Document
+
+    def get_success_url(self):
+        staff_id = self.request.META['HTTP_REFERER'].split("/")[-1]
+        return reverse_lazy('document', kwargs={'pk': staff_id})

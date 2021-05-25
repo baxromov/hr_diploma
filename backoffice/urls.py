@@ -44,8 +44,22 @@ urlpatterns += [
 
 # Vacation
 urlpatterns += [
-    path('vacation/<int:pk>', views.VacationListView.as_view(), name='vacation'),
-    path('vacation/create', views.VacationCreateView.as_view(), name='vacation_create'),
+    # path('vacation/<int:pk>', views.VacationListView.as_view(), name='vacation'),
+    path('vacation/<int:pk>', views.VacationCreateView.as_view(), name='vacation'),
     path('vacation/update/<int:pk>', views.VacationUpdateView.as_view(), name='vacation_update'),
     path('vacation/delete/<int:pk>', views.VacationDeleteView.as_view(), name='vacation_delete'),
+]
+
+# AdditionalPayments
+urlpatterns += [
+    path('additional-payment/<int:pk>', views.AdditionalPaymentsCreateView.as_view(), name='additional_payment'),
+    path('additional-payment/update/<int:pk>', views.AdditionalPaymentsUpdateView.as_view(), name='additional_payment_update'),
+    path('additional-payment/delete/<int:pk>', views.AdditionalPaymentsDeleteView.as_view(), name='additional_payment_delete'),
+]
+
+# Document
+urlpatterns += [
+    path('document/<int:pk>', views.DocumentListCreateView.as_view(), name='document'),
+    path('document/update/<int:pk>', views.DocumentUpdateView.as_view(), name='document_update'),
+    path('document/delete/<int:pk>', views.DocumentDeleteView.as_view(), name='document_delete'),
 ]

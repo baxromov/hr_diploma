@@ -62,3 +62,17 @@ class VacationModelForm(forms.ModelForm):
     class Meta:
         model = models.Vacation
         exclude = ('staff', )
+
+
+# Vacation
+class AdditionalPaymentsModelForm(forms.ModelForm):
+    class Meta:
+        model = models.AdditionalPayments
+        exclude = ('staff', )
+
+
+# Document
+class DocumentModelForm(forms.ModelForm):
+    class Meta:
+        model = models.Document
+        exclude = ('staff', )
