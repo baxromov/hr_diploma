@@ -64,11 +64,25 @@ class VacationModelForm(forms.ModelForm):
         exclude = ('staff', )
 
 
-# Vacation
+# VacationType
+class VacationTypeModelForm(forms.ModelForm):
+    class Meta:
+        model = models.VacationType
+        exclude = ('company', )
+
+
+# AdditionalPaymentsModelForm
 class AdditionalPaymentsModelForm(forms.ModelForm):
     class Meta:
         model = models.AdditionalPayments
         exclude = ('staff', )
+
+
+# AdditionalPaymentType
+class AdditionalPaymentTypeModelForm(forms.ModelForm):
+    class Meta:
+        model = models.AdditionalPaymentType
+        exclude = ('company', )
 
 
 # Document

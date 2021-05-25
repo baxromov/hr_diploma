@@ -341,6 +341,46 @@ class VacationUpdateView(LoginRequiredMixin, generic.UpdateView):
         return reverse_lazy('vacation', kwargs={'pk': staff_id})
 
 
+# VacationType
+class VacationTypeTypeListView(LoginRequiredMixin, generic.ListView):
+    template_name = 'backoffice/pages/vacation/vacation_type/list.html'
+    model = models.VacationType
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        ctx = super(VacationTypeTypeListView, self).get_context_data(**kwargs)
+        company = self.request.user.company
+        ctx['vacation_types'] = models.VacationType.objects.filter(company=company)
+        return ctx
+
+
+class VacationTypeCreateView(LoginRequiredMixin, generic.CreateView):
+    form_class = forms.VacationTypeModelForm
+    model = models.VacationType
+    success_url = reverse_lazy('vacation_type')
+
+    def form_valid(self, form):
+        self.company = form.save(commit=False)
+        company = self.request.user.company
+        self.company.company = company
+        self.company.save()
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        return super(VacationTypeCreateView, self).form_invalid(form)
+
+
+class VacationTypeDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = models.VacationType
+    form_class = forms.VacationTypeModelForm
+    success_url = reverse_lazy('vacation_type')
+
+
+class VacationTypeUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = models.VacationType
+    form_class = forms.VacationTypeModelForm
+    success_url = reverse_lazy('vacation_type')
+
+
 # AdditionalPayments
 class AdditionalPaymentsCreateView(LoginRequiredMixin, generic.CreateView):
     template_name = 'backoffice/pages/additional_payments/list.html'
@@ -390,6 +430,47 @@ class AdditionalPaymentsUpdateView(LoginRequiredMixin, generic.UpdateView):
     def get_success_url(self):
         staff_id = self.request.META['HTTP_REFERER'].split("/")[-1]
         return reverse_lazy('additional_payment', kwargs={'pk': staff_id})
+
+
+# AdditionalPaymentsType
+class AdditionalPaymentsTypeListView(LoginRequiredMixin, generic.ListView):
+    template_name = 'backoffice/pages/additional_payments/additional_peyments_type/list.html'
+    model = models.AdditionalPayments
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        ctx = super(AdditionalPaymentsTypeListView, self).get_context_data(**kwargs)
+        company = self.request.user.company
+        ctx['additional_payments_types'] = models.AdditionalPaymentType.objects.filter(company=company)
+        return ctx
+
+
+class AdditionalPaymentsTypeCreateView(LoginRequiredMixin, generic.CreateView):
+    # template_name = 'backoffice/pages/additional_payments/additional_peyments_type/list.html'
+    form_class = forms.AdditionalPaymentTypeModelForm
+    model = models.AdditionalPayments
+    success_url = reverse_lazy('additional_payment_type')
+
+    def form_valid(self, form):
+        self.company = form.save(commit=False)
+        company = self.request.user.company
+        self.company.company = company
+        self.company.save()
+        return super().form_valid(form)
+    
+    def form_invalid(self, form):
+        return  super(AdditionalPaymentsTypeCreateView, self).form_invalid(form)
+
+
+class AdditionalPaymentsTypeDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = models.AdditionalPaymentType
+    form_class = forms.AdditionalPaymentTypeModelForm
+    success_url = reverse_lazy('additional_payment_type')
+
+
+class AdditionalPaymentsTypeUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = models.AdditionalPaymentType
+    form_class = forms.AdditionalPaymentTypeModelForm
+    success_url = reverse_lazy('additional_payment_type')
 
 
 # Document

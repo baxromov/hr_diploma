@@ -44,17 +44,33 @@ urlpatterns += [
 
 # Vacation
 urlpatterns += [
-    # path('vacation/<int:pk>', views.VacationListView.as_view(), name='vacation'),
     path('vacation/<int:pk>', views.VacationCreateView.as_view(), name='vacation'),
     path('vacation/update/<int:pk>', views.VacationUpdateView.as_view(), name='vacation_update'),
     path('vacation/delete/<int:pk>', views.VacationDeleteView.as_view(), name='vacation_delete'),
 ]
+
+# VacationTypeType
+urlpatterns += [
+    path('vacation-type', views.VacationTypeTypeListView.as_view(), name='vacation_type'),
+    path('vacation-type/create', views.VacationTypeCreateView.as_view(), name='vacation_type_create'),
+    path('vacation-type/update/<int:pk>', views.VacationTypeUpdateView.as_view(), name='vacation_type_update'),
+    path('vacation-type/delete/<int:pk>', views.VacationTypeDeleteView.as_view(), name='vacation_type_delete'),
+]
+
 
 # AdditionalPayments
 urlpatterns += [
     path('additional-payment/<int:pk>', views.AdditionalPaymentsCreateView.as_view(), name='additional_payment'),
     path('additional-payment/update/<int:pk>', views.AdditionalPaymentsUpdateView.as_view(), name='additional_payment_update'),
     path('additional-payment/delete/<int:pk>', views.AdditionalPaymentsDeleteView.as_view(), name='additional_payment_delete'),
+]
+
+# AdditionalPaymentsType
+urlpatterns += [
+    path('additional-payment-type', views.AdditionalPaymentsTypeListView.as_view(), name='additional_payment_type'),
+    path('additional-payment-type/create', views.AdditionalPaymentsTypeCreateView.as_view(), name='additional_payment_type_create'),
+    path('additional-payment-type/update/<int:pk>', views.AdditionalPaymentsTypeUpdateView.as_view(), name='additional_payment_type_update'),
+    path('additional-payment-type/delete/<int:pk>', views.AdditionalPaymentsTypeDeleteView.as_view(), name='additional_payment_type_delete'),
 ]
 
 # Document
