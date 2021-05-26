@@ -38,9 +38,12 @@ class StaffUpdate(LoginRequiredMixin, generic.UpdateView, generic.DetailView):
     template_name = 'backoffice/pages/staff/detail.html'
     form_class = forms.StaffModelForm
     model = models.Staff
-    success_url = reverse_lazy('staff')
     context_object_name = 'staff'
     queryset = models.Staff.objects.all()
+
+    def get_success_url(self):
+        staff_id = self.kwargs['pk']
+        return reverse_lazy('staff-detail', kwargs={'pk': staff_id})
 
     def form_valid(self, form):
         form.save()
@@ -251,6 +254,7 @@ class SalaryListView(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         ctx = super(SalaryListView, self).get_context_data(**kwargs)
         staff_id = self.kwargs.get('pk')
+        ctx['staff'] = models.Staff.objects.get(id=staff_id)
         ctx['salaries'] = models.Salary.objects.filter(staff_id=staff_id)
         return ctx
 
@@ -303,6 +307,7 @@ class VacationCreateView(LoginRequiredMixin, generic.CreateView):
         ctx = super(VacationCreateView, self).get_context_data(**kwargs)
         staff_id = self.kwargs.get('pk')
         company = self.request.user.company
+        ctx['staff'] = models.Staff.objects.get(id=staff_id)
         ctx['vacations'] = models.Vacation.objects.filter(staff_id=staff_id)
         ctx['vacation_types'] = models.VacationType.objects.filter(company=company)
         ctx['staff_id'] = staff_id
@@ -352,6 +357,10 @@ class VacationTypeTypeListView(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         ctx = super(VacationTypeTypeListView, self).get_context_data(**kwargs)
         company = self.request.user.company
+        staff_id = self.request.META['HTTP_REFERER'].split("/")[-1]
+        ctx['staff'] = models.Staff.objects.get(id=staff_id)
+        prev_page = self.request.META['HTTP_REFERER']
+        ctx['prev_page'] = prev_page
         ctx['vacation_types'] = models.VacationType.objects.filter(company=company)
         return ctx
 
@@ -394,6 +403,7 @@ class AdditionalPaymentsCreateView(LoginRequiredMixin, generic.CreateView):
         ctx = super(AdditionalPaymentsCreateView, self).get_context_data(**kwargs)
         staff_id = self.kwargs.get('pk')
         company = self.request.user.company
+        ctx['staff'] = models.Staff.objects.get(id=staff_id)
         ctx['additional_payments'] = models.AdditionalPayments.objects.filter(staff_id=staff_id)
         ctx['additional_payments_type'] = models.AdditionalPaymentType.objects.filter(company=company)
         ctx['staff_id'] = staff_id
@@ -443,6 +453,10 @@ class AdditionalPaymentsTypeListView(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         ctx = super(AdditionalPaymentsTypeListView, self).get_context_data(**kwargs)
         company = self.request.user.company
+        staff_id = self.request.META['HTTP_REFERER'].split("/")[-1]
+        ctx['staff'] = models.Staff.objects.get(id=staff_id)
+        prev_page = self.request.META['HTTP_REFERER']
+        ctx['prev_page'] = prev_page
         ctx['additional_payments_types'] = models.AdditionalPaymentType.objects.filter(company=company)
         return ctx
 
@@ -485,6 +499,7 @@ class DocumentListCreateView(LoginRequiredMixin, generic.CreateView):
     def get_context_data(self, *, object_list=None, **kwargs):
         ctx = super(DocumentListCreateView, self).get_context_data(**kwargs)
         staff_id = self.kwargs.get('pk')
+        ctx['staff'] = models.Staff.objects.get(id=staff_id)
         ctx['documents'] = models.Document.objects.filter(staff_id=staff_id)
         ctx['staff_id'] = staff_id
         return ctx

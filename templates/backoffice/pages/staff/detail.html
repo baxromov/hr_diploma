@@ -1,7 +1,7 @@
 {% extends 'backoffice/base.html' %}
 {% load static %}
 {% block title %}
-    Xodimlar - Baxromov Shahzodbek
+    Xodimlar - {{ staff.first_name }} {{ staff.second_name }} {{ staff.last_name }}
 {% endblock %}
 
 {% block content %}
@@ -27,7 +27,8 @@
                             <div class="row">
                                 <div class="col-lg-10 col-md-12">
                                     <img src="{{ staff.qr_code.url }}"
-                                         class="user_pic rounded img-raised" style="width: 180px;height: 180px;" alt="User">
+                                         class="user_pic rounded img-raised" style="width: 180px;height: 180px;"
+                                         alt="User">
                                     <div class="detail">
                                         <div class="u_name">
                                             <h4><strong>{{ staff.second_name }}</strong> {{ staff.first_name }}</h4>
@@ -40,8 +41,9 @@
                                 </div>
                                 <div class="col-lg-2 col-md-12 user_earnings">
                                     <h6>Ish haqqi(so'm)</h6>
-                                    <h4><small class="number count-to" data-from="0" data-to="{{ salary.amount }}" data-speed="1500"
-                                                data-fresh-interval="1000">{{ salary.amount }}</small></h4>
+                                    <h4><small class="number count-to" data-from="0" data-to="{{ salary.amount }}"
+                                               data-speed="1500"
+                                               data-fresh-interval="1000">{{ salary.amount }}</small></h4>
                                 </div>
                             </div>
                         </div>
@@ -49,7 +51,8 @@
                             <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#overview">Xodim
                                 haqida
                                 ma'umot</a></li>
-                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#usersettings">Xodim Sozlamalari</a>
+                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#usersettings">Xodim
+                                Sozlamalari</a>
                             </li>
                         </ul>
                     </div>
@@ -106,7 +109,8 @@
 
                                                     Ish haqqi
                                                 </a>
-                                                <a href="{% url 'additional_payment' staff.id %}" class="list-group-item">
+                                                <a href="{% url 'additional_payment' staff.id %}"
+                                                   class="list-group-item">
                                                     <svg width="23" height="23" viewBox="0 0 23 23" fill="none"
                                                          xmlns="http://www.w3.org/2000/svg">
                                                         <path d="M0 3.45H23V17.25H22.1375C22.1375 15.1915 20.4585 13.5125 18.4 13.5125C16.8935 13.5125 15.617 14.421 15.019 15.709C14.7315 15.594 14.421 15.525 14.0875 15.525C12.9605 15.525 12.0175 16.2495 11.661 17.25H0V3.45ZM9.6255 7.0265C9.5565 7.199 9.5105 7.383 9.499 7.567C9.4875 7.751 9.4875 7.9465 9.5105 8.142L9.5335 8.234C9.545 8.303 9.5565 8.395 9.591 8.4985C9.614 8.6135 9.66 8.7285 9.706 8.855C9.7405 8.9815 9.8095 9.108 9.8785 9.2345C9.959 9.3725 10.051 9.4875 10.143 9.591C10.235 9.6945 10.35 9.7865 10.4995 9.8555C10.6375 9.9245 10.787 9.959 10.9595 9.959C11.1205 9.959 11.27 9.9245 11.408 9.8555C11.546 9.7865 11.661 9.6945 11.753 9.6025C11.8565 9.499 11.937 9.3725 12.006 9.2345C12.0865 9.0965 12.144 8.97 12.19 8.855C12.236 8.74 12.2705 8.625 12.2935 8.4985C12.328 8.372 12.3395 8.2915 12.351 8.2455C12.3625 8.1995 12.3625 8.165 12.3625 8.142C12.42 7.8085 12.397 7.498 12.3165 7.199C12.236 6.9 12.075 6.647 11.845 6.44C11.6035 6.233 11.3045 6.1295 10.9365 6.1295C10.718 6.1295 10.5225 6.164 10.3385 6.2445C10.166 6.325 10.0165 6.4285 9.9015 6.5665C9.798 6.693 9.706 6.854 9.6255 7.0265ZM14.7775 13.9725V12.6615C14.7775 12.282 14.6625 11.9025 14.444 11.5345C14.2255 11.1665 13.9265 10.856 13.5585 10.626C13.1905 10.3845 12.7995 10.2695 12.3855 10.2695L10.9595 11.2355L9.4875 10.2925C9.062 10.2925 8.6595 10.4075 8.2915 10.6375C7.935 10.8675 7.6475 11.1665 7.4405 11.523C7.2335 11.891 7.13 12.2705 7.13 12.6615V13.9725L7.337 14.03C7.475 14.076 7.6705 14.122 7.9235 14.191C8.188 14.2485 8.464 14.306 8.7745 14.3635C9.0735 14.421 9.43 14.467 9.821 14.513C10.212 14.5475 10.5915 14.5705 10.9595 14.5705C11.3045 14.5705 11.684 14.5475 12.0865 14.513C12.4775 14.467 12.8225 14.421 13.11 14.3635C13.3975 14.3175 13.685 14.2485 13.984 14.1795L14.559 14.0415C14.651 14.0185 14.72 13.9955 14.7775 13.9725ZM18.4 14.0875C20.148 14.0875 21.5625 15.502 21.5625 17.25C21.5625 18.998 20.148 20.4125 18.4 20.4125C17.5605 20.4125 16.813 20.0675 16.2495 19.527C16.6242 18.9606 16.7595 18.269 16.6259 17.6032C16.4923 16.9374 16.1007 16.3515 15.5365 15.9735C16.031 14.8695 17.112 14.0875 18.4 14.0875ZM12.075 18.1125C12.075 17.0085 12.9835 16.1 14.0875 16.1C15.1915 16.1 16.1 17.0085 16.1 18.1125C16.1 19.2165 15.1915 20.125 14.0875 20.125C12.9835 20.125 12.075 19.2165 12.075 18.1125Z"
@@ -116,15 +120,6 @@
                                                     Ushlab qolish yoki qo’shimcha
                                                     to’lovlar
                                                 </a>
-{#                                                <a href="#" class="list-group-item">#}
-{#                                                    <svg width="23" height="23" viewBox="0 0 23 23" fill="none"#}
-{#                                                         xmlns="http://www.w3.org/2000/svg">#}
-{#                                                        <path d="M2.87516 4.79167V20.125H18.2085V22.0417H2.87516C1.821 22.0417 0.958496 21.1792 0.958496 20.125V4.79167H2.87516ZM20.1252 0.958336H6.7085C5.64475 0.958336 4.79183 1.81125 4.79183 2.875V16.2917C4.79183 16.8 4.99376 17.2875 5.35321 17.647C5.71265 18.0064 6.20016 18.2083 6.7085 18.2083H20.1252C21.1889 18.2083 22.0418 17.3554 22.0418 16.2917V2.875C22.0418 2.36667 21.8399 1.87916 21.4804 1.51971C21.121 1.16027 20.6335 0.958336 20.1252 0.958336ZM10.5418 15.3333H7.66683V13.4167H10.5418V15.3333ZM10.5418 12.4583H7.66683V10.5417H10.5418V12.4583ZM10.5418 9.58333H7.66683V7.66667H10.5418V9.58333ZM14.3752 15.3333H11.5002V13.4167H14.3752V15.3333ZM14.3752 12.4583H11.5002V10.5417H14.3752V12.4583ZM14.3752 9.58333H11.5002V7.66667H14.3752V9.58333Z"#}
-{#                                                              fill="#374C72"/>#}
-{#                                                    </svg>#}
-{##}
-{#                                                    Ish jadvali#}
-{#                                                </a>#}
                                                 <a href="{% url 'vacation' staff.id %}" class="list-group-item">
                                                     <svg width="28" height="28" viewBox="0 0 28 28" fill="none"
                                                          xmlns="http://www.w3.org/2000/svg">
@@ -170,16 +165,18 @@
                                 </div>
                                 <div class="body">
                                     <div class="row clearfix">
-                                        <form action="" method="post" style="width: 100%;">
+                                        <form action="{% url 'staff-detail' staff.id %}" method="post" style="width: 100%;">
                                             {% csrf_token %}
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <input type="text" name="first_name" class="form-control" placeholder="Ism" value="{{ staff.first_name }}">
+                                                    <input type="text" name="first_name" class="form-control"
+                                                           placeholder="Ism" value="{{ staff.first_name }}">
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <input type="text" name="second_name" class="form-control" placeholder="Familiya" value="{{ staff.second_name }}">
+                                                    <input type="text" name="second_name" class="form-control"
+                                                           placeholder="Familiya" value="{{ staff.second_name }}">
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
@@ -193,45 +190,54 @@
 
                                                 <div class="form-group">
                                                     <label for="birth-date">Tugligan sanasi</label>
-                                                    <input type="date" name="birth_date" id="birth-date" class="form-control"
-                                                           placeholder="Tugligan sanasi" value="{{ staff.birth_date|date:"Y-m-d"}}">
+                                                    <input type="date" name="birth_date" id="birth-date"
+                                                           class="form-control"
+                                                           placeholder="Tugligan sanasi"
+                                                           value="{{ staff.birth_date|date:"Y-m-d" }}">
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label for="pin-code">Tabel raqami</label>
-                                                    <input type="text" name="tabel_number" id="pin-code" class="form-control"
+                                                    <input type="text" name="tabel_number" id="pin-code"
+                                                           class="form-control"
                                                            placeholder="Tabel raqami" value="{{ staff.tabel_number }}">
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label for="tab-num">Hisob raqami</label>
-                                                    <input type="text" id="tab-num" name="account_number" class="form-control"
-                                                           placeholder="Hisob raqami" value="{{ staff.account_number }}">
+                                                    <input type="text" id="tab-num" name="account_number"
+                                                           class="form-control"
+                                                           placeholder="Hisob raqami"
+                                                           value="{{ staff.account_number }}">
                                                 </div>
                                             </div>
 
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <input type="text" name="email" class="form-control" placeholder="E-mail" value="{{ staff.email }}">
+                                                    <input type="text" name="email" class="form-control"
+                                                           placeholder="E-mail" value="{{ staff.email }}">
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <input type="tel" name="mobile_phone" class="form-control"
-                                                           placeholder="Mobil telefon raqam" value="{{ staff.mobile_phone }}">
+                                                           placeholder="Mobil telefon raqam"
+                                                           value="{{ staff.mobile_phone }}">
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <input type="tel" name="home_phone" class="form-control" placeholder="Uy telefoni" value="{{ staff.home_phone }}">
+                                                    <input type="tel" name="home_phone" class="form-control"
+                                                           placeholder="Uy telefoni" value="{{ staff.home_phone }}">
                                                 </div>
                                             </div>
 
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <input type="text" name="address" class="form-control" placeholder="Uy manzili" value="{{ staff.address }}">
+                                                    <input type="text" name="address" class="form-control"
+                                                           placeholder="Uy manzili" value="{{ staff.address }}">
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
@@ -269,19 +275,23 @@
 
                                                 <div class="form-group">
                                                     <label for="started-work-date">Ish boshlangan sana</label>
-                                                    <input type="date" name="start_work_at" id="started-work-date" class="form-control"
-                                                           placeholder="" value="{{ staff.start_work_at|date:"Y-m-d" }}">
+                                                    <input type="date" name="start_work_at" id="started-work-date"
+                                                           class="form-control"
+                                                           placeholder=""
+                                                           value="{{ staff.start_work_at|date:"Y-m-d" }}">
                                                 </div>
                                             </div>
 
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                            <input class="form-control no-resize"
-                                                      placeholder="Izoh" type="text" name="note" value="{{ staff.note }}">
+                                                    <input class="form-control no-resize"
+                                                           placeholder="Izoh" type="text" name="note"
+                                                           value="{{ staff.note }}">
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
-                                                <button class="btn btn-primary btn-round" type="submit">Save Changes</button>
+                                                <button class="btn btn-success waves-effect" type="submit">Save Changes
+                                                </button>
                                             </div>
                                         </form>
                                     </div>
@@ -298,8 +308,22 @@
                     <h2>Kunlar bo’yicha tashriflar statistikasi</h2>
                 </div>
                 <div class="body">
-                            <div class="e_chart" id="echart-rainfall" style="height: 400px; -webkit-tap-highlight-color: transparent; user-select: none; position: relative;" _echarts_instance_="ec_1622036937512"><div style="position: relative; overflow: hidden; width: 224px; height: 400px; padding: 0px; margin: 0px; border-width: 0px; cursor: default;"><canvas data-zr-dom-id="zr_0" width="224" height="400" style="position: absolute; left: 0px; top: 0px; width: 224px; height: 400px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><div style="position: absolute; display: none; border-style: solid; white-space: nowrap; z-index: 9999999; transition: left 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s, top 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s; background-color: rgba(50, 50, 50, 0.7); border-width: 0px; border-color: rgb(51, 51, 51); border-radius: 4px; color: rgb(255, 255, 255); font: 14px / 21px sans-serif; padding: 5px; left: 61px; top: 51px; pointer-events: none;">Jan<br><span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:#45e5c3;"></span>data1: 2<br><span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:#288cff;"></span>data2: 2.6</div></div>
+                    <div class="e_chart" id="echart-rainfall"
+                         style="height: 400px; -webkit-tap-highlight-color: transparent; user-select: none; position: relative;"
+                         _echarts_instance_="ec_1622036937512">
+                        <div style="position: relative; overflow: hidden; width: 224px; height: 400px; padding: 0px; margin: 0px; border-width: 0px; cursor: default;">
+                            <canvas data-zr-dom-id="zr_0" width="224" height="400"
+                                    style="position: absolute; left: 0px; top: 0px; width: 224px; height: 400px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas>
                         </div>
+                        <div style="position: absolute; display: none; border-style: solid; white-space: nowrap; z-index: 9999999; transition: left 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s, top 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s; background-color: rgba(50, 50, 50, 0.7); border-width: 0px; border-color: rgb(51, 51, 51); border-radius: 4px; color: rgb(255, 255, 255); font: 14px / 21px sans-serif; padding: 5px; left: 61px; top: 51px; pointer-events: none;">
+                            Jan<br><span
+                                style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:#45e5c3;"></span>data1:
+                            2<br><span
+                                style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:#288cff;"></span>data2:
+                            2.6
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         </div>
