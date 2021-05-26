@@ -363,16 +363,16 @@
                         </div>
                     </div>
                 </li>
-                <li> <a href="/backoffice" class="toggled waves-effect waves-block"><i class="zmdi zmdi-home"></i><span>Bosh sahifa</span></a></li>
-                <li><a href="{% url 'staff' %}" class="menu-toggle waves-effect waves-block"><i class="zmdi zmdi-account"></i><span>XODIMLAR</span> <span class="badge badge-success float-right">7</span></a>
+                <li><a href="{% url 'backoffice-main' %}" class="toggled waves-effect waves-block"><i class="zmdi zmdi-home"></i><span>Bosh sahifa</span></a></li>
+                <li><a href="{% url 'staff' %}" class="menu-toggle waves-effect waves-block"><i class="zmdi zmdi-account"></i><span>XODIMLAR</span><span class="badge badge-success float-right">{{ amount_staff }}</span></a>
 
                 </li>
-                <li><a href="{% url 'table' %}" class="menu-toggle waves-effect waves-block"><i class="zmdi zmdi-assignment"></i><span>JADVAL</span> <span class="badge badge-default float-right">15</span></a>
+                <li><a href="{% url 'table' %}" class="menu-toggle waves-effect waves-block"><i class="zmdi zmdi-assignment"></i><span>JADVAL</span></a>
                 </li>
-                <li><a href="{% url 'position' %}" class="menu-toggle waves-effect waves-block"><i class="zmdi zmdi-ticket-star"></i><span>LAVOZIM</span> <span class="badge badge-default float-right">15</span></a>
+                <li><a href="{% url 'position' %}" class="menu-toggle waves-effect waves-block"><i class="zmdi zmdi-ticket-star"></i><span>LAVOZIM</span><span class="badge badge-default float-right">{{ position_amounts }}</span></a>
                 </li>
                 <li>
-                    <a href="{% url 'department' %}" class="menu-toggle waves-effect waves-block"><i class="zmdi zmdi-window-maximize"></i><span>BO'LIM</span> <span class="badge badge-default float-right">15</span></a>
+                    <a href="{% url 'department' %}" class="menu-toggle waves-effect waves-block"><i class="zmdi zmdi-window-maximize"></i><span>BO'LIM</span> <span class="badge badge-default float-right">{{ department_amounts }}</span></a>
                 </li>
             </ul>
         </div>
