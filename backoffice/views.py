@@ -54,6 +54,9 @@ class StaffUpdate(LoginRequiredMixin, generic.UpdateView, generic.DetailView):
         company = self.request.user.company
         ctx['positions'] = models.Position.objects.filter(company=company).order_by('-created_at')
         ctx['departments'] = models.Department.objects.filter(company=company).order_by('-created_at')
+        staff_id = self.kwargs.get('pk')
+        ctx['salary'] = models.Salary.objects.filter(staff_id=staff_id).last()
+
         # ctx['workplans'] = models.WorlPlan.objects.filter(company=company).order_by('-created_at')
         return ctx
 

@@ -5,33 +5,11 @@
     <ul class="menu_list">
         <li>
             <a href="javascript:void(0);" class="bars" style="display: inline;"></a>
-            <a class="navbar-brand" href="backoffice"><img src="{% static 'backoffice/assets/images/logo.svg' %}" alt="Alpino"></a>
+            <a class="navbar-brand" href="{% url 'backoffice-main' %}"><img src="{% static 'backoffice/assets/images/logo.svg' %}" alt="Alpino"></a>
         </li>
-        <li><a href="javascript:void(0);" class="btn_overlay hidden-sm-down"><i class="zmdi zmdi-search"></i></a></li>
         <li><a href="javascript:void(0);" class="menu-sm"><i class="zmdi zmdi-swap"></i></a></li>
-        <li class="menuapp-btn"><a href="javascript:void(0);"><i class="zmdi zmdi-apps"></i></a></li>
-        <li class="notifications badgebit">
-            <a href="javascript:void(0);">
-                <i class="zmdi zmdi-notifications"></i>
-                <div class="notify">
-                    <span class="heartbit"></span>
-                    <span class="point"></span>
-                </div>
-            </a>
-        </li>
-        <li class="task badgebit">
-            <a href="javascript:void(0);">
-                <i class="zmdi zmdi-flag"></i>
-                <div class="notify">
-                    <span class="heartbit"></span>
-                    <span class="point"></span>
-                </div>
-            </a>
-        </li>
         <li><a href="" title="Events"><i class="zmdi zmdi-calendar"></i></a></li>
-        <li><a href="" title="Inbox"><i class="zmdi zmdi-email"></i></a></li>
         <li><a href="" title="Contact List"><i class="zmdi zmdi-account-box-phone"></i></a></li>
-        <li><a href=""><i class="zmdi zmdi-comments"></i></a></li>
         <li><a href="javascript:void(0);" class="fullscreen" data-provide="fullscreen"><i
                 class="zmdi zmdi-fullscreen"></i></a></li>
         <li class="power">
@@ -385,7 +363,6 @@
                         </div>
                     </div>
                 </li>
-                <li class="header">Bosh sahifa</li>
                 <li> <a href="/backoffice" class="toggled waves-effect waves-block"><i class="zmdi zmdi-home"></i><span>Bosh sahifa</span></a></li>
                 <li><a href="{% url 'staff' %}" class="menu-toggle waves-effect waves-block"><i class="zmdi zmdi-account"></i><span>XODIMLAR</span> <span class="badge badge-success float-right">7</span></a>
 
