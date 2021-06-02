@@ -10,7 +10,6 @@ urlpatterns = [
     path('ajax_departmets/', views.ajax_dep, name='ajax_department'),
 ]
 
-
 # bot url
 
 urlpatterns += [

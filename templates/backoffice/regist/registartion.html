@@ -37,16 +37,16 @@
                         <form class="form" method="POST" action="{% url 'registration' %}">
                             {% csrf_token %}
                             <div class="input-group">
-                                <input type="text" name="username" class="form-control" placeholder="Enter User Name">
+                                <input type="text" name="username" class="form-control" placeholder="Enter User Name" required>
                                 <span class="input-group-addon"><i class="zmdi zmdi-account-circle"></i></span>
                             </div>
                             <div class="input-group">
-                                <input type="text" name="company_name" class="form-control" placeholder="Kompaniya nomini kiriting">
+                                <input type="text" name="company_name" class="form-control" placeholder="Kompaniya nomini kiriting" required>
                                 <span class="input-group-addon"><i class="zmdi zmdi-home"></i></span>
                             </div>
 
                             <div class="input-group demo-masked-input">
-                                <input type="text" name="telephone_number" class="form-control mobile-phone-number" placeholder="Tel: +00 (000) 000-00-00">
+                                <input type="text" name="telephone_number" class="form-control mobile-phone-number" placeholder="Tel: +00 (000) 000-00-00" required>
                                 <span class="input-group-addon"><i class="zmdi zmdi-phone"></i></span>
                             </div>
                             <div class="input-group">
@@ -62,17 +62,17 @@
                                 </div>
                             </div>
                             <div class="input-group">
-                                <input type="text" class="form-control" name="amount_of_staff" placeholder="Xodimlar soni">
+                                <input type="text" class="form-control" name="amount_of_staff" placeholder="Xodimlar soni" required>
                                 <span class="input-group-addon"><i class="zmdi zmdi-accounts"></i></span>
                             </div>
                             <div class="input-group">
-                                <input type="password" name="password" placeholder="Password" class="form-control" />
+                                <input type="password" name="password" placeholder="Password" class="form-control" required/>
                                 <span class="input-group-addon"><i class="zmdi zmdi-lock"></i></span>
                             </div>
-                            <div class="checkbox">
-                                <input id="terms" type="checkbox">
-                                <label for="terms">I read and Agree to the <a href="javascript:void(0);">Terms of Usage</a></label>
-                            </div>
+{#                            <div class="checkbox">#}
+{#                                <input id="terms" type="checkbox">#}
+{#                                <label for="terms">I read and Agree to the <a href="javascript:void(0);">Terms of Usage</a></label>#}
+{#                            </div>#}
                             <div class="footer">
                                 <button type="submit" class="btn btn-primary btn-round btn-block">SIGN UP</button>
                             </div>
