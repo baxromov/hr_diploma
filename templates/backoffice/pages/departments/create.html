@@ -39,8 +39,8 @@
                             {{ form.as_p }}
                             <div class="field_wrapper">
                                 <div class="mt-3">
-                                    <label for="explicit-label-name-0">Savol-1: </label>
-                                    <input type="text" id="explicit-label-name-0" name="field_name[]" value="" required/>
+                                    <label for="explicit-label-name-1">Savol-1: </label>
+                                    <input type="text" id="explicit-label-name-1" name="field_name" value="" required/>
                                     <a href="javascript:void(0);" class="add_button" title="Add field">
                                         <img src="{% static 'backoffice/assets/images/add-icon.png' %}"/>
                                     </a>
@@ -69,8 +69,8 @@ $(document).ready(function(){
     $(addButton).click(function(){
         //Check maximum number of input fields
         var fieldHTML = '<div class="mt-3">' +
-            '<label for="explicit-label-name' + (x+1) + '">Savol-' + (x+1) + ' : </label>' +
-            '<input type="text" id="explicit-label-name' + (x+1) + '" name="field_name[]" value=""/>' +
+            '<label for="explicit-label-name' + (x+1) + '">Savol-' + (x+1) + ': </label>' +
+            '<input type="text" id="explicit-label-name' + (x+1) + '" name="field_name" value="" required/>' +
                 '<a href="javascript:void(0);" class="remove_button m-l-5">' +
                     '<img src="{% static 'backoffice/assets/images/remove-icon.png' %}"/>' +
                 '</a>' +

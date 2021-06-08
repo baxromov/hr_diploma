@@ -1,0 +1,67 @@
+{% extends 'backoffice/base.html' %}
+
+{% block title %}
+     Telegram Staff
+{% endblock %}
+
+
+{% block content %}
+    <section class="content">
+    <div class="container-fluid">
+        <div class="block-header">
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <h2>Ushlab qolish yoki qo’shimcha to’lovlar</h2>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="card">
+                    <div class="header">
+                    </div>
+                    <div class="body table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>To'lliq Ismi</th>
+                                    <th>Telefon raqami</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for new_staff in new_staffs %}
+
+                                    <tr>
+
+                                        <td>
+                                            <p>{{ new_staff.id }}</p>
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'new_telegram_staff_detail' new_staff.id %}">
+                                                <p>{{ new_staff.full_name }}</p>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <p>{{ new_staff.phone_number }}</p>
+                                        </td>
+{% for field, val in test_instance %}
+<div>
+    <label>{{ field }}:</label>
+    <p>{{ val }}</p>
+</div>
+{% endfor %}
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+{% endblock %}

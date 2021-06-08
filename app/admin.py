@@ -98,6 +98,27 @@ class SalaryModelAdmin(admin.ModelAdmin):
     pass
 
 
+@admin.register(models.Bot)
+class BotModelAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(models.EntryText)
+class EntryTextModelAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(models.FinishText)
+class FinishTextModelAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(models.Admin)
+class AdminModelAdmin(admin.ModelAdmin):
+    pass
+
+
+
 @admin.register(models.User)
 class UserModelAdmin(admin.ModelAdmin):
     exclude = (

@@ -291,7 +291,7 @@ class Question(models.Model):
 
 
 class NewStaff(models.Model):
-    company = models.ForeignKey(Company, on_delete=models.CASCADE, verbose_name="Kompaniya")
+    company = models.ForeignKey(Company, null=True, blank=True, on_delete=models.CASCADE, verbose_name="Kompaniya")
     full_name = models.CharField(max_length=255, verbose_name="Xodimning to'liq ism sharifi")
     birth_date = models.DateField(null=True, blank=True, verbose_name="Xodimning tug'ilgan sanasi")
     image = models.ImageField(upload_to='company/staff/image/', null=True, blank=True, verbose_name="Xodimning rasmi")
@@ -307,6 +307,10 @@ class NewStaff(models.Model):
     tg_answer_id = models.IntegerField(null=True, blank=True)
     tg_username = models.CharField(null=True, blank=True, max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def __iter__(self):
+        for field in self._meta.fields:
+            yield (field.verbose_name, field.value_to_string(self))
 
     def __str__(self):
         return self.full_name
@@ -345,3 +349,48 @@ class Vacancy(models.Model):
     class Meta:
         ordering = ['-created_at']
         verbose_name_plural = "Vakansiya"
+
+
+class Bot(models.Model):
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, blank=True, null=True, verbose_name="Kompaniya")
+    name = models.CharField(max_length=255, null=True, blank=True, verbose_name="Bot nomi")
+    token = models.CharField(max_length=512, null=True, blank=True, verbose_name="Token")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name_plural = "Bot"
+
+
+class Admin(models.Model):
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, blank=True, null=True, verbose_name="Kompaniya")
+    name = models.CharField(blank=True, null=True, max_length=255)
+    chat_id = models.BigIntegerField(blank=True, null=True)
+
+    def __str__(self):
+        return str(self.chat_id)
+
+
+class EntryText(models.Model):
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, blank=True, null=True, verbose_name="Kompaniya")
+    name = models.CharField(blank=True, null=True, max_length=1024)
+
+    create_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.name)
+
+
+class FinishText(models.Model):
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, blank=True, null=True, verbose_name="Kompaniya")
+    name = models.CharField(blank=True, null=True, max_length=1024)
+
+    create_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.name)
+
+

@@ -13,7 +13,6 @@
         <li><a href="javascript:void(0);" class="fullscreen" data-provide="fullscreen"><i
                 class="zmdi zmdi-fullscreen"></i></a></li>
         <li class="power">
-            <a href="javascript:void(0);" class="js-right-sidebar"><i class="zmdi zmdi-settings zmdi-hc-spin"></i></a>
             <a href="{% url 'logout' %}" class="mega-menu"><i class="zmdi zmdi-power"></i></a>
         </li>
     </ul>
@@ -364,15 +363,20 @@
                     </div>
                 </li>
                 <li><a href="{% url 'backoffice-main' %}" class="toggled waves-effect waves-block"><i class="zmdi zmdi-home"></i><span>Bosh sahifa</span></a></li>
-                <li><a href="{% url 'staff' %}" class="menu-toggle waves-effect waves-block"><i class="zmdi zmdi-account"></i><span>XODIMLAR</span><span class="badge badge-success float-right">{{ amount_staff }}</span></a>
+                <li><a href="{% url 'staff' %}" class="menu-toggle waves-effect waves-block"><i class="zmdi zmdi zmdi-accounts-add"></i><span>Xodimlar</span><span class="badge badge-success float-right">{{ amount_staff }}</span></a>
 
                 </li>
-                <li><a href="{% url 'table' %}" class="menu-toggle waves-effect waves-block"><i class="zmdi zmdi-assignment"></i><span>JADVAL</span></a>
-                </li>
-                <li><a href="{% url 'position' %}" class="menu-toggle waves-effect waves-block"><i class="zmdi zmdi-ticket-star"></i><span>LAVOZIM</span><span class="badge badge-default float-right">{{ position_amounts }}</span></a>
+
+                <li><a href="{% url 'position' %}" class="menu-toggle waves-effect waves-block"><i class="zmdi zmdi-ticket-star"></i><span>Lavozimlar</span><span class="badge badge-default float-right">{{ position_amounts }}</span></a>
                 </li>
                 <li>
-                    <a href="{% url 'department' %}" class="menu-toggle waves-effect waves-block"><i class="zmdi zmdi-window-maximize"></i><span>BO'LIM</span> <span class="badge badge-default float-right">{{ department_amounts }}</span></a>
+                    <a href="{% url 'department' %}" class="menu-toggle waves-effect waves-block"><i class="zmdi zmdi-window-maximize"></i><span>Bo'limlar</span> <span class="badge badge-default float-right">{{ department_amounts }}</span></a>
+                </li>
+                <li>
+                    <a href="{% url 'new_telegram_staff' %}" class="menu-toggle waves-effect waves-block"><i class="zmdi zmdi-account-box-o "></i><span>Bot Xodimlar</span> <span class="badge badge-default float-right">{{ bot_user_list_counter }}</span></a>
+                </li>
+                <li>
+                    <a href="{% url 'settings' %}" class="menu-toggle waves-effect waves-block"><i class="zmdi zmdi-settings zmdi-hc-spin"></i><span>Sozlamalar</span></a>
                 </li>
             </ul>
         </div>

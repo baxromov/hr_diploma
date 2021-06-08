@@ -223,10 +223,10 @@ class DepartmentUpdateView(LoginRequiredMixin, generic.UpdateView):
     success_url = reverse_lazy('department')
 
     def form_valid(self, form):
-        self.position = form.save(commit=False)
+        self.department = form.save(commit=False)
         company = self.request.user.company
-        self.position.company = company
-        self.position.save()
+        self.department.company = company
+        self.department.save()
         return super().form_valid(form)
     
     def form_invalid(self, form):
@@ -239,10 +239,13 @@ class DepartmentCreateView(LoginRequiredMixin, generic.CreateView):
     success_url = reverse_lazy('department')
 
     def form_valid(self, form):
-        self.position = form.save(commit=False)
+        self.department = form.save(commit=False)
+        questions = self.request.POST.getlist('field_name')
         company = self.request.user.company
-        self.position.company = company
-        self.position.save()
+        self.department.company = company
+        self.department.save()
+        for question in questions:
+            models.Question.objects.create(question=question, department=self.department)
         return super().form_valid(form)
 
 
@@ -537,3 +540,46 @@ class DocumentUpdateView(LoginRequiredMixin, generic.UpdateView):
     def get_success_url(self):
         staff_id = self.request.META['HTTP_REFERER'].split("/")[-1]
         return reverse_lazy('document', kwargs={'pk': staff_id})
+
+
+# NewTelegramStaff
+class NewTelegramStaffListView(LoginRequiredMixin, generic.ListView):
+    template_name = 'backoffice/pages/new-telegram-staff/list.html'
+    queryset = models.NewStaff.objects.all()
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        ctx = super(NewTelegramStaffListView, self).get_context_data(**kwargs)
+        company = self.request.user.company
+        ctx['new_staffs'] = models.NewStaff.objects.filter(company=company)
+        return ctx
+
+
+class NewTelegramStaffDetailView(LoginRequiredMixin, generic.DetailView):
+    template_name = 'backoffice/pages/new-telegram-staff/detail.html'
+    queryset = models.NewStaff.objects.all()
+    context_object_name = 'new_staff'
+
+# -----------------------------------------------------------------------------------------
+
+
+# Settings
+class Settings(LoginRequiredMixin, generic.TemplateView):
+    template_name = 'backoffice/pages/settings/index.html'
+
+
+# Bot
+class BotListView(LoginRequiredMixin, generic.ListView):
+    template_name = 'backoffice/pages/bot/list.html'
+    queryset = models.Bot.objects.all()
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        ctx = super(BotListView, self).get_context_data(**kwargs)
+        company = self.request.user.company
+        ctx['bot_list'] = models.Bot.objects.filter(company=company)
+        return ctx
+
+
+class BotDetailView(LoginRequiredMixin, generic.DetailView):
+    template_name = 'backoffice/pages/new-telegram-staff/detail.html'
+    queryset = models.NewStaff.objects.all()
+    context_object_name = 'new_staff'

@@ -21,7 +21,7 @@ class FlowModelViewSet(viewsets.ModelViewSet):
     queryset = models.Flow.objects.all()
     serializer_class = serializers.FlowModelSerializer
     permission_classes = (permissions.IsAuthenticated,)
-    http_method_names = ['GET']
+    http_method_names = ['GET', 'POST']
 
 
 class StaffRetrieveAPIView(generics.RetrieveAPIView):

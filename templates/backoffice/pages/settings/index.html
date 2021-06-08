@@ -1,0 +1,33 @@
+{% extends 'backoffice/base.html' %}
+
+{% block title %}
+    Sozlamalar
+{% endblock %}
+
+
+{% block content %}
+    <section class="content">
+        <div class="container-fluid">
+
+            <!-- Disabled Items -->
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2><i class="zmdi zmdi-settings zmdi-hc-spin"></i> Sozlamar</h2>
+                        </div>
+                        <div class="body">
+                            <div class="list-group">
+                                <a href="{% url 'bot' %}" class="list-group-item">Bot qo'shish</a>
+                                <a href="" class="list-group-item"></a>
+                                <a href="javascript:void(0);" class="list-group-item"></a>
+                                <a href="javascript:void(0);" class="list-group-item"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #END# Disabled Items -->
+        </div>
+    </section>
+{% endblock %}

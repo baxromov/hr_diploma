@@ -1,0 +1,49 @@
+{% extends 'backoffice/base.html' %}
+
+{% block title %}
+    Bot Detail View
+{% endblock %}
+
+{% block content %}
+    <section class="content">
+    <div class="container-fluid">
+        <!-- Striped Rows -->
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="card">
+                    <div class="header">
+
+                    </div>
+                    <div class="body table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>To'lliq ismi</th>
+                                    <th>Tug'olgan sana</th>
+                                    <th>Rasm</th>
+                                    <th>Telefon raqami</th>
+                                    <th>Manzil</th>
+                                    <th>Bo'lim</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{{ new_staff.full_name }}</td>
+                                    <td>{{ new_staff.birth_date }}</td>
+                                    <td><a href="{{ new_staff.image.url }}">
+                                        <img src="{{ new_staff.image.url }}" style="width: 40px;height: 50px;" alt="">
+                                    </a></td>
+                                    <td>{{ new_staff.phone_number }}</td>
+                                    <td>{{ new_staff.address }}</td>
+                                    <td>{{ new_staff.department }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- #END# Striped Rows -->
+    </div>
+</section>
+{% endblock %}

@@ -29,7 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'app.apps.AppConfig',
     'backoffice.apps.BackofficeConfig',
-
+    'drf_yasg',
     # Rest
     'rest_framework',
     'rest_framework.authtoken',
@@ -68,6 +68,7 @@ TEMPLATES = [
                 'backoffice.context_processors.staff_amount',
                 'backoffice.context_processors.position_amount',
                 'backoffice.context_processors.department_amount',
+                'backoffice.context_processors.bot_user_list_counter',
             ],
         },
     },
@@ -140,6 +141,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 INSTALLED_APPS += [
     'ckeditor',
     'ckeditor_uploader',
+    # 'nested_inline',
+    'crispy_forms'
 ]
 
 CKEDITOR_CONFIGS = {
@@ -151,12 +154,6 @@ CKEDITOR_UPLOAD_PATH = 'uploads/'
 CKEDITOR_IMAGE_BACKEND = "pillow"
 CKEDITOR_UPLOAD_SLUGIFY_FILENAME = False
 
-# super_inlines
-
-INSTALLED_APPS += [
-    # 'nested_inline',
-    'crispy_forms'
-]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # All Auth

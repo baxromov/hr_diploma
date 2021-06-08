@@ -1,21 +1,33 @@
 import datetime
+import time
 from tempfile import NamedTemporaryFile
 
 from django.core.files import File
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from telebot import TeleBot
 from telebot.types import ReplyKeyboardMarkup, KeyboardButton, Update, ReplyKeyboardRemove
-import time
+
 from app import models
 
-API_TOKEN = '1791631754:AAEDzJQKcjBX9Nx47kkYIurZqhM8whS6haM'
+token = models.Bot.objects.last()
+# # token = None
+if token:
+    API_TOKEN = token.token
+    # URL = "https://api.telegram.org/bot" + token.token + "/setWebhook?url=https://bp.algobot.uz/bot/" + token.token + "/"
+    bot = TeleBot(API_TOKEN)
+    # bot.set_webhook(URL)
+else:
+    API_TOKEN = '123'
+    bot = TeleBot(API_TOKEN)
+# bot = TeleBot('1887331840:AAE7wuoXUJF1rn_gmxOMWANJaVXCJBlJAlg')
 
-bot = TeleBot(API_TOKEN)
 
+class BotAPIView(APIView):
+    permission_classes = [AllowAny, ]
 
-class UpdateBot(APIView):
-    def post(self, request):
+    def post(self, request, token):
         json_string = request.body.decode('UTF-8')
         update = Update.de_json(json_string)
         bot.process_new_updates([update])
@@ -24,17 +36,17 @@ class UpdateBot(APIView):
 
 @bot.message_handler(commands=['start'])
 def start(message):
-    user, created = models.NewStaff.objects.get_or_create(tg_user_id=message.from_user.id)
-    if not created:
-        user.delete()
+    models.NewStaff.objects.filter(tg_user_id=message.from_user.id).delete()
+    models.NewStaff.objects.create(tg_user_id=message.from_user.id)
+    entry_text = models.EntryText.objects.last()
+
     rkm = ReplyKeyboardMarkup(True, row_width=2)
     rkm.row(
         KeyboardButton("Ro'yxatdan o'tish"),
         KeyboardButton("Kompaniya haqida to'liq ma'lumot")
     )
-    bot.send_message(message.from_user.id, "Algorithm Gateway - ishga topshirish botiga hush kelibsiz",
-                     reply_markup=rkm)
-    bot.register_next_step_handler(message, answer_questions)
+    bot.send_message(message.from_user.id, entry_text, reply_markup=rkm)
+    bot.register_next_step_handler(message, auth_bot_or_info)
 
 
 def auth_bot_or_info(message):
@@ -42,25 +54,16 @@ def auth_bot_or_info(message):
         user = models.NewStaff.objects.get(tg_user_id=message.from_user.id)
         rkm = ReplyKeyboardMarkup(True)
         rkm.add("🔙 Orqaga")
-        # if created:
         user.tg_username = message.from_user.username
         user.save()
         bot.send_message(message.from_user.id, "Ismingizni kiriting\nmasalan: Ahrorov  Jasur...", reply_markup=rkm)
         bot.register_next_step_handler(message, get_name)
     elif message.text == "Kompaniya haqida to'liq ma'lumot":
-        info_company = models.Company.objects.order_by('-id')
-        if info_company.exists():
-            info_company = info_company.first()
-        images = info_company.get_images
+        info_company = models.Company.objects.last()
 
-        bot.send_message(
-            message.from_user.id, f"""
-{info_company.text}
-
-{info_company.url}
-""")
+        bot.send_photo(message.chat.id, info_company.image, info_company.text)
         time.sleep(1)
-        bot.send_media_group(message.from_user.id, images)
+        # bot.send_media_group(message.from_user.id, images)
 
         bot.register_next_step_handler(message, auth_bot_or_info)
     else:
@@ -119,7 +122,7 @@ def get_age(message):
                     bot.send_message(message.from_user.id, "Rasmingizni yuboring", reply_markup=rkm)
                     bot.register_next_step_handler(message, get_image)
             except:
-                bot.send_message(message.from_user.id, "Tu'gilgan sanangizni anniq kiriting", reply_markup=rkm)
+                bot.send_message(message.from_user.id, "Tug'ilgan sanangizni aniq kiriting", reply_markup=rkm)
                 bot.register_next_step_handler(message, get_age)
 
 
@@ -162,26 +165,34 @@ def get_phone(message):
             rkm = ReplyKeyboardRemove()
             bot.send_message(message.from_user.id,
                              "Ma'lumotlaringiz qabul qilindi.\n\nBotdan foydalanishingiz mumkin", reply_markup=rkm)
-            bot.register_next_step_handler(message, get_departments)
+            get_departments(message)
         else:
             bot.send_message(message.from_user.id, "Telefon raqam aniqlanmadi.\nPastdagi tugmani bosish yetarli.")
             bot.register_next_step_handler(message, get_phone)
 
 
 def get_departments(message):
-    departments = models.Department.objects.all()
-    rkm = ReplyKeyboardMarkup(True, row_width=3)
-    department_menu = []
-    for department in departments:
-        department_menu.append(department.name)
-    rkm.add(*department_menu)
-    bot.send_message(message.from_user.id, 'Bolimni tanlang', reply_markup=rkm)
-    bot.register_next_step_handler(message, answer_questions)
+    current_bot = models.Bot.objects.filter(token=bot.token).last()
+    if current_bot:
+        departments = models.Department.objects.filter(company=current_bot.company)
+        rkm = ReplyKeyboardMarkup(True, row_width=3)
+        department_menu = []
+        for department in departments:
+            # if department.is_hidden == False:
+            department_menu.append(department.name)
+        rkm.add(*department_menu)
+        bot.send_message(message.from_user.id, '✅', reply_markup=rkm)
+        bot.register_next_step_handler(message, answer_questions)
+    else:
+        bot.send_message(message.from_user.id, "Bo'limlar mavjud emas")
 
 
 def answer_questions(message):
     user = models.NewStaff.objects.get(tg_user_id=message.from_user.id)
-    department = models.Department.objects.filter(name__exact=message.text).first()
+    current_bot = models.Bot.objects.filter(token=bot.token).last()
+    department = models.Department.objects.filter(company=current_bot.company, name__exact=message.text).first()
+    # bot.send_message(message.from_user.id, (department.info if department.info else "Hozircha ma'lumot yo'q"))
+    # time.sleep(1)
     user.department = department
     qs = models.Question.objects.filter(department=user.department)
     if qs.exists():
@@ -194,21 +205,19 @@ def answer_questions(message):
         )
         user.tg_answer_id = answer.id
         user.save()
-        bot.send_message(message.from_user.id, questions[0].question)
+        rkm = ReplyKeyboardRemove()
+        bot.send_message(message.from_user.id, questions[0].question, reply_markup=rkm)
         bot.register_next_step_handler(message, answer_question_1)
 
-        # questions_all = []
-        # for item in questions:
-        #     questions_all.append(item.question)
-
     else:
-        departments = models.Department.objects.all()
+        current_bot = models.Bot.objects.filter(token=bot.token).last()
+        departments = models.Department.objects.filter(company=current_bot.company, name__exact=message.text)
         rkm = ReplyKeyboardMarkup(True, row_width=3)
         department_menu = []
         for department in departments:
             department_menu.append(department.name)
         rkm.add(*department_menu)
-        bot.send_message(message.from_user.id, 'Bolimni tanlang', reply_markup=rkm)
+        bot.send_message(message.from_user.id, "Bo'limni tanlang", reply_markup=rkm)
         bot.register_next_step_handler(message, answer_questions)
 
 
@@ -217,7 +226,8 @@ def answer_question_1(message):
     qs = models.Question.objects.filter(department=user.department)
     if qs.exists():
         questions = qs.order_by('id')
-        bot.send_message(message.from_user.id, questions[user.question_step])
+        rkm = ReplyKeyboardRemove()
+        bot.send_message(message.from_user.id, questions[user.question_step], reply_markup=rkm)
         answer = models.Answer.objects.get(pk=user.tg_answer_id)
         answer.answer = message.text
         answer.save()
@@ -259,9 +269,12 @@ def answer_question_2(message):
 
 def finish(message):
     user = models.NewStaff.objects.get(tg_user_id=message.from_user.id)
+    finish_text = models.FinishText.objects.last()
     answer = models.Answer.objects.get(pk=user.tg_answer_id)
     answer.answer = message.text
     answer.save()
     user.tg_answer_id = None
+    current_bot = models.Bot.objects.filter(token=bot.token).last()
+    user.company = current_bot.company
     user.save()
-    bot.send_message(message.from_user.id, "Finish bo'ldi")
+    bot.send_message(message.from_user.id, finish_text)

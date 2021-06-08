@@ -79,3 +79,20 @@ urlpatterns += [
     path('document/update/<int:pk>', views.DocumentUpdateView.as_view(), name='document_update'),
     path('document/delete/<int:pk>', views.DocumentDeleteView.as_view(), name='document_delete'),
 ]
+
+# ---------------------------------------------------------------------------------------------------------------------
+
+urlpatterns += [
+    path('settings', views.Settings.as_view(), name='settings'),
+]
+
+# NewTelegramStaffListView
+urlpatterns += [
+    path('new-telegram-staff', views.NewTelegramStaffListView.as_view(), name="new_telegram_staff"),
+    path('new-telegram-staff/<int:pk>', views.NewTelegramStaffDetailView.as_view(), name="new_telegram_staff_detail"),
+]
+
+# Bot
+urlpatterns += [
+    path('bot', views.BotListView.as_view(), name='bot')
+]

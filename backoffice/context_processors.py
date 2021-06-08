@@ -30,3 +30,14 @@ def department_amount(request):
     return {
         'department_amounts': department_amounts
     }
+
+
+def bot_user_list_counter(request):
+    department_amounts = None
+    if request.user.is_anonymous == False:
+        company = request.user.company
+        department = models.NewStaff.objects.filter(company=company)
+        department_amounts = department.count()
+    return {
+        'bot_user_list_counter': department_amounts
+    }
