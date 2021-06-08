@@ -94,5 +94,6 @@ urlpatterns += [
 
 # Bot
 urlpatterns += [
-    path('bot', views.BotListView.as_view(), name='bot')
+    path('bot', views.BotListView.as_view(), name='bot_c_l'),
+    path('bot/<int:pk>', views.BotUpdateView.as_view(), name='bot_c_u'),
 ]

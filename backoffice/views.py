@@ -568,18 +568,31 @@ class Settings(LoginRequiredMixin, generic.TemplateView):
 
 
 # Bot
-class BotListView(LoginRequiredMixin, generic.ListView):
+class BotListView(LoginRequiredMixin, generic.CreateView):
     template_name = 'backoffice/pages/bot/list.html'
     queryset = models.Bot.objects.all()
+    form_class = forms.BotModelForm
+    model = models.Bot
+    success_url = reverse_lazy('bot_c_l')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         ctx = super(BotListView, self).get_context_data(**kwargs)
         company = self.request.user.company
-        ctx['bot_list'] = models.Bot.objects.filter(company=company)
+        ctx['bot_list'] = models.Bot.objects.filter(company=company).first()
         return ctx
 
+    def form_valid(self, form):
+        self.company = form.save(commit=False)
+        company = self.request.user.company
+        self.company.company = company
+        self.company.save()
+        return super().form_valid(form)
 
-class BotDetailView(LoginRequiredMixin, generic.DetailView):
-    template_name = 'backoffice/pages/new-telegram-staff/detail.html'
-    queryset = models.NewStaff.objects.all()
-    context_object_name = 'new_staff'
+    def form_invalid(self, form):
+        return super(BotListView, self).form_invalid(form)
+
+
+class BotUpdateView(LoginRequiredMixin, generic.UpdateView):
+    form_class = forms.BotModelForm
+    model = models.Bot
+    success_url = reverse_lazy('bot_c_l')

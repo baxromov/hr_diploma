@@ -90,3 +90,10 @@ class DocumentModelForm(forms.ModelForm):
     class Meta:
         model = models.Document
         exclude = ('staff', )
+
+
+# Bot
+class BotModelForm(forms.ModelForm):
+    class Meta:
+        model = models.Bot
+        exclude = ('company', )
