@@ -1,10 +1,13 @@
 asgiref==3.2.10
+cairocffi==1.2.0
+CairoSVG==2.5.2
 certifi==2020.12.5
 cffi==1.14.5
 chardet==4.0.0
 coreapi==2.3.3
 coreschema==0.0.4
 cryptography==3.4.7
+cssselect2==0.4.1
 defusedxml==0.7.1
 Django==3.1
 django-allauth==0.44.0
@@ -15,6 +18,7 @@ django-nested-inline==0.4.2
 django-rest-auth==0.9.5
 djangorestframework==3.12.4
 drf-yasg==1.20.0
+html5lib==1.1
 idna==2.10
 inflection==0.5.1
 itypes==1.2.0
@@ -26,6 +30,7 @@ Pillow==8.2.0
 pycparser==2.20
 PyJWT==2.1.0
 pyparsing==2.4.7
+Pyphen==0.10.0
 pyTelegramBotAPI==3.7.7
 python-monkey-business==1.0.0
 python3-openid==3.2.0
@@ -37,5 +42,8 @@ ruamel.yaml==0.17.7
 ruamel.yaml.clib==0.2.2
 six==1.15.0
 sqlparse==0.4.1
+tinycss2==1.1.0
 uritemplate==3.0.1
 urllib3==1.26.4
+WeasyPrint==52.5
+webencodings==0.5.1
