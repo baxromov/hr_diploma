@@ -11,6 +11,7 @@ from django.views import generic
 
 from app import models
 from backoffice import forms
+from django.contrib.messages.views import SuccessMessageMixin
 
 
 class MainTemplate(LoginRequiredMixin, generic.ListView):
@@ -596,3 +597,78 @@ class BotUpdateView(LoginRequiredMixin, generic.UpdateView):
     form_class = forms.BotModelForm
     model = models.Bot
     success_url = reverse_lazy('bot_c_l')
+
+
+# Admin
+class AdminCreateView(LoginRequiredMixin, generic.CreateView):
+    template_name = 'backoffice/pages/bot_admin/list.html'
+    form_class = forms.AdminModelForm
+    model = models.Admin
+    success_url = reverse_lazy('admin_bot')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        ctx = super(AdminCreateView, self).get_context_data(**kwargs)
+        company = self.request.user.company
+        ctx['admin_lists'] = models.Admin.objects.filter(company=company)
+        return ctx
+
+    def form_valid(self, form):
+        self.company = form.save(commit=False)
+        company = self.request.user.company
+        self.company.company = company
+        self.company.save()
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        return super(AdminCreateView, self).form_invalid(form)
+
+
+class AdminDeleteView(LoginRequiredMixin, generic.DeleteView):
+    queryset = models.Admin.objects.all()
+    form_class = forms.AdminModelForm
+    success_message = "deleted..."
+    success_url = reverse_lazy('admin_bot')
+
+
+class AdminUpdateView(LoginRequiredMixin, generic.UpdateView):
+    form_class = forms.AdminModelForm
+    model = models.Admin
+    success_url = reverse_lazy('admin_bot')
+
+
+# Admin
+class EntryTextCreateView(LoginRequiredMixin, generic.CreateView):
+    template_name = 'backoffice/pages/entry/list.html'
+    form_class = forms.EntryTextModelForm
+    model = models.EntryText
+    success_url = reverse_lazy('entry_text')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        ctx = super(EntryTextCreateView, self).get_context_data(**kwargs)
+        company = self.request.user.company
+        entry_text = models.EntryText.objects.filter(company=company).last()
+        ctx['item'] = entry_text
+        return ctx
+
+    def form_valid(self, form):
+        self.company = form.save(commit=False)
+        company = self.request.user.company
+        self.company.company = company
+        self.company.save()
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        return super(EntryTextCreateView, self).form_invalid(form)
+
+
+class EntryTextDeleteView(LoginRequiredMixin, SuccessMessageMixin, generic.DeleteView):
+    queryset = models.EntryText.objects.all()
+    form_class = forms.EntryTextModelForm
+    success_message = "deleted..."
+    success_url = reverse_lazy('entry_text')
+
+
+class EntryTextUpdateView(LoginRequiredMixin, generic.UpdateView):
+    form_class = forms.EntryTextModelForm
+    model = models.EntryText
+    success_url = reverse_lazy('entry_text')

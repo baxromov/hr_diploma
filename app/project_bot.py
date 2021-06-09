@@ -11,6 +11,8 @@ from telebot.types import ReplyKeyboardMarkup, KeyboardButton, Update, ReplyKeyb
 
 from app import models
 
+
+# company =
 token = models.Bot.objects.last()
 # # token = None
 if token:
@@ -27,7 +29,11 @@ else:
 class BotAPIView(APIView):
     permission_classes = [AllowAny, ]
 
-    def post(self, request, token):
+    def post(self, request, _token):
+        # print(_token)
+        # global bot
+        # current_bot = models.Bot.objects.filter(token=_token).last()
+        # bot = TeleBot(API_TOKEN)
         json_string = request.body.decode('UTF-8')
         update = Update.de_json(json_string)
         bot.process_new_updates([update])

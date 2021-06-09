@@ -355,6 +355,7 @@ class Bot(models.Model):
     company = models.ForeignKey(Company, on_delete=models.CASCADE, blank=True, null=True, verbose_name="Kompaniya")
     name = models.CharField(max_length=255, null=True, blank=True, verbose_name="Bot nomi")
     token = models.CharField(max_length=512, null=True, blank=True, verbose_name="Token")
+
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -369,6 +370,8 @@ class Admin(models.Model):
     company = models.ForeignKey(Company, on_delete=models.CASCADE, blank=True, null=True, verbose_name="Kompaniya")
     name = models.CharField(blank=True, null=True, max_length=255)
     chat_id = models.BigIntegerField(blank=True, null=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return str(self.chat_id)

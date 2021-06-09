@@ -94,6 +94,20 @@ urlpatterns += [
 
 # Bot
 urlpatterns += [
-    path('bot', views.BotListView.as_view(), name='bot_c_l'),
-    path('bot/<int:pk>', views.BotUpdateView.as_view(), name='bot_c_u'),
+    path('settings/bot', views.BotListView.as_view(), name='bot_c_l'),
+    path('settings/bot/<int:pk>', views.BotUpdateView.as_view(), name='bot_c_u'),
+]
+
+# Admin
+urlpatterns += [
+    path('settings/admin-bot', views.AdminCreateView.as_view(), name='admin_bot'),
+    path('settings/admin-bot/delete/<int:pk>', views.AdminDeleteView.as_view(), name='admin_bot_delete'),
+    path('settings/admin-bot/update/<int:pk>', views.AdminUpdateView.as_view(), name='admin_bot_update'),
+]
+
+# EntryText
+urlpatterns += [
+    path('settings/entry-text', views.EntryTextCreateView.as_view(), name='entry_text'),
+    path('settings/entry-text/delete/<int:pk>', views.EntryTextDeleteView.as_view(), name='entry_text_delete'),
+    path('settings/entry-text/update/<int:pk>', views.EntryTextUpdateView.as_view(), name='entry_text_update'),
 ]

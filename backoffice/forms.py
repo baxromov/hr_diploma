@@ -97,3 +97,17 @@ class BotModelForm(forms.ModelForm):
     class Meta:
         model = models.Bot
         exclude = ('company', )
+
+
+# Admin
+class AdminModelForm(forms.ModelForm):
+    class Meta:
+        model = models.Admin
+        exclude = ('company',)
+
+
+# EntryText
+class EntryTextModelForm(forms.ModelForm):
+    class Meta:
+        model = models.EntryText
+        exclude = ('company',)
