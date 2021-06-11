@@ -12,11 +12,13 @@ defusedxml==0.7.1
 Django==3.1
 django-allauth==0.44.0
 django-ckeditor==6.0.0
+django-cors-headers==3.7.0
 django-crispy-forms==1.11.2
 django-js-asset==1.2.2
 django-nested-inline==0.4.2
 django-rest-auth==0.9.5
 djangorestframework==3.12.4
+djangorestframework-simplejwt==4.7.1
 drf-yasg==1.20.0
 html5lib==1.1
 idna==2.10
