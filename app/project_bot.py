@@ -13,27 +13,29 @@ from app import models
 
 
 # company =
-token = models.Bot.objects.last()
-# # token = None
-if token:
-    API_TOKEN = token.token
-    # URL = "https://api.telegram.org/bot" + token.token + "/setWebhook?url=https://bp.algobot.uz/bot/" + token.token + "/"
-    bot = TeleBot(API_TOKEN)
-    # bot.set_webhook(URL)
-else:
-    API_TOKEN = '123'
-    bot = TeleBot(API_TOKEN)
+# token = models.Bot.objects.last()
+# token = None
+# if token:
+#     API_TOKEN = token.token
+#     # URL = "https://api.telegram.org/bot" + token.token + "/setWebhook?url=https://bp.algobot.uz/bot/" + token.token + "/"
+#     bot = TeleBot(API_TOKEN)
+#     # bot.set_webhook(URL)
+# else:
+#     API_TOKEN = '123'
+#     bot = TeleBot(API_TOKEN)
 # bot = TeleBot('1887331840:AAE7wuoXUJF1rn_gmxOMWANJaVXCJBlJAlg')
+
+bot = TeleBot('')
 
 
 class BotAPIView(APIView):
     permission_classes = [AllowAny, ]
 
-    def post(self, request, _token):
-        # print(_token)
-        # global bot
-        # current_bot = models.Bot.objects.filter(token=_token).last()
-        # bot = TeleBot(API_TOKEN)
+    def post(self, request, tok):
+        print(tok)
+        global bot
+        # current_bot = models.Bot.objects.filter(token=tok).last()
+        bot = TeleBot(tok)
         json_string = request.body.decode('UTF-8')
         update = Update.de_json(json_string)
         bot.process_new_updates([update])
@@ -42,6 +44,8 @@ class BotAPIView(APIView):
 
 @bot.message_handler(commands=['start'])
 def start(message):
+    bot.send_message(message.from_user.id, 'hello')
+
     models.NewStaff.objects.filter(tg_user_id=message.from_user.id).delete()
     models.NewStaff.objects.create(tg_user_id=message.from_user.id)
     entry_text = models.EntryText.objects.last()

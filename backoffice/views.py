@@ -8,6 +8,7 @@ from django.contrib.auth.views import LoginView
 from django.core.files import File
 from django.urls import reverse_lazy
 from django.views import generic
+from telebot import TeleBot
 
 from app import models
 from backoffice import forms
@@ -587,6 +588,13 @@ class BotListView(LoginRequiredMixin, generic.CreateView):
         company = self.request.user.company
         self.company.company = company
         self.company.save()
+
+        token = form.data.get('token')
+        # bot.
+        bot = TeleBot(token)
+        website = 'https://f1209dcd2fab.ngrok.io'
+        URL = f"https://api.telegram.org/bot{token}/setWebhook?url={website}/bot/{token}/"
+        bot.set_webhook(URL)
         return super().form_valid(form)
 
     def form_invalid(self, form):

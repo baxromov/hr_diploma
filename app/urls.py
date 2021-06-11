@@ -14,5 +14,5 @@ from . import views
 # bot url
 
 urlpatterns = [
-    path('bot/<str:token>/', csrf_exempt(BotAPIView.as_view()))
+    path('bot/<str:tok>/', csrf_exempt(BotAPIView.as_view()))
 ]
