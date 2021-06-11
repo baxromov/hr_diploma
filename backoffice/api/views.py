@@ -45,9 +45,9 @@ class StaffModelViewSet(viewsets.ModelViewSet):
 class JWTTokenObtainView(rest_framework_simplejwt_views.TokenObtainPairView):
     serializer_class = serializers.JWTTokenObtainSerializer
 
-
-class JWTTokenVerifyView(rest_framework_simplejwt_views.TokenVerifyView):
-    serializer_class = serializers.JWTTokenVerifySerializer
+#
+# class JWTTokenVerifyView(rest_framework_simplejwt_views.TokenVerifyView):
+#     serializer_class = serializers.JWTTokenVerifySerializer
 
 
 class JWTTokenRefreshView(rest_framework_simplejwt_views.TokenRefreshView):
