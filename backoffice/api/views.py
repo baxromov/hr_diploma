@@ -23,13 +23,14 @@ class FlowModelViewSet(viewsets.ModelViewSet):
     http_method_names = ['GET', 'POST']
 
 
-class StaffRetrieveAPIView(generics.RetrieveAPIView):
+class StaffModelViewSet(viewsets.ModelViewSet):
     queryset = models.Staff.objects.all()
     serializer_class = serializers.StaffModelSerializer
     permission_classes = (permissions.IsAuthenticated,)
-    http_method_names = ['get']
+    http_method_names = ['get', 'post']
 
-    def retrieve(self, request, *args, **kwargs):
+
+    def get(self, request, *args, **kwargs):
         company = self.request.user.company
         staff = models.Staff.objects.filter(company=company)
         serializer = self.get_serializer(staff, many=True)
