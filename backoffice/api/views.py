@@ -20,7 +20,7 @@ class FlowModelViewSet(viewsets.ModelViewSet):
     queryset = models.Flow.objects.all()
     serializer_class = serializers.FlowModelSerializer
     permission_classes = (permissions.IsAuthenticated,)
-    http_method_names = ['GET', 'POST']
+    http_method_names = ['get', 'post']
 
 
 class StaffModelViewSet(viewsets.ModelViewSet):
@@ -28,7 +28,6 @@ class StaffModelViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.StaffModelSerializer
     permission_classes = (permissions.IsAuthenticated,)
     http_method_names = ['get', 'post']
-
 
     def get(self, request, *args, **kwargs):
         company = self.request.user.company
