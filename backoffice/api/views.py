@@ -35,3 +35,18 @@ class StaffRetrieveAPIView(generics.RetrieveAPIView):
         staff = models.Staff.objects.filter(company=company)
         serializer = self.get_serializer(staff, many=True)
         return Response(serializer.data)
+
+
+
+class JWTTokenObtainView(rest_framework_simplejwt_views.TokenObtainPairView):
+    serializer_class = serializers.JWTTokenObtainSerializer
+
+
+class JWTTokenVerifyView(rest_framework_simplejwt_views.TokenVerifyView):
+    serializer_class = serializers.JWTTokenVerifySerializer
+
+
+class JWTTokenRefreshView(rest_framework_simplejwt_views.TokenRefreshView):
+    pass
+
+
