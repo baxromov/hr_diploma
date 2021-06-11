@@ -29,12 +29,17 @@ class StaffModelViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticated,)
     http_method_names = ['get', 'post']
 
-    def get(self, request, *args, **kwargs):
+    def retrieve(self, request, *args, **kwargs):
         company = self.request.user.company
         staff = models.Staff.objects.filter(company=company)
         serializer = self.get_serializer(staff, many=True)
         return Response(serializer.data)
 
+    def list(self, request, *args, **kwargs):
+        company = self.request.user.company
+        staff = models.Staff.objects.filter(company=company)
+        serializer = self.get_serializer(staff, many=True)
+        return Response(serializer.data)
 
 
 class JWTTokenObtainView(rest_framework_simplejwt_views.TokenObtainPairView):
