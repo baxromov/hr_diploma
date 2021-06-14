@@ -38,19 +38,21 @@
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
                                 <thead>
-                                    <tr>
-                                        <th>TO’LIQ ISMI</th>
-                                        <th>ISH BOSHLANGAN SANA</th>
-                                        <th>BO’LIM</th>
-                                        <th>LAVOZIM</th>
+                                   <tr>
+                                        <th>To'liq ismi</th>
+                                        <th>Ish boshlagan sana</th>
+                                        <th>Bo'lim</th>
+                                        <th>Lavozim</th>
+                                        <th>O'chirish</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <th>TO’LIQ ISMI</th>
-                                        <th>ISH BOSHLANGAN SANA</th>
-                                        <th>BO’LIM</th>
-                                        <th>LAVOZIM</th>
+                                        <th>To'liq ismi</th>
+                                        <th>Ish boshlagan sana</th>
+                                        <th>Bo'lim</th>
+                                        <th>Lavozim</th>
+                                        <th>O'chirish</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
@@ -60,6 +62,12 @@
                                             <td>{{ staff.birth_date }}</td>
                                             <td>{{ staff.department }}</td>
                                             <td>{{ staff.position}}</td>
+                                            <td>
+                                                <form action="{% url 'staff_delete' pk=staff.id %}" method="POST">
+                                                    {% csrf_token %}
+                                                    <input class="btn btn-default btn-danger" type="submit" value="O'shirish"/>
+                                                </form>
+                                            </td>
                                         </tr>
                                     {% endfor %}
                                 </tbody>

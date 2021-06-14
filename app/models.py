@@ -19,12 +19,18 @@ class TypeCompany(models.Model):
         return self.name
 
 
+# class Qurilma(models.Model):
+#     name = models.CharField(max_length=100)
+#     company = models.ForeignKey('Company', on_delete=models.CASCADE)
+
+
 class Company(models.Model):
     name = models.CharField(max_length=100, verbose_name="Kompaniya nomi")
     phone = models.CharField(max_length=25, null=True, blank=True, verbose_name="Kompaniya telefon raqami")
     type = models.ForeignKey(TypeCompany, on_delete=models.CASCADE, null=True, blank=True,
                              verbose_name="Kompaniya turi")
     address = models.CharField(max_length=255, null=True, blank=True, verbose_name="Kompaniya manzili")
+    #
     creator = models.CharField(max_length=255, null=True, blank=True, verbose_name="Kompaniya asoschisi")
     text = RichTextUploadingField(null=True, blank=True, verbose_name="Kompaniya haqida qisqacha ma'lumot")
     video = models.FileField(upload_to='company/video/', null=True, blank=True,
@@ -397,3 +403,4 @@ class FinishText(models.Model):
         return str(self.name)
 
 
+# class

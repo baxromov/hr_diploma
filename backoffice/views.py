@@ -112,6 +112,12 @@ class StaffCreate(LoginRequiredMixin, generic.CreateView):
         return super(StaffCreate, self).form_invalid(form)
 
 
+class StaffDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = models.Staff
+    form_class = forms.StaffModelForm
+    success_url = reverse_lazy('staff')
+
+
 # Authentication
 class LoginPage(LoginView):
     template_name = 'backoffice/regist/login.html'
@@ -230,7 +236,7 @@ class DepartmentUpdateView(LoginRequiredMixin, generic.UpdateView):
         self.department.company = company
         self.department.save()
         return super().form_valid(form)
-    
+
     def form_invalid(self, form):
         return super(DepartmentUpdateView, self).form_invalid(form)
 
@@ -478,9 +484,9 @@ class AdditionalPaymentsTypeCreateView(LoginRequiredMixin, generic.CreateView):
         self.company.company = company
         self.company.save()
         return super().form_valid(form)
-    
+
     def form_invalid(self, form):
-        return  super(AdditionalPaymentsTypeCreateView, self).form_invalid(form)
+        return super(AdditionalPaymentsTypeCreateView, self).form_invalid(form)
 
 
 class AdditionalPaymentsTypeDeleteView(LoginRequiredMixin, generic.DeleteView):
@@ -560,6 +566,7 @@ class NewTelegramStaffDetailView(LoginRequiredMixin, generic.DetailView):
     template_name = 'backoffice/pages/new-telegram-staff/detail.html'
     queryset = models.NewStaff.objects.all()
     context_object_name = 'new_staff'
+
 
 # -----------------------------------------------------------------------------------------
 
@@ -680,3 +687,24 @@ class EntryTextUpdateView(LoginRequiredMixin, generic.UpdateView):
     form_class = forms.EntryTextModelForm
     model = models.EntryText
     success_url = reverse_lazy('entry_text')
+
+
+# Company
+class CompanyTemplateView(LoginRequiredMixin, generic.TemplateView):
+    template_name = 'backoffice/pages/company/index.html'
+
+    def get_context_data(self, **kwargs):
+        ctx = super(CompanyTemplateView, self).get_context_data(**kwargs)
+        ctx['company'] = models.User.objects.get(company=self.request.user.company)
+
+        return ctx
+
+
+class SearchingStaffListView(LoginRequiredMixin, generic.ListView):
+    template_name = 'backoffice/pages/staff_search/list.html'
+    model = models.Staff
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        ctx = super(SearchingStaffListView, self).get_context_data(**kwargs)
+        ctx['searching_staffs'] = models.Staff.objects.filter(company=self.request.user.company)
+        return ctx

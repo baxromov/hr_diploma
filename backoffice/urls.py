@@ -13,9 +13,11 @@ urlpatterns = [
 
 # Staff
 urlpatterns += [
-    path('xodimlar', views.StaffListTemplate.as_view(), name="staff"),
-    path('xodimlar/create', views.StaffCreate.as_view(), name="staff_create"),
-    path('xodimlar/<int:pk>', views.StaffUpdate.as_view(), name="staff-detail"),
+    path('staff', views.StaffListTemplate.as_view(), name="staff"),
+    path('staff/create', views.StaffCreate.as_view(), name="staff_create"),
+    path('staff/<int:pk>', views.StaffUpdate.as_view(), name="staff-detail"),
+    path('staff/delete/<int:pk>', views.StaffDeleteView.as_view(), name="staff_delete"),
+
 ]
 
 # Position
@@ -110,4 +112,14 @@ urlpatterns += [
     path('settings/entry-text', views.EntryTextCreateView.as_view(), name='entry_text'),
     path('settings/entry-text/delete/<int:pk>', views.EntryTextDeleteView.as_view(), name='entry_text_delete'),
     path('settings/entry-text/update/<int:pk>', views.EntryTextUpdateView.as_view(), name='entry_text_update'),
+]
+
+# Company
+urlpatterns += [
+    path('info', views.CompanyTemplateView.as_view(), name='info')
+]
+
+# Searching Staff
+urlpatterns += [
+    path('search-staff', views.SearchingStaffListView.as_view(), name='search_staff')
 ]

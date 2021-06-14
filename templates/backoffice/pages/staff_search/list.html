@@ -1,0 +1,66 @@
+{% extends 'backoffice/base.html' %}
+{% load static %}
+
+{% block title %}Hodim Qidirish{% endblock %}
+
+{% block content %}
+    <!-- Main Content -->
+<section class="content home">
+    <div class="container-fluid">
+        <div class="block-header">
+            <div class="row clearfix">
+                <div class="col-lg-5 col-md-5 col-sm-12">
+                    <h2>Hodim Qidirish</h2>
+                    <ul class="breadcrumb padding-0">
+                        <li class="breadcrumb-item"><a href="{% url 'backoffice-main' %}"><i class="zmdi zmdi-home"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row clearfix">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>Hodim Qidirish</h2>
+                    </div>
+                    <div class="body">
+                        <table class="table-responsive table table-bordered table-striped table-hover dataTable js-exportable">
+                            <thead>
+                                <tr>
+                                    <th>Xodim</th>
+                                    <th>Birinchi kelishi</th>
+                                    <th>Oxirgi ketishi</th>
+                                    <th>Kech qolgan vaqti</th>
+                                    <th>Erta ketishi</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>Xodim</th>
+                                    <th>Birinchi kelishi</th>
+                                    <th>Oxirgi ketishi</th>
+                                    <th>Kech qolgan vaqti</th>
+                                    <th>Erta ketishi</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                            {% for searching_staff in searching_staffs %}
+                                <tr>
+                                    <td><a href="{% url 'staff-detail' searching_staff.id %}">{{ searching_staff.first_name }} {{ searching_staff.second_name }} {{ searching_staff.last_name }}</a></td>
+                                    <td>08:40</td>
+                                    <td>18:00</td>
+                                    <td>09:00</td>
+                                    <td>17:40</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Jquery Core Js -->
+{% endblock %}

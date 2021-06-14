@@ -1,0 +1,39 @@
+{% extends 'backoffice/base.html' %}
+
+{% block title %}
+    {{ request.user.company }}
+{% endblock %}
+
+{#zmdi-hc-spin#}
+{% block content %}
+    <section class="content">
+        <div class="container-fluid">
+
+            <!-- Disabled Items -->
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="card">
+                        <div class="header">
+                            <ul class="list-unstyled">
+                                <li>
+                                    <h2><i class="zmdi zmdi-info-outline"></i> Info</h2>
+                                </li>
+                                <li>
+                                    <a href="">Kompaniya sozlamalari</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="body">
+                            <div class="list-group">
+                                <h1 class="text-center">{{ request.user.company }}</h1>
+                               {{ company.company.text|safe }}
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #END# Disabled Items -->
+        </div>
+    </section>
+{% endblock %}
