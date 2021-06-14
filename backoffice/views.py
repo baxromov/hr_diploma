@@ -708,3 +708,46 @@ class SearchingStaffListView(LoginRequiredMixin, generic.ListView):
         ctx = super(SearchingStaffListView, self).get_context_data(**kwargs)
         ctx['searching_staffs'] = models.Staff.objects.filter(company=self.request.user.company)
         return ctx
+
+
+# FinishText
+class FinishTextCreateView(LoginRequiredMixin, generic.CreateView):
+    template_name = 'backoffice/pages/finish/list.html'
+    form_class = forms.FinishTextModelForm
+    model = models.FinishText
+    success_url = reverse_lazy('finish_text')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        ctx = super(FinishTextCreateView, self).get_context_data(**kwargs)
+        company = self.request.user.company
+        finish_text = models.FinishText.objects.filter(company=company).last()
+        ctx['item'] = finish_text
+        return ctx
+
+    def form_valid(self, form):
+        self.company = form.save(commit=False)
+        company = self.request.user.company
+        self.company.company = company
+        self.company.save()
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        return super(FinishTextCreateView, self).form_invalid(form)
+
+
+class FinishTextDeleteView(LoginRequiredMixin, SuccessMessageMixin, generic.DeleteView):
+    queryset = models.FinishText.objects.all()
+    form_class = forms.FinishTextModelForm
+    success_message = "deleted..."
+    success_url = reverse_lazy('finish_text')
+
+
+class FinishTexttUpdateView(LoginRequiredMixin, generic.UpdateView):
+    form_class = forms.FinishTextModelForm
+    model = models.FinishText
+    success_url = reverse_lazy('finish_text')
+
+
+# Control the flowing staff
+class ControlFlowingStaffTemplateView(LoginRequiredMixin, generic.TemplateView):
+    template_name = 'backoffice/pages/control_flowing_staffs/index.html'

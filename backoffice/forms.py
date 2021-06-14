@@ -111,3 +111,10 @@ class EntryTextModelForm(forms.ModelForm):
     class Meta:
         model = models.EntryText
         exclude = ('company',)
+
+
+# FinishText
+class FinishTextModelForm(forms.ModelForm):
+    class Meta:
+        model = models.FinishText
+        exclude = ('company',)

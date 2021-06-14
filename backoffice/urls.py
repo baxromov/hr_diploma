@@ -114,6 +114,13 @@ urlpatterns += [
     path('settings/entry-text/update/<int:pk>', views.EntryTextUpdateView.as_view(), name='entry_text_update'),
 ]
 
+# FinishText
+urlpatterns += [
+    path('settings/finish-text', views.FinishTextCreateView.as_view(), name='finish_text'),
+    path('settings/finish-text/delete/<int:pk>', views.FinishTextDeleteView.as_view(), name='finish_text_delete'),
+    path('settings/finish-text/update/<int:pk>', views.FinishTexttUpdateView.as_view(), name='finish_text_update'),
+]
+
 # Company
 urlpatterns += [
     path('info', views.CompanyTemplateView.as_view(), name='info')
@@ -123,3 +130,9 @@ urlpatterns += [
 urlpatterns += [
     path('search-staff', views.SearchingStaffListView.as_view(), name='search_staff')
 ]
+
+# Controlling staff flow
+urlpatterns += [
+    path('control-staff-flow', views.ControlFlowingStaffTemplateView.as_view(), name='control_staff_flow')
+]
+

@@ -1,0 +1,120 @@
+{% extends 'backoffice/base.html' %}
+
+{% block title %}
+    Bot kirish qismi texti
+{% endblock %}
+
+
+{% block content %}
+    <section class="content">
+    <div class="container-fluid">
+        <div class="block-header">
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <h2>Bot chiqish qismi texti</h2>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="card">
+                    <div class="header">
+                        <div class="button-demo js-modal-buttons">
+                                <button type="button" data-color="pink" data-toggle="modal" data-target="#colorModal" class="btn btn-success waves-effect"><i class="zmdi zmdi-plus"></i> Qo'shish</button>
+                            </div>
+                    </div>
+                    <div class="body table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Text</th>
+                                    <th>Qo'shilgan sana</th>
+                                    <th>O'chirish</th>
+                                    <th>Taxrirlash</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                    <tr>
+                                        <td>{{ item.name }}</td>
+                                        <td>{{ item.create_at }}</td>
+                                        <td>
+                                            {% if item %}
+                                                <form action="{% url 'finish_text_delete' pk=item.id %}" method="POST" enctype="multipart/form-data">
+                                                    {% csrf_token %}
+                                                    <button type="submit" class="btn btn-neutral"><i class="zmdi zmdi-delete"></i></button>
+                                                </form>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <button type="button" data-color="pink" data-toggle="modal" data-target="#colorModal{{ item.id }}" class="btn btn-neutral waves-effect"><i class="zmdi zmdi-edit"></i></button>
+                                        </td>
+                                    </tr>
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<div class="modal fade" id="colorModal" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content bg-white">
+                <div class="modal-header">
+                    <h4 class="title text-dark">Bot qo'shish</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label for="name" class="text-dark">Text</label>
+                                    <input type="text" name="name" id="name" class="form-control">
+                                </div>
+                        </div>
+                        <button type="submit" class="btn btn-success">Saqalash</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal"><i class="zmdi zmdi-close"></i></button>
+                </div>
+            </div>
+        </div>
+</div>
+
+
+
+    <div class="modal fade" id="colorModal{{ item.id }}" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+            <div class="modal-content bg-white">
+                    <div class="modal-header">
+                        <h4 class="title text-dark">Bot qo'shish</h4>
+                    </div>
+                    <div class="modal-body">
+                        {% if item %}
+                            <form action="{% url 'finish_text_update' pk=item.id %}" method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label for="name" class="text-dark">Admin nomi</label>
+                                            <input type="text" name="name" id="name" class="form-control" value="{{ item.name }}">
+                                        </div>
+                                </div>
+                                <button type="submit" class="btn btn-success">Saqalash</button>
+                            </form>
+                        {% endif %}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary btn-round" data-dismiss="modal"><i class="zmdi zmdi-close"></i></button>
+                    </div>
+                </div>
+            </div>
+</div>
+{% endblock %}
