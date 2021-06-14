@@ -16,6 +16,26 @@
                     </ul>
                 </div>
             </div>
+             <!-- Disabled Items -->
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2><i class="zmdi zmdi-settings zmdi-hc-spin"></i> Bot integratsiyalari va sozlamalari</h2>
+                        </div>
+                        <div class="body">
+                            <div class="list-group">
+                                <a href="{% url 'bot_c_l' %}" class="list-group-item">Bot qo'shish</a>
+                                <a href="{% url 'admin_bot' %}" class="list-group-item">Bot Admin</a>
+                                <a href="{% url 'entry_text' %}" class="list-group-item">Bot kirish qismi texti</a>
+                                <a href="javascript:void(0);" class="list-group-item">Bot so'ngi qismi texti</a>
+                                <a href="javascript:void(0);" class="list-group-item">Kompaniya haqida info</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #END# Disabled Items -->
         </div>
 
         <div class="row clearfix">
@@ -29,29 +49,26 @@
                             <thead>
                                 <tr>
                                     <th>Xodim</th>
-                                    <th>Birinchi kelishi</th>
-                                    <th>Oxirgi ketishi</th>
-                                    <th>Kech qolgan vaqti</th>
-                                    <th>Erta ketishi</th>
+                                    <th>Ish boshlagan sana</th>
+                                    <th>Bo'lim</th>
+                                    <th>Lavozim</th>
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
                                     <th>Xodim</th>
-                                    <th>Birinchi kelishi</th>
-                                    <th>Oxirgi ketishi</th>
-                                    <th>Kech qolgan vaqti</th>
-                                    <th>Erta ketishi</th>
+                                    <th>Ish boshlagan sana</th>
+                                    <th>Bo'lim</th>
+                                    <th>Lavozim</th>
                                 </tr>
                             </tfoot>
                             <tbody>
                             {% for searching_staff in searching_staffs %}
                                 <tr>
                                     <td><a href="{% url 'staff-detail' searching_staff.id %}">{{ searching_staff.first_name }} {{ searching_staff.second_name }} {{ searching_staff.last_name }}</a></td>
-                                    <td>08:40</td>
-                                    <td>18:00</td>
-                                    <td>09:00</td>
-                                    <td>17:40</td>
+                                    <td>{{ searching_staff.start_work_at }}</td>
+                                    <td>{{ searching_staff.department.name }}</td>
+                                    <td>{{ searching_staff.position.name }}</td>
                                 </tr>
                             {% endfor %}
                             </tbody>
