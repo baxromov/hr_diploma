@@ -48,7 +48,9 @@
                                     <tr>
                                         <th scope="row">{{ position.id }}</th>
                                         <td>
-                                            {{ position.name }}
+                                            <a href="#" data-toggle="modal" data-target="#defaultModal{{ position.id }}">
+                                                {{ position.name }}
+                                            </a>
                                         </td>
                                         <td>
                                             <form action="{% url 'position_delete' pk=position.pk %}" method="POST">
@@ -70,4 +72,22 @@
             </div>
         </div>
     </section>
+   {% for position in positions %}
+         <div class="modal fade" id="defaultModal{{ position.id }}" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="title" id="defaultModalLabel">{{ position.name }}</h4>
+                    </div>
+                    <div class="modal-body">
+                        {{ position.info }}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">CLOSE</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+   {% endfor %}
+
 {% endblock %}

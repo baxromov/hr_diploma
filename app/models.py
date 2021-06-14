@@ -77,6 +77,7 @@ class User(AbstractUser):
 
 class Department(models.Model):
     name = models.CharField(max_length=255, verbose_name="Bo'lim nomi")
+    info = models.CharField(max_length=255, null=True, blank=True, verbose_name="Bo'lim haqida")
     company = models.ForeignKey(Company, on_delete=models.CASCADE, verbose_name='Kompaniya')
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -90,6 +91,7 @@ class Department(models.Model):
 
 class Position(models.Model):
     name = models.CharField(max_length=255, verbose_name="Lavozim nomi")
+    info = models.CharField(max_length=255, null=True, blank=True, verbose_name='Lavozim haqida')
     company = models.ForeignKey(Company, on_delete=models.CASCADE, verbose_name='Kompaniya')
     created_at = models.DateTimeField(auto_now_add=True)
 

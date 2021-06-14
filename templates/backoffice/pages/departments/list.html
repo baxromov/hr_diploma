@@ -10,7 +10,7 @@
             <div class="block-header">
                 <div class="row clearfix">
                     <div class="col-lg-5 col-md-5 col-sm-12">
-                        <h2>Lavozim</h2>
+                        <h2>Bo'lim</h2>
                         <ul class="breadcrumb padding-0">
                             <li class="breadcrumb-item"><a href="#"><i class="zmdi zmdi-home"></i></a></li>
                             <li class="breadcrumb-item active">Bo'lim</li>
@@ -47,7 +47,9 @@
                             {% for department in departments %}
                                 <tr>
                                     <th scope="row">{{ department.id }}</th>
-                                    <td>{{ department.name }}</td>
+                                    <td><a href="#" data-toggle="modal" data-target="#defaultModal{{ department.id }}">
+                                                {{ department.name }}
+                                    </a></td>
                                     <td>
                                         <form action="{% url 'department_delete' pk=department.id %}" method="POST">
                                                 {% csrf_token %}
@@ -67,4 +69,22 @@
             </div>
         </div>
     </section>
+
+   {% for item in departments %}
+         <div class="modal fade" id="defaultModal{{ item.id }}" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="title" id="defaultModalLabel">{{ item.name }}</h4>
+                    </div>
+                    <div class="modal-body">
+                        {{ item.info }}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">CLOSE</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+   {% endfor %}
 {% endblock %}
