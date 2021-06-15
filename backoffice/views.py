@@ -806,8 +806,14 @@ class TrainingInfoTemplateView(LoginRequiredMixin, generic.CreateView):
     def form_valid(self, form):
         self.training_info = form.save(commit=False)
         questions = self.request.POST.getlist('field_name')
+        staffs = self.request.POST.getlist('staff')
+
+        for staff in staffs:
+            models.TrainingAnswer.objects.create(staff=staff, position=self.training_info.position)
+
         for question in questions:
             models.TrainingQuestion.objects.create(question=question, position=self.training_info.position)
+
         self.training_info.save()
         return super().form_valid(form)
 
