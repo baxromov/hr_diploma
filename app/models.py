@@ -437,8 +437,8 @@ class TrainingQuestion(models.Model):
 
 
 class TrainingAnswer(models.Model):
-    staff = models.ForeignKey(Staff, on_delete=models.CASCADE, verbose_name="Xodim")
-    question = models.ForeignKey(Question, on_delete=models.CASCADE, verbose_name="Savol")
+    staff = models.ForeignKey(Staff, blank=True, on_delete=models.CASCADE, verbose_name="Xodim")
+    question = models.ForeignKey(Question, null=True, blank=True, on_delete=models.CASCADE, verbose_name="Savol")
     answer = models.CharField(max_length=512, verbose_name="Javob")
     created_at = models.DateTimeField(auto_now_add=True)
 

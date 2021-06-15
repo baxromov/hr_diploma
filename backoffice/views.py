@@ -798,14 +798,17 @@ class TrainingInfoTemplateView(LoginRequiredMixin, generic.CreateView):
         ctx = super(TrainingInfoTemplateView, self).get_context_data(**kwargs)
         company = self.request.user.company
         entry_text = models.TrainingInfo.objects.filter(company=company)
+        staffs = models.Staff.objects.filter(company=company)
         ctx['items'] = entry_text
+        ctx['staffs'] = staffs
         return ctx
 
     def form_valid(self, form):
-        self.company = form.save(commit=False)
-        company = self.request.user.company
-        self.company.company = company
-        self.company.save()
+        self.training_info = form.save(commit=False)
+        questions = self.request.POST.getlist('field_name')
+        for question in questions:
+            models.TrainingQuestion.objects.create(question=question, position=self.training_info.position)
+        self.training_info.save()
         return super().form_valid(form)
 
     def form_invalid(self, form):
