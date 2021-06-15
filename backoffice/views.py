@@ -13,6 +13,8 @@ from telebot import TeleBot
 from app import models
 from backoffice import forms
 from django.contrib.messages.views import SuccessMessageMixin
+import os
+from project import settings
 
 
 class MainTemplate(LoginRequiredMixin, generic.ListView):
@@ -584,6 +586,26 @@ class BotListView(LoginRequiredMixin, generic.CreateView):
     model = models.Bot
     success_url = reverse_lazy('bot_c_l')
 
+    def generate_bot(self, token, company_id):
+        bot_path = str(settings.BASE_DIR) + '/app/sample_bot.py'
+        with open(bot_path) as f:
+            new_bot = f.read().replace('TOKEN = None', f'TOKEN = "{token}"')
+
+        # bot_conf = str(settings.BASE_DIR) + "/bot/conf/bot_conf.conf"
+        # bot_conf_new = "/etc/supervisor/conf.d/bot_conf_{}.conf".format(user_id)
+
+        new_bot_path = str(settings.BASE_DIR) + f'/app/bot/bot_{company_id}.py'
+        with open(new_bot_path, "w") as f:
+            f.write(new_bot)
+
+        # with open(bot_conf) as f:
+        #     newText = f.read().replace('[program:bot]', '[program:bot_{}]'.format(user_id))
+        #     newText = newText.replace('command=/bot/venv/bin/python /bot/bots/bot_father.py', 'command=/bot/venv/bin/python /bot/bots/bot_{}.py'.format(user_id))
+
+        # with open(bot_conf_new, "w") as f:
+        #     f.write(newText)
+
+
     def get_context_data(self, *, object_list=None, **kwargs):
         ctx = super(BotListView, self).get_context_data(**kwargs)
         company = self.request.user.company
@@ -591,17 +613,12 @@ class BotListView(LoginRequiredMixin, generic.CreateView):
         return ctx
 
     def form_valid(self, form):
-        self.company = form.save(commit=False)
+        self.bot = form.save(commit=False)
         company = self.request.user.company
-        self.company.company = company
-        self.company.save()
-
+        self.bot.company = company
+        self.bot.save()
         token = form.data.get('token')
-        # bot.
-        bot = TeleBot(token)
-        website = 'https://f1209dcd2fab.ngrok.io'
-        URL = f"https://api.telegram.org/bot{token}/setWebhook?url={website}/bot/{token}/"
-        bot.set_webhook(URL)
+        self.generate_bot(token, self.bot.company.id)
         return super().form_valid(form)
 
     def form_invalid(self, form):
