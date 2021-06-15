@@ -15,7 +15,7 @@ import sys
 import django
 from django.apps import apps
 
-os.chdir('bot/')
+# os.chdir('../')
 BASE_DIR = os.getcwd()
 sys.path.append(BASE_DIR)
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project.settings')

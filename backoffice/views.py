@@ -597,11 +597,29 @@ class BotListView(LoginRequiredMixin, generic.CreateView):
         new_bot_path = str(settings.BASE_DIR) + f'/app/bot/bot_{company_id}.py'
         with open(new_bot_path, "w") as f:
             f.write(new_bot)
+        service_config = """
+[Unit]
+Description=uWSGI Emperor service
+
+[Service]
+WorkingDirectory=/var/www/hr_project/project
+#ExecStartPre=/bin/bash -c 'mkdir -p /run/uwsgi; chown ubuntu:www-data /run/uwsgi'
+ExecStart=/var/www/hr_project/venv/bin/python /var/www/hr_project/project/app/bot/bot_1.py --serve-in-foreground
+Restart=always
+KillSignal=SIGQUIT
+Type=idle
+
+[Install]
+WantedBy=multi-user.target
+        """
+        with open(f'/etc/systemd/system/bot_{company_id}.service', 'w') as f:
+            f.write(service_config)
 
         # with open(bot_conf) as f:
         #     newText = f.read().replace('[program:bot]', '[program:bot_{}]'.format(user_id))
         #     newText = newText.replace('command=/bot/venv/bin/python /bot/bots/bot_father.py', 'command=/bot/venv/bin/python /bot/bots/bot_{}.py'.format(user_id))
-
+        os.system(f"systemctl daemon-reload")
+        os.system(f"systemctl restart bot_{company_id}.service")
         # with open(bot_conf_new, "w") as f:
         #     f.write(newText)
 
