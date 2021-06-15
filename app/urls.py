@@ -5,4 +5,5 @@ from app import views
 # StaffLoginTemplateView
 urlpatterns = [
     path('staff-login', views.StaffLoginTemplateView.as_view(), name="staff_login"),
+    path('staff-training', views.StaffLoginPageTemplateView.as_view(), name="staff_training"),
 ]
