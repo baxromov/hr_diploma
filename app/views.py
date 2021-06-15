@@ -1,6 +1,6 @@
-from django.shortcuts import render
+from django.views import generic
 
 
-def index(request):
-    return render(request, 'app/base.html')
-
+# Staff Login
+class StaffLoginTemplateView(generic.TemplateView):
+    template_name = 'app/staff/login.html'

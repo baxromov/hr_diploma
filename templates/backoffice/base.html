@@ -11,7 +11,7 @@
         </title>
 
 
-    {% include 'backoffice/assets/links.html' %}
+    {% include 'backoffice/../app/assets/links.html' %}
 </head>
 <body class="theme-black" style="overflow: auto">
 {% if request.path == "/backoffice/login" or request.path == "/backoffice/registration" %}
@@ -22,6 +22,6 @@
 
 {% block content %}{% endblock %}
 
-{% include 'backoffice/assets/scripts.html' %}
+{% include 'backoffice/../app/assets/scripts.html' %}
 </body>
 </html>

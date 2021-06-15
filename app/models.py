@@ -64,6 +64,7 @@ class User(AbstractUser):
     branch = models.ForeignKey(Branch, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Filial")
     company = models.ForeignKey("Company", on_delete=models.CASCADE, null=True, blank=True, verbose_name='Kompaniya')
     is_director = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -248,6 +249,7 @@ class Staff(models.Model):
     first_name = models.CharField(null=True, blank=True, max_length=255, verbose_name="Ism")
     second_name = models.CharField(null=True, blank=True, max_length=255, verbose_name="Familiya")
     last_name = models.CharField(null=True, blank=True, max_length=255, verbose_name="Otasining ismi")
+    # last_name = models.CharField(null=True, blank=True, max_length=255, verbose_name="Otasining ismi")
     birth_date = models.DateField(null=True, blank=True, verbose_name="Tug'ilgan sana")
     gender = models.CharField(choices=GENDER, max_length=10, verbose_name="Jinsi")
 
@@ -405,4 +407,14 @@ class FinishText(models.Model):
         return str(self.name)
 
 
-# class
+class TrainingInfo(models.Model):
+    position = models.ForeignKey(Position, on_delete=models.CASCADE, null=True, blank=True,
+                                 verbose_name="Xodimning lavozimi")
+    title = models.CharField(null=True, blank=True, max_length=255)
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, blank=True, null=True, verbose_name="Kompaniya")
+    info = RichTextUploadingField(null=True, blank=True)
+
+    create_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.title)

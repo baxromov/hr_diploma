@@ -1,0 +1,162 @@
+{% extends 'backoffice/base.html' %}
+
+{% block title %}
+    {{ request.user.company }}
+{% endblock %}
+
+{#zmdi-hc-spin#}
+{% block content %}
+    <section class="content">
+        <div class="container-fluid">
+
+            <!-- Disabled Items -->
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="card">
+                        <div class="header">
+                            <ul class="list-unstyled">
+                                <li>
+                                    <h2><i class="zmdi zmdi-info-outline"></i> Info</h2>
+                                </li>
+                                <li>
+                                    <a href="">Hodim Adaptatsiyasi</a>
+                                </li>
+                            </ul>
+                            <button type="button" data-color="pink" data-toggle="modal" data-target="#colorModal" class="btn btn-success waves-effect"><i class="zmdi zmdi-plus"></i> Biriktirish</button>
+
+                        </div>
+                        <div class="body table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Training</th>
+                                    <th>O'chirish</th>
+                                    <th>Taxrirlash</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for item in items %}
+                                    <tr>
+                                        <th scope="row">{{ item.id }}</th>
+                                        <td>
+
+                                                {{ item.title }}
+
+                                        </td>
+                                        <td>
+                                            <form action="{% url 'training_info_delete' pk=item.pk %}" method="POST">
+                                                {% csrf_token %}
+                                                <input class="btn btn-default btn-danger" type="submit" value="O'shirish"/>
+                                            </form>
+                                        </td>
+                                    <td>
+                                        <a  href="{% url 'training_info_update' item.id %}" data-color="pink" data-toggle="modal" data-target="#colorModal" class="btn btn-warning waves-effect">Taxrirlash</a>
+                                    </td>
+                                    </tr>
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #END# Disabled Items -->
+        </div>
+    </section>
+     <div class="modal fade" id="colorModal" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content bg-white">
+                <div class="modal-header">
+
+                </div>
+                <div class="modal-body">
+                    <div class="card">
+                        <div class="header">
+                            <h2>Biriktirish</h2>
+                        </div>
+                        <div class="body">
+                            <form action="{% url 'training_info' %}" method="POST" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                {{ form.media|safe }}
+                                {{ form.as_p }}<div class="field_wrapper">
+                                <div class="mt-5">
+                                    <h1>Savollar</h1>
+                                    <label for="explicit-label-name-1">Savol-1: </label>
+                                    <input type="text" id="explicit-label-name-1" name="field_name" value="" required/>
+                                    <a href="javascript:void(0);" class="add_button" title="Add field">
+                                        <i class="zmdi zmdi-plus"></i>
+                                    </a>
+                                </div>
+                            </div>
+
+                                <input type="submit" class="btn btn-info" value="Save">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-round" data-dismiss="modal"><i class="zmdi zmdi-close"></i></button>
+                </div>
+            </div>
+        </div>
+</div>
+     {% for item in items %}
+        <div class="modal fade" id="colorModal{{ item.id }}" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content bg-white">
+                    <div class="modal-header">
+                        <h4 class="title text-dark">Ish haqqini biriktirish</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{% url 'training_info_update' item.id %}" method="POST" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                {{ form.media|safe }}
+                                {{ form.as_p }}
+                                <input type="submit" class="btn btn-info" value="Save">
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal"><i class="zmdi zmdi-close"></i></button>
+                    </div>
+                </div>
+            </div>
+    </div>
+    {% endfor %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+    var maxField = 50; //Input fields increment limitation<
+    var addButton = $('.add_button'); //Add button selector
+    var wrapper = $('.field_wrapper'); //Input field wrapper
+    var x = 1; //Initial field counter is 1
+
+
+    //Once add button is clicked
+    $(addButton).click(function(){
+        //Check maximum number of input fields
+        var fieldHTML = '<div class="mt-3">' +
+            '<label for="explicit-label-name' + (x+1) + '">Savol-' + (x+1) + ': </label>' +
+            '<input type="text" id="explicit-label-name' + (x+1) + '" name="field_name" value="" required/>' +
+                '<a href="javascript:void(0);" class="remove_button m-l-5">' +
+                    '<i class="zmdi zmdi-minus"></i>' +
+                '</a>' +
+            '</div>'; //New input field html
+        if(x < maxField){
+            x++; //Increment field counter
+            $(wrapper).append(fieldHTML); //Add field html
+        }
+    });
+
+    //Once remove button is clicked
+    $(wrapper).on('click', '.remove_button', function(e){
+        e.preventDefault();
+        $(this).parent('div').remove(); //Remove field html
+        x--; //Decrement field counter
+    });
+});
+
+</script>
+{% endblock %}

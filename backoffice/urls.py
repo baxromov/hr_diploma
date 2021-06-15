@@ -136,3 +136,9 @@ urlpatterns += [
     path('control-staff-flow', views.ControlFlowingStaffTemplateView.as_view(), name='control_staff_flow')
 ]
 
+# TrainingInfo
+urlpatterns += [
+    path('training-info', views.TrainingInfoTemplateView.as_view(), name="training_info"),
+    path('training-info/delete/<int:pk>', views.TrainingInfoDeleteView.as_view(), name="training_info_delete"),
+    path('training-info/update/<int:pk>', views.TrainingInfoUpdateView.as_view(), name="training_info_update"),
+]

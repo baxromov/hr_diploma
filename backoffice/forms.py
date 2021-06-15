@@ -1,3 +1,4 @@
+from ckeditor.widgets import CKEditorWidget
 from django import forms
 
 from app import models
@@ -108,6 +109,8 @@ class AdminModelForm(forms.ModelForm):
 
 # EntryText
 class EntryTextModelForm(forms.ModelForm):
+    content = forms.CharField(widget=CKEditorWidget())
+
     class Meta:
         model = models.EntryText
         exclude = ('company',)
@@ -117,4 +120,11 @@ class EntryTextModelForm(forms.ModelForm):
 class FinishTextModelForm(forms.ModelForm):
     class Meta:
         model = models.FinishText
+        exclude = ('company',)
+
+
+# FinishText
+class TrainingInfoModelForm(forms.ModelForm):
+    class Meta:
+        model = models.TrainingInfo
         exclude = ('company',)

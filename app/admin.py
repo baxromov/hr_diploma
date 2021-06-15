@@ -118,6 +118,10 @@ class AdminModelAdmin(admin.ModelAdmin):
     pass
 
 
+@admin.register(models.TrainingInfo)
+class TrainingInfoModelAdmin(admin.ModelAdmin):
+    pass
+
 
 @admin.register(models.User)
 class UserModelAdmin(admin.ModelAdmin):

@@ -1,6 +1,8 @@
 from django.urls import path
-from django.views.decorators.csrf import csrf_exempt
+from app import views
 
+
+# StaffLoginTemplateView
 urlpatterns = [
-    # path('bot/<str:tok>/', csrf_exempt(BotAPIView.as_view()))
+    path('staff-login', views.StaffLoginTemplateView.as_view(), name="staff_login"),
 ]

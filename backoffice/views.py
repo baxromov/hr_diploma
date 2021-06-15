@@ -605,7 +605,6 @@ class BotListView(LoginRequiredMixin, generic.CreateView):
         # with open(bot_conf_new, "w") as f:
         #     f.write(newText)
 
-
     def get_context_data(self, *, object_list=None, **kwargs):
         ctx = super(BotListView, self).get_context_data(**kwargs)
         company = self.request.user.company
@@ -768,3 +767,41 @@ class FinishTexttUpdateView(LoginRequiredMixin, generic.UpdateView):
 # Control the flowing staff
 class ControlFlowingStaffTemplateView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'backoffice/pages/control_flowing_staffs/index.html'
+
+
+# TrainingInfo
+class TrainingInfoTemplateView(LoginRequiredMixin, generic.CreateView):
+    template_name = 'backoffice/pages/trainig-info/index.html'
+    form_class = forms.TrainingInfoModelForm
+    success_url = reverse_lazy('training_info')
+    model = models.TrainingInfo
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        ctx = super(TrainingInfoTemplateView, self).get_context_data(**kwargs)
+        company = self.request.user.company
+        entry_text = models.TrainingInfo.objects.filter(company=company)
+        ctx['items'] = entry_text
+        return ctx
+
+    def form_valid(self, form):
+        self.company = form.save(commit=False)
+        company = self.request.user.company
+        self.company.company = company
+        self.company.save()
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        return super(TrainingInfoTemplateView, self).form_invalid(form)
+
+
+class TrainingInfoDeleteView(LoginRequiredMixin, SuccessMessageMixin, generic.DeleteView):
+    queryset = models.TrainingInfo.objects.all()
+    form_class = forms.TrainingInfoModelForm
+    success_message = "deleted..."
+    success_url = reverse_lazy('training_info')
+
+
+class TrainingInfoUpdateView(LoginRequiredMixin, generic.UpdateView):
+    form_class = forms.EntryTextModelForm
+    model = models.EntryText
+    success_url = reverse_lazy('training_info')
