@@ -55,49 +55,49 @@ class DepartmentsModelForm(forms.ModelForm):
 class SalaryModelForm(forms.ModelForm):
     class Meta:
         model = models.Salary
-        exclude = ('staff', )
+        exclude = ('staff',)
 
 
 # Vacation
 class VacationModelForm(forms.ModelForm):
     class Meta:
         model = models.Vacation
-        exclude = ('staff', )
+        exclude = ('staff',)
 
 
 # VacationType
 class VacationTypeModelForm(forms.ModelForm):
     class Meta:
         model = models.VacationType
-        exclude = ('company', )
+        exclude = ('company',)
 
 
 # AdditionalPaymentsModelForm
 class AdditionalPaymentsModelForm(forms.ModelForm):
     class Meta:
         model = models.AdditionalPayments
-        exclude = ('staff', )
+        exclude = ('staff',)
 
 
 # AdditionalPaymentType
 class AdditionalPaymentTypeModelForm(forms.ModelForm):
     class Meta:
         model = models.AdditionalPaymentType
-        exclude = ('company', )
+        exclude = ('company',)
 
 
 # Document
 class DocumentModelForm(forms.ModelForm):
     class Meta:
         model = models.Document
-        exclude = ('staff', )
+        exclude = ('staff',)
 
 
 # Bot
 class BotModelForm(forms.ModelForm):
     class Meta:
         model = models.Bot
-        exclude = ('company', )
+        exclude = ('company',)
 
 
 # Admin

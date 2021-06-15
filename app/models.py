@@ -416,7 +416,6 @@ class TrainingInfo(models.Model):
     title = models.CharField(null=True, blank=True, max_length=255)
     company = models.ForeignKey(Company, on_delete=models.CASCADE, blank=True, null=True, verbose_name="Kompaniya")
     info = RichTextUploadingField(null=True, blank=True)
-
     create_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -438,7 +437,8 @@ class TrainingQuestion(models.Model):
 
 class TrainingAnswer(models.Model):
     staff = models.ForeignKey(Staff, blank=True, on_delete=models.CASCADE, verbose_name="Xodim")
-    question = models.ForeignKey(TrainingQuestion, null=True, blank=True, on_delete=models.CASCADE, verbose_name="Savol")
+    question = models.ForeignKey(TrainingQuestion, null=True, blank=True, on_delete=models.CASCADE,
+                                 verbose_name="Savol")
     answer = models.CharField(max_length=512, null=True, blank=True, verbose_name="Javob")
     created_at = models.DateTimeField(auto_now_add=True)
 
