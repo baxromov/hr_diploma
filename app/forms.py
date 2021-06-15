@@ -28,3 +28,9 @@ class AnswerModelForm(forms.ModelForm):
             'question',
             'answer',
         ]
+
+
+class StaffLogin(forms.Form):
+    username = forms.CharField(max_length=255, required=True)
+    password = forms.CharField(max_length=16)
+

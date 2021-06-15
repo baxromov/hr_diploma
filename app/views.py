@@ -1,6 +1,5 @@
 from django.views import generic
 
-
 # Staff Login
 class StaffLoginTemplateView(generic.TemplateView):
     template_name = 'app/staff/login.html'
@@ -8,7 +7,7 @@ class StaffLoginTemplateView(generic.TemplateView):
     def get(self, request, *args, **kwargs):
         # username
         # pass
-        staff.check_
+        # staff.check_
         return super().get(request, *args, **kwargs)
 
 
