@@ -34,22 +34,19 @@
                         <div class="header">
                             <h5>Log in</h5>
                         </div>
-                        <form class="form" action="" method="POST">
+                        <form class="form" action="{% url 'staff_login' %}" method="POST">
                             {% csrf_token %}
                             <div class="input-group">
-                                <input type="text" class="form-control" name="username" placeholder="User Name" required>
+                                <input type="text" class="form-control" name="username" placeholder="Username" required>
                                 <span class="input-group-addon"><i class="zmdi zmdi-account-circle"></i></span>
                             </div>
                             <div class="input-group">
                                 <input type="password" name="password" placeholder="Password" class="form-control" required/>
                                 <span class="input-group-addon"><i class="zmdi zmdi-lock"></i></span>
                             </div>
-                            <button type="submit" class="btn btn-primary btn-round btn-block">SIGN IN</button>
+                            <button type="submit" class="btn btn-primary btn-round btn-block">Login</button>
 
                         </form>
-                        <div class="footer">
-                            <a href="{% url 'registration' %}" class="btn btn-primary btn-simple btn-round btn-block">SIGN UP</a>
-                        </div>
                     </div>
                 </div>
             </div>

@@ -3,14 +3,13 @@ from app import forms
 
 
 # Staff Login
-class StaffLoginTemplateView(generic.CreateView):
+class StaffLoginTemplateView(generic.FormView):
     template_name = 'app/staff/login.html'
     form_class = forms.StaffLogin
+    success_url = 'staff-training'
 
     def form_valid(self, form):
-
-
-        return form
+        return super().form_valid(form)
 
 
 # Staff Login
