@@ -1,14 +1,14 @@
 from django.views import generic
+from app import forms
+
 
 # Staff Login
-class StaffLoginTemplateView(generic.TemplateView):
+class StaffLoginTemplateView(generic.CreateView):
     template_name = 'app/staff/login.html'
+    form_class = forms.StaffLogin
 
-    def get(self, request, *args, **kwargs):
-        # username
-        # pass
-        # staff.check_
-        return super().get(request, *args, **kwargs)
+    def form_valid(self, form):
+        form = self.form_class(self.request.POST)
 
 
 # Staff Login
