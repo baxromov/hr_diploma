@@ -597,14 +597,14 @@ class BotListView(LoginRequiredMixin, generic.CreateView):
         new_bot_path = str(settings.BASE_DIR) + f'/app/bot/bot_{company_id}.py'
         with open(new_bot_path, "w") as f:
             f.write(new_bot)
-        service_config = """
+        service_config = f"""
 [Unit]
 Description=uWSGI Emperor service
 
 [Service]
 WorkingDirectory=/var/www/hr_project/project
 #ExecStartPre=/bin/bash -c 'mkdir -p /run/uwsgi; chown ubuntu:www-data /run/uwsgi'
-ExecStart=/var/www/hr_project/venv/bin/python /var/www/hr_project/project/app/bot/bot_1.py --serve-in-foreground
+ExecStart=/var/www/hr_project/venv/bin/python /var/www/hr_project/project/app/bot/bot_{company_id}.py --serve-in-foreground
 Restart=always
 KillSignal=SIGQUIT
 Type=idle
