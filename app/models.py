@@ -136,7 +136,8 @@ class Vacation(models.Model):
         ('per_hour', 'Soatbay'),
         ('per_day', 'Kunbay')
     )
-    vocation_period_types = models.CharField(choices=vocation_period_type, null=True, blank=True, max_length=255, verbose_name="Turi")
+    vocation_period_types = models.CharField(choices=vocation_period_type, null=True, blank=True, max_length=255,
+                                             verbose_name="Turi")
     start_at = models.DateField(verbose_name="Boshlash vaqti")
     end_at = models.DateField(verbose_name="Tugash vaqti")
     vacation_type = models.ForeignKey(VacationType, on_delete=models.CASCADE, verbose_name="Qo'shimcha dam olish turi")
@@ -170,7 +171,7 @@ class AdditionalPayments(models.Model):
     apt = models.ForeignKey(AdditionalPaymentType, on_delete=models.CASCADE, verbose_name="Turi")
     attached_date = models.DateField(null=True, blank=True, verbose_name="Biriktirilgan sana")
     type_of_additional_payment = models.CharField(choices=additional_payment, max_length=225)
-    amount = models.DecimalField(decimal_places=2 , max_digits=16, verbose_name="Summasi")
+    amount = models.DecimalField(decimal_places=2, max_digits=16, verbose_name="Summasi")
     note = models.TextField(verbose_name="Ta'rifi")
     staff = models.ForeignKey('Staff', on_delete=models.CASCADE, verbose_name="Xodim")
 
@@ -265,7 +266,8 @@ class Staff(models.Model):
 
     address = models.CharField(null=True, blank=True, max_length=255, verbose_name="Uy manzili")
     image = models.ImageField(upload_to='company/staff/image/', null=True, blank=True, verbose_name="Xodimning rasmi")
-    qr_code = models.ImageField(upload_to='company/staff/qr_code/', null=True, blank=True, verbose_name="Xodimning qr code")
+    qr_code = models.ImageField(upload_to='company/staff/qr_code/', null=True, blank=True,
+                                verbose_name="Xodimning qr code")
 
     department = models.ForeignKey(Department, on_delete=models.CASCADE, verbose_name="Bo'lim")
     position = models.ForeignKey(Position, on_delete=models.CASCADE, verbose_name="Lavozim")
@@ -419,3 +421,30 @@ class TrainingInfo(models.Model):
 
     def __str__(self):
         return str(self.title)
+
+
+class TrainingQuestion(models.Model):
+    question = models.CharField(max_length=500, blank=True, null=True, verbose_name="Savol")
+    position = models.ForeignKey(Position, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.question
+
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name_plural = "Training savollar"
+
+
+class TrainingAnswer(models.Model):
+    staff = models.ForeignKey(Staff, on_delete=models.CASCADE, verbose_name="Xodim")
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, verbose_name="Savol")
+    answer = models.CharField(max_length=512, verbose_name="Javob")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.answer
+
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name_plural = "Training Javoblar"
