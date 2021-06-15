@@ -249,9 +249,10 @@ class Staff(models.Model):
     first_name = models.CharField(null=True, blank=True, max_length=255, verbose_name="Ism")
     second_name = models.CharField(null=True, blank=True, max_length=255, verbose_name="Familiya")
     last_name = models.CharField(null=True, blank=True, max_length=255, verbose_name="Otasining ismi")
-    # last_name = models.CharField(null=True, blank=True, max_length=255, verbose_name="Otasining ismi")
+    username = models.CharField(null=True, blank=True, max_length=255, verbose_name="Username")
     birth_date = models.DateField(null=True, blank=True, verbose_name="Tug'ilgan sana")
     gender = models.CharField(choices=GENDER, max_length=10, verbose_name="Jinsi")
+    password = models.CharField(null=True, blank=True, max_length=255, verbose_name="parol")
 
     tabel_number = models.PositiveIntegerField(null=True, blank=True, verbose_name="Tabel raqami")
     start_work_at = models.DateField(null=True, blank=True, verbose_name="Ish boshlagan sana")
