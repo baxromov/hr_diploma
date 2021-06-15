@@ -8,7 +8,9 @@ class StaffLoginTemplateView(generic.CreateView):
     form_class = forms.StaffLogin
 
     def form_valid(self, form):
-        form = self.form_class(self.request.POST)
+
+
+        return form
 
 
 # Staff Login
