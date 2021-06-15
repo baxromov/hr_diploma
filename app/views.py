@@ -13,6 +13,6 @@ class StaffLoginTemplateView(generic.FormView):
 
 
 # Staff Login
-class StaffLoginPageTemplateView(generic.TemplateView):
+class StaffPageTemplateView(generic.TemplateView):
     template_name = 'app/staff/treining/index.html'
 
