@@ -811,9 +811,17 @@ class TrainingInfoTemplateView(LoginRequiredMixin, generic.CreateView):
         for question in questions:
             training_questions = models.TrainingQuestion.objects.create(question=question,
                                                                         position=self.training_info.position)
-            for staff in staffs:
-                models.TrainingAnswer.objects.create(staff=staff, position=self.training_info.position,
-                                                     question=training_questions)
+            traininganswer = models.TrainingAnswer.objects.create()
+            for staff_id in staffs:
+                staff = models.Staff.objects.get(id=staff_id)
+                staff.traininganswer_set.add(traininganswer)
+
+                staff.save()
+                # answer.question_set.add(training_questions)
+                # answer.staff_set.add(staff)
+            training_questions.traininganswer_set.add(traininganswer)
+            training_questions.save()
+        self.training_info.company = self.request.user.company
         self.training_info.save()
         return super().form_valid(form)
 
