@@ -797,9 +797,9 @@ class TrainingInfoTemplateView(LoginRequiredMixin, generic.CreateView):
     def get_context_data(self, *, object_list=None, **kwargs):
         ctx = super(TrainingInfoTemplateView, self).get_context_data(**kwargs)
         company = self.request.user.company
-        entry_text = models.TrainingInfo.objects.filter(company=company)
+        training_info = models.TrainingInfo.objects.filter(company=company)
         staffs = models.Staff.objects.filter(company=company)
-        ctx['items'] = entry_text
+        ctx['items'] = training_info
         ctx['staffs'] = staffs
         return ctx
 

@@ -37,13 +37,14 @@
                     </div>
                     <div class="body">
                         <h1>Hello</h1>
-                        <form action="">
-                            <label for="explicit-label-name-1">Savol-1: </label>
-                        <input type="text" id="explicit-label-name-1" name="field_name" value=""
-                               required/>
-                        <a href="javascript:void(0);" class="add_button" title="Add field">
-                            <i class="zmdi zmdi-plus"></i>
-                        </a>
+                        <form action="" method="POST">
+                            {% csrf_token %}
+                                <label for="explicit-label-name-1">Savol-1: </label>
+                            <input type="text" id="explicit-label-name-1" name="field_name" value=""
+                                   required/>
+                            <a href="javascript:void(0);" class="add_button" title="Add field">
+                                <i class="zmdi zmdi-plus"></i>
+                            </a>
                         </form>
                     </div>
                 </div>
