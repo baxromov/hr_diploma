@@ -69,7 +69,7 @@ class User(AbstractUser):
     branch = models.ForeignKey(Branch, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Filial")
     company = models.ForeignKey("Company", on_delete=models.CASCADE, null=True, blank=True, verbose_name='Kompaniya')
     is_director = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=True)
+    # is_staff = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
