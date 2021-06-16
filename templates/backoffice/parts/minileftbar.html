@@ -350,7 +350,11 @@
                 <li>
                     <div class="user-info m-b-20">
                         <div class="image">
-                            <a href="" class=" waves-effect waves-block"><img src="{% static 'backoffice/assets/images/profile_av.jpg' %}" alt="User"></a>
+                        {% if request.user.company.logo_url %}
+                            <a href="{% url 'company_update' request.user.company.id %}" class=" waves-effect waves-block"><img src="{% if request.user.company.logo_url %}{{ request.user.company.logo_url }}{% else %}{% endif %}" alt="User"></a>
+                        {% else %}
+                            <a href="{% url 'company_update' request.user.company.id %}" class=" waves-effect waves-block"><img src="{% static 'backoffice/assets/images/logo.svg' %}" alt="User"></a>
+                        {% endif %}
                         </div>
                         <div class="detail">
                             <h6>{{ user.first_name }} {{ user.last_name }}</h6>

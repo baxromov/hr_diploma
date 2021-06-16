@@ -730,8 +730,15 @@ class CompanyTemplateView(LoginRequiredMixin, generic.TemplateView):
     def get_context_data(self, **kwargs):
         ctx = super(CompanyTemplateView, self).get_context_data(**kwargs)
         ctx['company'] = models.User.objects.get(company=self.request.user.company)
-
+        ctx['item'] = models.Company.objects.get(id=self.request.user.company.id)
         return ctx
+
+
+class CompanyUpdate(LoginRequiredMixin, generic.UpdateView):
+    template_name = 'backoffice/pages/company/update.html'
+    form_class = forms.CompanyModelForm
+    model = models.Company
+    success_url = reverse_lazy('info')
 
 
 class SearchingStaffListView(LoginRequiredMixin, generic.ListView):
@@ -797,9 +804,9 @@ class TrainingInfoTemplateView(LoginRequiredMixin, generic.CreateView):
     def get_context_data(self, *, object_list=None, **kwargs):
         ctx = super(TrainingInfoTemplateView, self).get_context_data(**kwargs)
         company = self.request.user.company
-        entry_text = models.TrainingInfo.objects.filter(company=company)
+        training_info = models.TrainingInfo.objects.filter(company=company)
         staffs = models.Staff.objects.filter(company=company)
-        ctx['items'] = entry_text
+        ctx['items'] = training_info
         ctx['staffs'] = staffs
         return ctx
 
@@ -834,7 +841,7 @@ class TrainingInfoTemplateView(LoginRequiredMixin, generic.CreateView):
         return super(TrainingInfoTemplateView, self).form_invalid(form)
 
 
-class TrainingInfoDeleteView(LoginRequiredMixin, SuccessMessageMixin, generic.DeleteView):
+class TrainingInfoDeleteView(LoginRequiredMixin, generic.DeleteView):
     queryset = models.TrainingInfo.objects.all()
     form_class = forms.TrainingInfoModelForm
     success_message = "deleted..."
@@ -842,6 +849,6 @@ class TrainingInfoDeleteView(LoginRequiredMixin, SuccessMessageMixin, generic.De
 
 
 class TrainingInfoUpdateView(LoginRequiredMixin, generic.UpdateView):
-    form_class = forms.EntryTextModelForm
-    model = models.EntryText
+    form_class = forms.TrainingInfoModelForm
+    model = models.TrainingInfo
     success_url = reverse_lazy('training_info')

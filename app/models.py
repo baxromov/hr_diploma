@@ -43,6 +43,11 @@ class Company(models.Model):
     def __str__(self):
         return f'#{self.id}  {self.name}'
 
+    @property
+    def logo_url(self):
+        if self.logo and hasattr(self.logo, 'url'):
+            return self.logo.url
+
     class Meta:
         ordering = ['-created_at']
         verbose_name_plural = "Kompaniya ma'lumotini qo'shish"
@@ -428,7 +433,7 @@ class TrainingQuestion(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.question
+        return self.question if self.question else "None"
 
     class Meta:
         ordering = ['-created_at']
@@ -443,7 +448,7 @@ class TrainingAnswer(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.answer
+        return self.answer if self.answer else  "none"
 
     class Meta:
         ordering = ['-created_at']

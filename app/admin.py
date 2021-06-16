@@ -123,6 +123,16 @@ class TrainingInfoModelAdmin(admin.ModelAdmin):
     pass
 
 
+@admin.register(models.TrainingAnswer)
+class TrainingAnswerModelAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(models.TrainingQuestion)
+class TrainingQuestionModelAdmin(admin.ModelAdmin):
+    pass
+
+
 @admin.register(models.User)
 class UserModelAdmin(admin.ModelAdmin):
     exclude = (
