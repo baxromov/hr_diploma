@@ -143,3 +143,8 @@ urlpatterns += [
     path('training-info/delete/<int:pk>', views.TrainingInfoDeleteView.as_view(), name="training_info_delete"),
     path('training-info/update/<int:pk>', views.TrainingInfoUpdateView.as_view(), name="training_info_update"),
 ]
+
+# TrainingAnswerListView
+urlpatterns += [
+    path('staff-training-answer', views.TrainingAnswerListView.as_view(), name="staff_training_answer")
+]

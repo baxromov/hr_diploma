@@ -852,3 +852,15 @@ class TrainingInfoUpdateView(LoginRequiredMixin, generic.UpdateView):
     form_class = forms.TrainingInfoModelForm
     model = models.TrainingInfo
     success_url = reverse_lazy('training_info')
+
+
+# TrainingAnswerListView
+class TrainingAnswerListView(LoginRequiredMixin, generic.ListView):
+    template_name = 'backoffice/pages/trainig-info/answer.html'
+    model = models.Staff
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        ctx = super(TrainingAnswerListView, self).get_context_data(**kwargs)
+        company = self.request.user.company
+        ctx['staffs'] = models.Staff.objects.filter(company=company)
+        return ctx
