@@ -812,29 +812,27 @@ class TrainingInfoTemplateView(LoginRequiredMixin, generic.CreateView):
 
     def form_valid(self, form):
         self.training_info = form.save(commit=False)
+        self.training_info.company = self.request.user.company
+        self.training_info.save()
         questions = self.request.POST.getlist('field_name')
+        position_id = self.request.POST.get('position')
         staffs = self.request.POST.getlist('staff')
+
         for staff_id in staffs:
             staff = models.Staff.objects.get(id=staff_id)
             staff.traininganswer_set.all().delete()
         for question in questions:
             training_questions = models.TrainingQuestion.objects.create(question=question,
                                                                         position=self.training_info.position)
-            traininganswer = models.TrainingAnswer.objects.create()
             for staff_id in staffs:
-                position_id = self.request.POST.get('position')
-                position = models.Position.objects.filter(id=position_id).first()
+                traininganswer = models.TrainingAnswer.objects.create()
                 staff = models.Staff.objects.get(id=staff_id)
-                staff.position = position
                 staff.traininganswer_set.add(traininganswer)
 
                 staff.save()
-                # answer.question_set.add(training_questions)
-                # answer.staff_set.add(staff)
-            training_questions.traininganswer_set.add(traininganswer)
-            training_questions.save()
-        self.training_info.company = self.request.user.company
-        self.training_info.save()
+                training_questions.traininganswer_set.add(traininganswer)
+                training_questions.save()
+
         return super().form_valid(form)
 
     def form_invalid(self, form):
