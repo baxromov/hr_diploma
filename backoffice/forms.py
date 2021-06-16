@@ -35,6 +35,10 @@ class PositionModelForm(forms.ModelForm):
     class Meta:
         model = models.Position
         exclude = ('company',)
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'info': forms.TextInput(attrs={'class': 'form-control'}),
+        }
 
 
 # Staff
@@ -49,6 +53,10 @@ class DepartmentsModelForm(forms.ModelForm):
     class Meta:
         model = models.Department
         exclude = ('company',)
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'info': forms.TextInput(attrs={'class': 'form-control'}),
+        }
 
 
 # Salary
@@ -128,6 +136,9 @@ class TrainingInfoModelForm(forms.ModelForm):
     class Meta:
         model = models.TrainingInfo
         exclude = ('company',)
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+        }
 
 
 class CompanyModelForm(forms.ModelForm):

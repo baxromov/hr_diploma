@@ -1,27 +1,30 @@
 {% extends 'backoffice/base.html' %}
 
 {% block title %}
-    {{ request.user.company }}
+    Hodim Adaptatsiyasi
 {% endblock %}
 
 {#zmdi-hc-spin#}
 {% block content %}
     <section class="content">
         <div class="container-fluid">
-
+            <div class="block-header">
+            <div class="row clearfix">
+                <div class="col-lg-5 col-md-5 col-sm-12">
+                    <h2>Hodim Adaptatsiyasi</h2>
+                    <ul class="breadcrumb padding-0">
+                        <li class="breadcrumb-item"><a href="{% url 'backoffice-main' %}"><i class="zmdi zmdi-home"></i></a></li>
+                        <li class="breadcrumb-item active">Hodim Adaptatsiyasi</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
             <!-- Disabled Items -->
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="card">
                         <div class="header">
-                            <ul class="list-unstyled">
-                                <li>
-                                    <h2><i class="zmdi zmdi-info-outline"></i> Info</h2>
-                                </li>
-                                <li>
-                                    <a href="">Hodim Adaptatsiyasi</a>
-                                </li>
-                            </ul>
+
                             <button type="button" data-color="pink" data-toggle="modal" data-target="#colorModal"
                                     class="btn btn-success waves-effect"><i class="zmdi zmdi-plus"></i> Biriktirish
                             </button>
@@ -49,14 +52,13 @@
                                         <td>
                                             <form action="{% url 'training_info_delete' pk=item.pk %}" method="POST">
                                                 {% csrf_token %}
-                                                <input class="btn btn-default btn-danger" type="submit"
-                                                       value="O'shirish"/>
+                                                <button type="submit" class="btn btn-neutral waves-effect"><i class="zmdi zmdi-delete"></i></button>
                                             </form>
                                         </td>
                                         <td>
                                             <a href="javascript:void(0);" data-color="pink"
                                                data-toggle="modal" data-target="#staff_adaptation{{ item.id }}"
-                                               class="btn btn-warning waves-effect">Taxrirlash</a>
+                                               class="btn btn-neutral waves-effect"><i class="zmdi zmdi-edit"></i></a>
                                         </td>
                                     </tr>
                                 {% endfor %}
@@ -101,7 +103,7 @@
                                         </div>
                                         <h1>Savollar</h1>
                                         <label for="explicit-label-name-1">Savol-1: </label>
-                                        <input type="text" id="explicit-label-name-1" name="field_name" value=""
+                                        <input type="text" id="explicit-label-name-1" name="field_name" class="form-control" value=""
                                                required/>
                                         <a href="javascript:void(0);" class="add_button" title="Add field">
                                             <i class="zmdi zmdi-plus"></i>
@@ -179,7 +181,7 @@
             $(addButton).click(function () {
                 var fieldHTML = '<div class="mt-3">' +
                     '<label for="explicit-label-name' + (x + 1) + '">Savol-' + (x + 1) + ': </label>' +
-                    '<input type="text" id="explicit-label-name' + (x + 1) + '" name="field_name" value="" required/>' +
+                    '<input type="text" id="explicit-label-name' + (x + 1) + '" name="field_name" class="form-control" value="" required/>' +
                     '<a href="javascript:void(0);" class="remove_button m-l-5">' +
                     '<i class="zmdi zmdi-minus"></i>' +
                     '</a>' +

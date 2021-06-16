@@ -1,7 +1,7 @@
 {% extends 'backoffice/base.html' %}
 
 {% block title %}
-    {{ request.user.company }}
+    {{ item.name }} - Info
 {% endblock %}
 
 {#zmdi-hc-spin#}
@@ -16,17 +16,18 @@
                         <div class="header">
                             <ul class="list-unstyled">
                                 <li>
-                                    <h2><i class="zmdi zmdi-info-outline"></i> Info</h2>
-                                </li>
-                                <li>
-                                    <a href="">Kompaniya sozlamalari</a>
+                                    <a href="">Info</a>
                                 </li>
                             </ul>
                         </div>
                         <div class="body">
                             <div class="list-group">
-                                <h1 class="text-center">{{ request.user.company }}</h1>
-                               {{ company.company.text|safe }}
+                                <h1 class="text-center">{{ item.name }}</h1>
+                               {% if company.company.text %}
+                                    {{ company.company.text|safe }}
+                               {% else %}
+                                   Ma'lumot yo'q
+                               {% endif %}
                             </div>
 
                         </div>
@@ -42,12 +43,11 @@
                     </div>
                     <div class="body">
                        <ul class="list-group">
-                            <li class="list-group-item"><strong>Konpaniya logosi: </strong><img src="{{ item.logo_url }}" style="width: 300px;height: 300px;" alt=""></li>
                             <li class="list-group-item"><strong>Konpaniya nomi: </strong>{{ item.name }}</li>
                             <li class="list-group-item"><strong>Konpaniya telefon raqami: </strong>{{ item.phone }}</li>
                             <li class="list-group-item"><strong>Konpaniya turi: </strong>{{ item.type.name }}</li>
-                            <li class="list-group-item"><strong>Konpaniya manzili: </strong>{{ item.address }}</li>
-                            <li class="list-group-item"><strong>Konpaniya asoschisi: </strong>{{ item.creator }}</li>
+                            <li class="list-group-item"><strong>Konpaniya manzili: </strong>{% if item.address %}{{ item.address }}{% else %}Manzil kiritilmagan{% endif %} </li>
+                            <li class="list-group-item"><strong>Konpaniya asoschisi: </strong>{% if item.creator %}{{ item.creator }}{% else %}Asoschi kiritilmagan{% endif %}</li>
                             <li class="list-group-item"><strong>Konpaniya ishchilar soni: </strong>{{ item.amount_of_staff }}</li>
                         </ul>
                     </div>

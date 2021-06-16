@@ -165,7 +165,7 @@
                                 </div>
                                 <div class="body">
                                     <div class="row clearfix">
-                                        <form action="{% url 'staff-detail' staff.id %}" method="post" style="width: 100%;">
+                                        <form action="{% url 'staff-detail' staff.id %}" method="post" enctype="multipart/form-data" style="width: 100%;">
                                             {% csrf_token %}
                                             <div class="col-md-12">
                                                 <div class="form-group">
@@ -299,6 +299,11 @@
                                             <div class="form-group">
                                                 <label for="password">Password:</label>
                                                 <input type="text" name="password" id="password" value="{{ staff.password }}" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                {{ form.image }}
                                             </div>
                                         </div>
                                             <div class="col-md-12">

@@ -1,27 +1,30 @@
 {% extends 'backoffice/base.html' %}
 
 {% block title %}
-    Training Answers
+    Hodim Training
 {% endblock %}
 
 {#zmdi-hc-spin#}
 {% block content %}
     <section class="content">
         <div class="container-fluid">
-
+            <div class="block-header">
+            <div class="row clearfix">
+                <div class="col-lg-5 col-md-5 col-sm-12">
+                    <h2>Hodim Training</h2>
+                    <ul class="breadcrumb padding-0">
+                        <li class="breadcrumb-item"><a href="{% url 'backoffice-main' %}"><i class="zmdi zmdi-home"></i></a></li>
+                        <li class="breadcrumb-item active">Hodim Training</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
             <!-- Disabled Items -->
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="card">
                         <div class="header">
-                            <ul class="list-unstyled">
-                                <li>
-                                    <h2><i class="zmdi zmdi-info-outline"></i> Info</h2>
-                                </li>
-                                <li>
-                                    <a href="">Training Answers</a>
-                                </li>
-                            </ul>
+
                         </div>
                         <div class="body">
                             <div class="col-lg-12 col-md-12 col-sm-12">
@@ -44,7 +47,7 @@
                                                         <td>{{ staff.id }}</td>
                                                         <td>
                                                             <a href="#" data-toggle="modal" data-target="#defaultModal{{ staff.id }}">
-                                                                {{ staff.staff.first_name }} {{ staff.staff.second_name }} {{ staff.staff.last_name }}</a>
+                                                                {{ staff.first_name }} {{ staff.second_name }} {{ staff.last_name }}</a>
                                                             </a>
                                                         </td>
                                                         <td>
@@ -75,11 +78,17 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-
+                        <h2>Javoblar</h2>
                     </div>
                     <div class="modal-body">
-                        <p>{{ item.question.question }}</p>
-                        <p>{{ item.answer }}</p>
+                        {% for answer in answers %}
+                            {% if answer.staff == item %}
+                                <p>{{ answer.question }}</p>
+                                <p>{{ answer.answer }}</p>
+                                <hr>
+                            {% endif %}
+                        {% endfor %}
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">CLOSE</button>

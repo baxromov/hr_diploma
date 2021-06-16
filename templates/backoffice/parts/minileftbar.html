@@ -345,24 +345,21 @@
         <div class="menu">
             <ul class="list">
                 <li>
-                    <p>{{ request.user.company }}</p>
-                </li>
-                <li>
                     <div class="user-info m-b-20">
                         <div class="image">
                         {% if request.user.company.logo_url %}
-                            <a href="{% url 'company_update' request.user.company.id %}" class=" waves-effect waves-block"><img src="{% if request.user.company.logo_url %}{{ request.user.company.logo_url }}{% else %}{% endif %}" alt="User"></a>
+                            <a href="{% url 'company_update' request.user.company.id %}" class=" waves-effect waves-block"><img src="{% if request.user.company.logo_url %}{{ request.user.company.logo_url }}{% else %}{% endif %}" alt="User" style="width: 100px;height: 100px;"></a>
                         {% else %}
                             <a href="{% url 'company_update' request.user.company.id %}" class=" waves-effect waves-block"><img src="{% static 'backoffice/assets/images/logo.svg' %}" alt="User"></a>
                         {% endif %}
                         </div>
                         <div class="detail">
-                            <h6>{{ user.first_name }} {{ user.last_name }}</h6>
-                            <p class="m-b-0">{{ user.email }}</p>
-                            <a href="javascript:void(0);" title="" class=" waves-effect waves-block"><i class="zmdi zmdi-facebook-box"></i></a>
-                            <a href="javascript:void(0);" title="" class=" waves-effect waves-block"><i class="zmdi zmdi-linkedin-box"></i></a>
-                            <a href="javascript:void(0);" title="" class=" waves-effect waves-block"><i class="zmdi zmdi-instagram"></i></a>
-                            <a href="javascript:void(0);" title="" class=" waves-effect waves-block"><i class="zmdi zmdi-twitter-box"></i></a>
+                            <p>{{ request.user.company }}</p>
+{#                            <p class="m-b-0">{{ user.email }}</p>#}
+{#                            <a href="javascript:void(0);" title="" class=" waves-effect waves-block"><i class="zmdi zmdi-facebook-box"></i></a>#}
+{#                            <a href="javascript:void(0);" title="" class=" waves-effect waves-block"><i class="zmdi zmdi-linkedin-box"></i></a>#}
+{#                            <a href="javascript:void(0);" title="" class=" waves-effect waves-block"><i class="zmdi zmdi-instagram"></i></a>#}
+{#                            <a href="javascript:void(0);" title="" class=" waves-effect waves-block"><i class="zmdi zmdi-twitter-box"></i></a>#}
                         </div>
                     </div>
                 </li>
@@ -394,9 +391,9 @@
                 <li>
                     <a href="{% url 'new_telegram_staff' %}" class="menu-toggle waves-effect waves-block"><i class="zmdi zmdi-account-box-o "></i><span>Kondidatlar</span><span class="badge badge-default float-right">{{ bot_user_list_counter }}</span></a>
                 </li>
-                <li>
-                    <a href="{% url 'settings' %}" class="menu-toggle waves-effect waves-block"><i class="zmdi zmdi-settings zmdi-hc-spin"></i><span>Sozlamalar</span></a>
-                </li>
+{#                <li>#}
+{#                    <a href="{% url 'settings' %}" class="menu-toggle waves-effect waves-block"><i class="zmdi zmdi-settings zmdi-hc-spin"></i><span>Sozlamalar</span></a>#}
+{#                </li>#}
             </ul>
         </div>
     </div>

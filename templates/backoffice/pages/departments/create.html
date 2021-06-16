@@ -14,16 +14,9 @@
                     <h2>Bosh sahifa</h2>
                     <ul class="breadcrumb padding-0">
                         <li class="breadcrumb-item"><a href="create.html"><i class="zmdi zmdi-home"></i></a></li>
-                        <li class="breadcrumb-item active">Bosh sahifa</li>
+                        <li class="breadcrumb-item active"><a href="{% url 'department' %}">Bo'lim</a></li>
+                        <li class="breadcrumb-item active">Bo'lim yaratish</li>
                     </ul>
-                </div>
-                <div class="col-lg-7 col-md-7 col-sm-12">
-                    <div class="input-group m-b-0">
-                        <input type="text" class="form-control" placeholder="Qidirish...">
-                        <span class="input-group-addon">
-                            <i class="zmdi zmdi-search"></i>
-                        </span>
-                    </div>
                 </div>
             </div>
         </div>
@@ -40,13 +33,13 @@
                             <div class="field_wrapper">
                                 <div class="mt-3">
                                     <label for="explicit-label-name-1">Savol-1: </label>
-                                    <input type="text" id="explicit-label-name-1" name="field_name" value="" required/>
-                                    <a href="javascript:void(0);" class="add_button" title="Add field">
-                                        <img src="{% static 'backoffice/assets/images/add-icon.png' %}"/>
+                                    <input type="text" id="explicit-label-name-1" class="form-control" name="field_name" value="" required/>
+                                    <a href="javascript:void(0);" class="add_button btn btn-neutral" title="Add field">
+                                        <i class="zmdi zmdi-plus"></i>
                                     </a>
                                 </div>
                             </div>
-                            <button type="submit">Save</button>
+                            <button type="submit" class="btn btn-success waves-effect">Save</button>
                         </form>
                     </div>
                 </div>
@@ -70,9 +63,9 @@ $(document).ready(function(){
         //Check maximum number of input fields
         var fieldHTML = '<div class="mt-3">' +
             '<label for="explicit-label-name' + (x+1) + '">Savol-' + (x+1) + ': </label>' +
-            '<input type="text" id="explicit-label-name' + (x+1) + '" name="field_name" value="" required/>' +
-                '<a href="javascript:void(0);" class="remove_button m-l-5">' +
-                    '<img src="{% static 'backoffice/assets/images/remove-icon.png' %}"/>' +
+            '<input type="text" id="explicit-label-name' + (x+1) + '" name="field_name" class="form-control" value="" required/>' +
+                '<a href="javascript:void(0);" class="remove_button m-l-5 btn btn-neutral">' +
+                    '<i class="zmdi zmdi-minus"></i>' +
                 '</a>' +
             '</div>'; //New input field html
         if(x < maxField){

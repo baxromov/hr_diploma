@@ -16,14 +16,6 @@
                             <li class="breadcrumb-item active">Bo'lim</li>
                         </ul>
                     </div>
-                    <div class="col-lg-7 col-md-7 col-sm-12">
-                        <div class="input-group m-b-0">
-                            <input type="text" class="form-control" placeholder="Qidirish...">
-                            <span class="input-group-addon">
-                            <i class="zmdi zmdi-search"></i>
-                        </span>
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -53,11 +45,11 @@
                                     <td>
                                         <form action="{% url 'department_delete' pk=department.id %}" method="POST">
                                                 {% csrf_token %}
-                                                <input class="btn btn-default btn-danger" type="submit" value="O'shirish"/>
+                                                <button type="submit" class="btn btn-neutral hover-zoom-effect"><i class="zmdi zmdi-delete"></i></button>
                                         </form>
                                     </td>
                                     <td>
-                                        <a href="{% url 'department_update' department.id %}" class="btn btn-warning">Taxrirlash</a>
+                                        <a href="{% url 'department_update' department.id %}" class="btn btn-neutral waves-effect"><i class="zmdi zmdi-edit"></i></a>
                                     </td>
                                 </tr>
                             {% endfor %}

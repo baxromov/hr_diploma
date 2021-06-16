@@ -11,34 +11,15 @@
             <div class="row clearfix">
                 <div class="col-lg-5 col-md-5 col-sm-12">
                     <h2>Hodim Qidirish</h2>
-                    <ul class="breadcrumb padding-0">
-                        <li class="breadcrumb-item"><a href="{% url 'backoffice-main' %}"><i class="zmdi zmdi-home"></i></a></li>
-                    </ul>
+{#                    <ul class="breadcrumb padding-0">#}
+{#                        <li class="breadcrumb-item"><a href="{% url 'backoffice-main' %}"><i class="zmdi zmdi-home"></i></a></li>#}
+{#                    </ul>#}
                 </div>
             </div>
-             <!-- Disabled Items -->
-            <div class="row clearfix">
-                <div class="col-lg-12 col-md-12 col-sm-12">
-                    <div class="card">
-                        <div class="header">
-                            <h2><i class="zmdi zmdi-settings zmdi-hc-spin"></i> Bot integratsiyalari va sozlamalari</h2>
-                        </div>
-                        <div class="body">
-                            <div class="list-group">
-                                <a href="{% url 'bot_c_l' %}" class="list-group-item">Bot integratsiya</a>
-                                <a href="{% url 'admin_bot' %}" class="list-group-item">Bot Admin</a>
-                                <a href="{% url 'entry_text' %}" class="list-group-item">Bot kirish qismi texti</a>
-                                <a href="{% url 'finish_text' %}" class="list-group-item">Bot so'ngi qismi texti</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- #END# Disabled Items -->
         </div>
 
         <div class="row clearfix">
-            <div class="col-lg-12">
+            <div class="col-lg-6 col-md-6 col-sm-12">
                 <div class="card">
                     <div class="header">
                         <h2>Hodim Qidirish</h2>
@@ -75,6 +56,21 @@
                     </div>
                 </div>
             </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2><i class="zmdi zmdi-settings zmdi-hc-spin"></i> Bot integratsiyalari va sozlamalari</h2>
+                        </div>
+                        <div class="body">
+                            <div class="list-group">
+                                <a href="{% url 'bot_c_l' %}" class="list-group-item">Bot integratsiya</a>
+                                <a href="{% url 'admin_bot' %}" class="list-group-item">Bot Admin</a>
+                                <a href="{% url 'entry_text' %}" class="list-group-item">Bot kirish qismi texti</a>
+                                <a href="{% url 'finish_text' %}" class="list-group-item">Bot so'ngi qismi texti</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
         </div>
     </div>
 </section>

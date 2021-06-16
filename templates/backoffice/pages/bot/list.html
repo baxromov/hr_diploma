@@ -12,7 +12,11 @@
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <h2>Bot</h2>
-
+                        <ul class="breadcrumb padding-0">
+                            <li class="breadcrumb-item"><a href="{% url 'backoffice-main' %}"><i class="zmdi zmdi-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="{% url 'search_staff' %}">Hodim qidirish</a></li>
+                            <li class="breadcrumb-item"><a href="javascript:void(0);">Bot integratsiyasi</a></li>
+                        </ul>
                 </div>
             </div>
         </div>
@@ -22,7 +26,7 @@
                 <div class="card">
                     <div class="header">
                         <div class="button-demo js-modal-buttons">
-                                <button type="button" data-color="pink" data-toggle="modal" data-target="#colorModal" class="btn btn-success waves-effect"><i class="zmdi zmdi-plus"></i> Bot qo'shish</button>
+                                <button type="button" data-color="pink" data-toggle="modal" data-target="#colorModal" class="btn btn-success waves-effect"><i class="zmdi zmdi-plus"></i> Bot integratsiyasi</button>
                             </div>
                     </div>
                     <div class="body table-responsive">
@@ -56,7 +60,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content bg-white">
                 <div class="modal-header">
-                    <h4 class="title text-dark">Bot qo'shish</h4>
+                    <h4 class="title text-dark">Bot integratsiyasi qoshish</h4>
                 </div>
                 {% csrf_token %}
             <div class="modal-body">
@@ -74,7 +78,7 @@
                                     <input type="text" name="token" id="token" class="form-control">
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-success">Saqalash</button>
+                            <button type="submit" class="btn btn-success">Saqlash</button>
                         </form>
             </div>
             <div class="modal-footer">
@@ -90,7 +94,7 @@
     <div class="modal-dialog" role="document">
             <div class="modal-content bg-white">
                     <div class="modal-header">
-                        <h4 class="title text-dark">Bot qo'shish</h4>
+                        <h4 class="title text-dark">Bot integratsiyasini taxrirlash</h4>
                     </div>
                     <div class="modal-body">
                             {% if bot_list %}
@@ -108,7 +112,7 @@
                                     <input type="text" name="token" id="token" class="form-control" value="{{ bot_list.token }}">
                                 </div>
                         </div>
-                        <button type="submit" class="btn btn-success">Saqalash</button>
+                        <button type="submit" class="btn btn-success">Taxrirlashni saqlash</button>
                     </form>
                             {% endif %}
                     </div>
