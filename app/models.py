@@ -43,6 +43,11 @@ class Company(models.Model):
     def __str__(self):
         return f'#{self.id}  {self.name}'
 
+    @property
+    def logo_url(self):
+        if self.logo and hasattr(self.logo, 'url'):
+            return self.logo.url
+
     class Meta:
         ordering = ['-created_at']
         verbose_name_plural = "Kompaniya ma'lumotini qo'shish"

@@ -350,7 +350,7 @@
                 <li>
                     <div class="user-info m-b-20">
                         <div class="image">
-                            <a href="{% url 'company_update' request.user.company.id %}" class=" waves-effect waves-block"><img src="{{ request.user.company.logo.url }}" alt="User"></a>
+                            <a href="{% url 'company_update' request.user.company.id %}" class=" waves-effect waves-block"><img src="{% if request.user.company.logo_url %}{{ request.user.company.logo_url }}{% else %}{% endif %}" alt="User"></a>
                         </div>
                         <div class="detail">
                             <h6>{{ user.first_name }} {{ user.last_name }}</h6>
