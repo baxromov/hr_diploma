@@ -428,7 +428,7 @@ class TrainingQuestion(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.question
+        return self.question if self.question else "None"
 
     class Meta:
         ordering = ['-created_at']
@@ -443,7 +443,7 @@ class TrainingAnswer(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.answer
+        return self.answer if self.answer else  "none"
 
     class Meta:
         ordering = ['-created_at']

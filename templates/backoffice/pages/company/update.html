@@ -1,0 +1,47 @@
+{% extends 'backoffice/base.html' %}
+
+{% block title %}
+    {{ request.user.company }}
+{% endblock %}
+
+{% block content %}
+    <section class="content">
+    <div class="container-fluid">
+        <div class="block-header">
+            <div class="row">
+                <div class="col-lg-5 col-md-5 col-sm-12">
+                    <h2>{{ request.user.company }}</h2>
+
+                </div>
+                <div class="col-lg-7 col-md-7 col-sm-12">
+                    <div class="input-group m-b-0">
+                        <input type="text" class="form-control" placeholder="Search...">
+                        <span class="input-group-addon">
+                            <i class="zmdi zmdi-search"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row clearfix">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="header">
+                        <h2><strong>Typography</strong></h2>
+                    </div>
+                    <div class="body">
+                        <div class="row">
+                            <form action="{% url 'company_update' request.user.company.id %}" method="POST" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                {{ form.media|safe }}
+                                {{ form.as_p }}
+                                <input type="submit" value="Save">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

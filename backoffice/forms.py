@@ -128,3 +128,9 @@ class TrainingInfoModelForm(forms.ModelForm):
     class Meta:
         model = models.TrainingInfo
         exclude = ('company',)
+
+
+class CompanyModelForm(forms.ModelForm):
+    class Meta:
+        model = models.Company
+        exclude = ('company',)

@@ -123,7 +123,8 @@ urlpatterns += [
 
 # Company
 urlpatterns += [
-    path('info', views.CompanyTemplateView.as_view(), name='info')
+    path('info', views.CompanyTemplateView.as_view(), name='info'),
+    path('company/<int:pk>', views.CompanyUpdate.as_view(), name='company_update')
 ]
 
 # Searching Staff
