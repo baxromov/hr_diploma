@@ -30,7 +30,6 @@ class LoginForm(forms.Form):
     password = forms.CharField(max_length=16, widget=forms.PasswordInput())
 
 
-# Position
 class PositionModelForm(forms.ModelForm):
     class Meta:
         model = models.Position
@@ -41,14 +40,12 @@ class PositionModelForm(forms.ModelForm):
         }
 
 
-# Staff
 class StaffModelForm(forms.ModelForm):
     class Meta:
         model = models.Staff
         exclude = ('company',)
 
 
-# Departments
 class DepartmentsModelForm(forms.ModelForm):
     class Meta:
         model = models.Department
@@ -59,79 +56,68 @@ class DepartmentsModelForm(forms.ModelForm):
         }
 
 
-# Salary
 class SalaryModelForm(forms.ModelForm):
     class Meta:
         model = models.Salary
         exclude = ('staff',)
 
 
-# Vacation
 class VacationModelForm(forms.ModelForm):
     class Meta:
         model = models.Vacation
         exclude = ('staff',)
 
 
-# VacationType
 class VacationTypeModelForm(forms.ModelForm):
     class Meta:
         model = models.VacationType
         exclude = ('company',)
 
 
-# AdditionalPaymentsModelForm
 class AdditionalPaymentsModelForm(forms.ModelForm):
     class Meta:
         model = models.AdditionalPayments
         exclude = ('staff',)
 
 
-# AdditionalPaymentType
 class AdditionalPaymentTypeModelForm(forms.ModelForm):
     class Meta:
         model = models.AdditionalPaymentType
         exclude = ('company',)
 
 
-# Document
 class DocumentModelForm(forms.ModelForm):
     class Meta:
         model = models.Document
         exclude = ('staff',)
 
 
-# Bot
 class BotModelForm(forms.ModelForm):
     class Meta:
         model = models.Bot
         exclude = ('company',)
 
 
-# Admin
 class AdminModelForm(forms.ModelForm):
     class Meta:
         model = models.Admin
         exclude = ('company',)
 
 
-# EntryText
 class EntryTextModelForm(forms.ModelForm):
-    content = forms.CharField(widget=CKEditorWidget())
+    # content = forms.CharField(widget=CKEditorWidget())
 
     class Meta:
         model = models.EntryText
         exclude = ('company',)
 
 
-# FinishText
 class FinishTextModelForm(forms.ModelForm):
     class Meta:
         model = models.FinishText
         exclude = ('company',)
 
 
-# FinishText
 class TrainingInfoModelForm(forms.ModelForm):
     class Meta:
         model = models.TrainingInfo
