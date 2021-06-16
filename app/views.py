@@ -13,12 +13,17 @@ class StaffLoginTemplateView(generic.FormView):
     success_url = 'staff-training'
 
     def form_valid(self, form):
+        print(form)
+        staff = models.Staff.objects.get(username=form.data.get('username'))
+        staff.training_url = uuid.uuid4()
+        self.success_url = reverse('staff_training', kwargs={'staff_uuid': staff.training_url})
+        staff.save()
         return super().form_valid(form)
 
 
 class StaffFormView(generic.FormView):
     template_name = 'app/staff/treining/index.html'
-    form_class = forms.StaffTrainingForm
+    form_class = forms.StaffTrainingQuestionForm
     success_url = 'staff-login'
 
     def get_context_data(self, **kwargs):

@@ -52,5 +52,5 @@ class StaffLoginForm(forms.Form):
         return username
 
 
-class StaffTrainingForm(forms.Form):
+class StaffTrainingQuestionForm(forms.Form):
     pass
