@@ -7,50 +7,60 @@
 
 {% block content %}
     <div class="authentication">
-    <div class="container">
-        <div class="col-md-12 content-center">
-            <div class="row">
-                <div class="col-lg-6 col-md-12">
-                    <div class="company_detail">
-                        <h4 class="logo"><img src="assets/images/logo.svg" alt=""> CRM</h4>
-                        <h3>Customer <strong>relationship</strong> management</h3>
-                        <p>Customer relationship management (CRM) is a process in which a business or other organization administers its interactions with customers, typically using data analysis to study large amounts of information.</p>
-                        <div class="footer">
-                            <ul  class="social_link list-unstyled">
-                                <li><a href="https://thememakker.com" title="ThemeMakker"><i class="zmdi zmdi-globe"></i></a></li>
-                                <li><a href="https://themeforest.net/user/thememakker" title="Themeforest"><i class="zmdi zmdi-shield-check"></i></a></li>
-                                <li><a href="https://www.linkedin.com/company/thememakker/" title="LinkedIn"><i class="zmdi zmdi-linkedin"></i></a></li>
-                                <li><a href="https://www.facebook.com/thememakkerteam" title="Facebook"><i class="zmdi zmdi-facebook"></i></a></li>
-                                <li><a href="http://twitter.com/thememakker" title="Twitter"><i class="zmdi zmdi-twitter"></i></a></li>
-                                <li><a href="http://plus.google.com/+thememakker" title="Google plus"><i class="zmdi zmdi-google-plus"></i></a></li>
-                                <li><a href="https://www.behance.net/thememakker" title="Behance"><i class="zmdi zmdi-behance"></i></a></li>
-                            </ul>
-                            <hr>
+        <div class="container">
+            <div class="col-md-12 content-center">
+                <div class="row">
+                    <div class="col-lg-6 col-md-12">
+                        <div class="company_detail">
+                            <h4 class="logo"><img src="assets/images/logo.svg" alt=""> CRM</h4>
+                            <h3>Customer <strong>relationship</strong> management</h3>
+                            <p>Customer relationship management (CRM) is a process in which a business or other
+                                organization administers its interactions with customers, typically using data analysis
+                                to study large amounts of information.</p>
+                            <div class="footer">
+                                <ul class="social_link list-unstyled">
+                                    <li><a href="https://thememakker.com" title="ThemeMakker"><i
+                                            class="zmdi zmdi-globe"></i></a></li>
+                                    <li><a href="https://themeforest.net/user/thememakker" title="Themeforest"><i
+                                            class="zmdi zmdi-shield-check"></i></a></li>
+                                    <li><a href="https://www.linkedin.com/company/thememakker/" title="LinkedIn"><i
+                                            class="zmdi zmdi-linkedin"></i></a></li>
+                                    <li><a href="https://www.facebook.com/thememakkerteam" title="Facebook"><i
+                                            class="zmdi zmdi-facebook"></i></a></li>
+                                    <li><a href="http://twitter.com/thememakker" title="Twitter"><i
+                                            class="zmdi zmdi-twitter"></i></a></li>
+                                    <li><a href="http://plus.google.com/+thememakker" title="Google plus"><i
+                                            class="zmdi zmdi-google-plus"></i></a></li>
+                                    <li><a href="https://www.behance.net/thememakker" title="Behance"><i
+                                            class="zmdi zmdi-behance"></i></a></li>
+                                </ul>
+                                <hr>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-5 col-md-12 offset-lg-1">
-                    <div class="card-plain">
-                        <div class="header">
-                            <h5>Log in</h5>
+                    <div class="col-lg-5 col-md-12 offset-lg-1">
+                        <div class="card-plain">
+                            <div class="header">
+                                <h5>Log in</h5>
+                            </div>
+                            <form class="form" action="{% url 'staff_login' %}" method="POST">
+                                {% csrf_token %}
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="username" placeholder="Username"
+                                           required>
+                                    <span class="input-group-addon"><i class="zmdi zmdi-account-circle"></i></span>
+                                </div>
+                                <div class="input-group">
+                                    <input type="password" name="password" placeholder="Password" class="form-control"
+                                           required/>
+                                    <span class="input-group-addon"><i class="zmdi zmdi-lock"></i></span>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-round btn-block">Login</button>
+                            </form>
                         </div>
-                        <form class="form" action="{% url 'staff_login' %}" method="POST">
-                            {% csrf_token %}
-                            <div class="input-group">
-                                <input type="text" class="form-control" name="username" placeholder="Username" required>
-                                <span class="input-group-addon"><i class="zmdi zmdi-account-circle"></i></span>
-                            </div>
-                            <div class="input-group">
-                                <input type="password" name="password" placeholder="Password" class="form-control" required/>
-                                <span class="input-group-addon"><i class="zmdi zmdi-lock"></i></span>
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-round btn-block">Login</button>
-
-                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 {% endblock %}

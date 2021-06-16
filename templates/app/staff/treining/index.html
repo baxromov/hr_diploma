@@ -6,52 +6,63 @@
 {% endblock %}
 
 {% block content %}
-<section class="">
-    <div class="container-fluid">
-        <div class="block-header">
-            <div class="row clearfix">
-                <div class="col-lg-12 col-md-12 col-sm-12 ">
-                <div class="card">
-                    <div class="header">
-                        <h2><strong>Bo'lim:</strong>Buxgalter</h2>
+    <section class="">
+        <div class="container-fluid">
+            <div class="block-header">
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12 ">
+                        <div class="card">
+                            <div class="header">
+                                <h2><strong>Bo'lim: </strong>{{ staff.position.name }}</h2>
+                            </div>
+                            <div class="body">
+                                <div class="media mleft">
+                                    <div class="media-left"><a href="javascript:void(0);">
+                                        <img class="media-object" src="{{ staff.image.url }}" width="64" height="64"
+                                             alt="">
+                                    </a>
+                                    </div>
+                                    <div class="media-body">
+                                        <h4 class="media-heading">{{ staff.first_name }} {{ staff.last_name }}</h4>
+                                        <p><strong>Maosh:</strong>90.000.000</p>
+                                        <p><strong>Jarima:</strong>90.000.000</p>
+                                        <p><strong>Izoh:</strong>Shunga</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="body">
-                        <div class="media mleft">
-                            <div class="media-left"> <a href="javascript:void(0);"> <img class="media-object" src="http://placehold.it/64x64" width="64" height="64" alt=""> </a> </div>
-                            <div class="media-body">
-                                <h4 class="media-heading">Baxromov Shahzodbek</h4>
-                                <p><strong>Maosh:</strong>90.000.000</p>
-                                <p><strong>Jarima:</strong>90.000.000</p>
-                                <p><strong>Izoh:</strong>Shunga</p>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12 ">
+                        <div class="card">
+                            <div class="header">
+                                <h2><strong>Training</strong></h2>
+                            </div>
+                            <div class="body">
+                                <h3>Savollar</h3>
+                                <form action="{% url 'staff_training' staff.training_url %}" method="post">
+                                    {% csrf_token %}
+                                    {% for questions_answers in training_answers %}
+                                        {#                                        <div class="">#}
+                                        {#                                            {{ ques.question.question }}#}
+                                        {#                                        </div>#}
+
+                                        <label for="explicit-name-1">{{ questions_answers.question.question }}</label>
+                                        <input type="text" id="explicit-name-1"
+                                               name="{{ questions_answers.id }}" required/>
+                                        <br>
+                                        <br>
+                                    {% endfor %}
+                                    <button type="submit" class="btn btn-primary btn-round btn-block">Login</button>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            </div>
-            <div class="row clearfix">
-                <div class="col-lg-12 col-md-12 col-sm-12 ">
-                <div class="card">
-                    <div class="header">
-                        <h2><strong>Training</strong></h2>
-                    </div>
-                    <div class="body">
-                        <h1>Hello</h1>
-                        <form action="">
-                            <label for="explicit-label-name-1">Savol-1: </label>
-                        <input type="text" id="explicit-label-name-1" name="field_name" value=""
-                               required/>
-                        <a href="javascript:void(0);" class="add_button" title="Add field">
-                            <i class="zmdi zmdi-plus"></i>
-                        </a>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            </div>
         </div>
-    </div>
-</section>
+    </section>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <script type="text/javascript">

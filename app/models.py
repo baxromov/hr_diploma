@@ -254,7 +254,7 @@ class Staff(models.Model):
     birth_date = models.DateField(null=True, blank=True, verbose_name="Tug'ilgan sana")
     gender = models.CharField(choices=GENDER, max_length=10, verbose_name="Jinsi")
     password = models.CharField(null=True, blank=True, max_length=255, verbose_name="parol")
-
+    training_url = models.UUIDField(max_length=200, unique=True, null=True, blank=True)
     tabel_number = models.PositiveIntegerField(null=True, blank=True, verbose_name="Tabel raqami")
     start_work_at = models.DateField(null=True, blank=True, verbose_name="Ish boshlagan sana")
     account_number = models.BigIntegerField(null=True, blank=True, verbose_name="Xisob raqami")

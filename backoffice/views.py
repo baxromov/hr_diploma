@@ -807,13 +807,18 @@ class TrainingInfoTemplateView(LoginRequiredMixin, generic.CreateView):
         self.training_info = form.save(commit=False)
         questions = self.request.POST.getlist('field_name')
         staffs = self.request.POST.getlist('staff')
-
+        for staff_id in staffs:
+            staff = models.Staff.objects.get(id=staff_id)
+            staff.traininganswer_set.all().delete()
         for question in questions:
             training_questions = models.TrainingQuestion.objects.create(question=question,
                                                                         position=self.training_info.position)
             traininganswer = models.TrainingAnswer.objects.create()
             for staff_id in staffs:
+                position_id = self.request.POST.get('position')
+                position = models.Position.objects.filter(id=position_id).first()
                 staff = models.Staff.objects.get(id=staff_id)
+                staff.position = position
                 staff.traininganswer_set.add(traininganswer)
 
                 staff.save()
