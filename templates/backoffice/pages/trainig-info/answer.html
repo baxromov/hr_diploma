@@ -27,7 +27,7 @@
                             <div class="col-lg-12 col-md-12 col-sm-12">
                                 <div class="card">
                                     <div class="header">
-                                        <a href="" class="btn btn-success">Lavozim qo'shish <i class="zmdi zmdi-plus"></i></a>
+
                                     </div>
                                     <div class="body table-responsive">
                                         <table class="table table-hover">
@@ -42,7 +42,11 @@
                                                 {% for staff in staffs %}
                                                     <tr>
                                                         <td>{{ staff.id }}</td>
-                                                        <td>{{ staff.first_name }} {{ staff.second_name }} {{ staff.last_name }}</td>
+                                                        <td>
+                                                            <a href="#" data-toggle="modal" data-target="#defaultModal{{ staff.id }}">
+                                                                {{ staff.staff.first_name }} {{ staff.staff.second_name }} {{ staff.staff.last_name }}</a>
+                                                            </a>
+                                                        </td>
                                                         <td>
                                                             <form action="" method="POST">
                                                                 {% csrf_token %}
@@ -65,4 +69,23 @@
 
         </div>
     </section>
+
+       {% for item in staffs %}
+         <div class="modal fade" id="defaultModal{{ item.id }}" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+
+                    </div>
+                    <div class="modal-body">
+                        <p>{{ item.question.question }}</p>
+                        <p>{{ item.answer }}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">CLOSE</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+   {% endfor %}
 {% endblock %}

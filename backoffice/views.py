@@ -862,5 +862,5 @@ class TrainingAnswerListView(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         ctx = super(TrainingAnswerListView, self).get_context_data(**kwargs)
         company = self.request.user.company
-        ctx['staffs'] = models.Staff.objects.filter(company=company)
+        ctx['staffs'] = models.TrainingAnswer.objects.filter(staff__company=company)
         return ctx
