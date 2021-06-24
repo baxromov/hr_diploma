@@ -41,3 +41,25 @@ def bot_user_list_counter(request):
     return {
         'bot_user_list_counter': department_amounts
     }
+
+
+def staff_gender_statistic(request):
+    male = None
+    female = None
+    if request.user.is_anonymous == False:
+        company =request.user.company
+        male = models.Staff.objects.filter(company=company, gender='male')
+        female = models.Staff.objects.filter(company=company, gender='female')
+
+        male = male.count()
+        female = female.count()
+        return {
+            "male_count": male,
+            "female_count": female,
+            "company_staff_count": request.user.company.amount_of_staff
+        }
+    return {
+        "male_count": '',
+        "female_count": '',
+        "company_staff_count": ''
+    }

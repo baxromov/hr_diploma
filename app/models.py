@@ -190,8 +190,8 @@ class AdditionalPayments(models.Model):
 
 
 class Flow(models.Model):
-    came = models.DateTimeField(verbose_name="Kelishi")
-    went = models.DateTimeField(verbose_name="Ketishi")
+    came = models.DateTimeField(verbose_name="Kelishi", null=True, blank=True)
+    went = models.DateTimeField(verbose_name="Ketishi", null=True, blank=True)
     staff = models.ForeignKey("Staff", on_delete=models.CASCADE, verbose_name="Xodim")
     created_at = models.DateTimeField(auto_now_add=True)
 

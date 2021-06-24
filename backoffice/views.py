@@ -62,9 +62,10 @@ class StaffUpdate(LoginRequiredMixin, generic.UpdateView, generic.DetailView):
         ctx['positions'] = models.Position.objects.filter(company=company).order_by('-created_at')
         ctx['departments'] = models.Department.objects.filter(company=company).order_by('-created_at')
         staff_id = self.kwargs.get('pk')
-        ctx['salary'] = models.Salary.objects.filter(staff_id=staff_id).last()
+        salary = models.Salary.objects.filter(staff_id=staff_id).last()
+        ctx['salary'] = salary
+        additional_payment = models.AdditionalPayments.objects.filter(staff_id=staff_id).last()
 
-        # ctx['workplans'] = models.WorlPlan.objects.filter(company=company).order_by('-created_at')
         return ctx
 
 
@@ -95,8 +96,6 @@ class StaffCreate(LoginRequiredMixin, generic.CreateView):
         )
         user_data = {
             'id': staff.id,
-            'full_name': f'{staff.first_name} {staff.last_name}',
-            'company_id': staff.company.id,
         }
         qr_code_image = qrcode.make(user_data)
         canvas = Image.new('RGB', (450, 450), 'white')
@@ -268,7 +267,7 @@ class SalaryListView(LoginRequiredMixin, generic.ListView):
         ctx = super(SalaryListView, self).get_context_data(**kwargs)
         staff_id = self.kwargs.get('pk')
         ctx['staff'] = models.Staff.objects.get(id=staff_id)
-        ctx['salaries'] = models.Salary.objects.filter(staff_id=staff_id)
+        ctx['salaries'] = models.Salary.objects.filter(staff_id=staff_id).order_by('-id')
         return ctx
 
 
