@@ -31,7 +31,12 @@ class StaffFormView(generic.FormView):
         staff_uuid = self.kwargs.get('staff_uuid')
         staff = models.Staff.objects.get(training_url=staff_uuid)
         training_answers = models.TrainingAnswer.objects.filter(staff=staff).order_by('id')
+        salary = models.Salary.objects.filter(staff=staff).last()
+        position = staff.position
+        training_info = models.TrainingInfo.objects.filter(position=position).last()
         context['staff'] = staff
+        context['salary'] = salary
+        context['training_info'] = training_info
         context['training_answers'] = training_answers
         return context
 

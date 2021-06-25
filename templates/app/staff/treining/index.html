@@ -13,48 +13,114 @@
                     <div class="col-lg-12 col-md-12 col-sm-12 ">
                         <div class="card">
                             <div class="header">
-                                <h2><strong>Bo'lim: </strong>{{ staff.position.name }}</h2>
                             </div>
                             <div class="body">
                                 <div class="media mleft">
                                     <div class="media-left"><a href="javascript:void(0);">
-                                        <img class="media-object" src="{{ staff.image.url }}" width="64" height="64"
+                                        <img class="media-object" src="{{ staff.image.url }}"
+                                             style="width: 200px;height: 200px;"
                                              alt="">
                                     </a>
                                     </div>
                                     <div class="media-body">
-                                        <h4 class="media-heading">{{ staff.first_name }} {{ staff.last_name }}</h4>
-                                        <p><strong>Maosh:</strong>90.000.000</p>
-                                        <p><strong>Jarima:</strong>90.000.000</p>
-                                        <p><strong>Izoh:</strong>Shunga</p>
+                                        <ul class="nav justify-content-between">
+                                            <li class="nav-item">
+                                                <h4 class="media-heading">{{ staff.first_name }} {{ staff.last_name }}</h4>
+                                                <p class="mt-5"><strong>Department:</strong> {{ staff.department.name }}
+                                                </p>
+                                                <p><strong>Position:</strong> {{ staff.position.name }}</p>
+
+                                                <p><strong>Salary:</strong> {{ salary.amount }} so'm</p>
+
+                                            </li>
+                                            <li class="nav-item">
+                                                <p><strong>QR-code</strong></p>
+                                                <img src="{{ staff.qr_code.url }}" style="width: 200px;" alt="">
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="card">
+                            <div class="header">
+                                <h2><strong>Something </strong> Interesting <small> Content</small></h2>
+                                <ul class="header-dropdown">
+                                    <li class="dropdown"><a href="javascript:void(0);" class="dropdown-toggle"
+                                                            data-toggle="dropdown" role="button" aria-haspopup="true"
+                                                            aria-expanded="false"> <i class="zmdi zmdi-more"></i> </a>
+                                        <ul class="dropdown-menu dropdown-menu-right">
+                                            <li><a href="javascript:void(0);" class="boxs-close">Hide</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="body">
+                                <!-- Nav tabs -->
+                                <ul class="nav nav-tabs">
+                                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#training_info">Advanced training</a>
+                                    </li>
+                                    <li class="nav-item"><a class="nav-link" data-toggle="tab"
+                                                            href="#profile">Company culture</a></li>
+                                </ul>
+                                <!-- Tab panes -->
+                                <div class="tab-content">
+                                    <div role="tabpanel" class="tab-pane in" id="training_info"><b></b>
+                                        <h2 class="text-center">{{ training_info.title }}</h2>
+                                        <h4 class="text-center">{{ training_info.company.name }}</h4>
+                                        <div>
+                                            {{ training_info.info|safe }}
+                                        </div>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane" id="profile"><b>Profile Content</b>
+                                        <p>It is a long established fact that a reader will be distracted by the
+                                            readable content of a page when looking at its layout. The point of using
+                                            Lorem Ipsum is that it has a more-or-less normal distribution of letters, as
+                                            opposed to using 'Content here, content here', making it look like readable
+                                            English. Many desktop publishing packages and web page editors now use Lorem
+                                            Ipsum as their default model text, and a search for 'lorem ipsum' will
+                                            uncover many web sites still in their infancy. Various versions have evolved
+                                            over the years, sometimes by accident, sometimes on purpose (injected humour
+                                            and the like).</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="row clearfix">
                     <div class="col-lg-12 col-md-12 col-sm-12 ">
                         <div class="card">
                             <div class="header">
                                 <h2><strong>Training</strong></h2>
+                                <ul class="header-dropdown">
+                                    <li class="dropdown"><a href="javascript:void(0);" class="dropdown-toggle"
+                                                            data-toggle="dropdown" role="button" aria-haspopup="true"
+                                                            aria-expanded="false"> <i class="zmdi zmdi-more"></i> </a>
+                                        <ul class="dropdown-menu dropdown-menu-right">
+                                            <li><a href="javascript:void(0);" class="boxs-close">Hide</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
                             </div>
                             <div class="body">
                                 <h3>Savollar</h3>
                                 <form action="{% url 'staff_training' staff.training_url %}" method="post">
                                     {% csrf_token %}
                                     {% for questions_answers in training_answers %}
-                                        {#                                        <div class="">#}
-                                        {#                                            {{ ques.question.question }}#}
-                                        {#                                        </div>#}
-
                                         <label for="explicit-name-1">{{ questions_answers.question.question }}</label>
                                         <input type="text" id="explicit-name-1"
-                                               name="{{ questions_answers.id }}" required/>
+                                               name="{{ questions_answers.id }}" class="form-control" required/>
                                         <br>
                                         <br>
                                     {% endfor %}
-                                    <button type="submit" class="btn btn-primary btn-round btn-block">Login</button>
+                                    <button type="submit" class="btn btn-success waves-effect btn-block">Submit</button>
                                 </form>
                             </div>
                         </div>
@@ -78,8 +144,8 @@
                 //Check maximum number of input fields
                 var fieldHTML = '<div class="mt-3">' +
                     '<label for="explicit-label-name' + (x + 1) + '">Savol-' + (x + 1) + ': </label>' +
-                    '<input type="text" id="explicit-label-name' + (x + 1) + '" name="field_name" value="" required/>' +
-                    '<a href="javascript:void(0);" class="remove_button m-l-5">' +
+                    '<input type="text" id="explicit-label-name' + (x + 1) + '" name="field_name" value="" class="form-control" required/>' +
+                    '<a href="javascript:void(0);" class="remove_button m-l-5 btn btn-neutral">' +
                     '<i class="zmdi zmdi-minus"></i>' +
                     '</a>' +
                     '</div>'; //New input field html
