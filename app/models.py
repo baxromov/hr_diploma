@@ -453,3 +453,18 @@ class TrainingAnswer(models.Model):
     class Meta:
         ordering = ['-created_at']
         verbose_name_plural = "Training Javoblar"
+
+
+class CompanyCulture(models.Model):
+    title = models.CharField(max_length=255, null=True, blank=True)
+    text = RichTextUploadingField(null=True, blank=True)
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name_plural = "Company Culture"

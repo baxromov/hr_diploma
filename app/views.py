@@ -32,10 +32,12 @@ class StaffFormView(generic.FormView):
         staff = models.Staff.objects.get(training_url=staff_uuid)
         training_answers = models.TrainingAnswer.objects.filter(staff=staff).order_by('id')
         salary = models.Salary.objects.filter(staff=staff).last()
+        company_culture = models.CompanyCulture.objects.filter(company=staff.company).last()
         position = staff.position
         training_info = models.TrainingInfo.objects.filter(position=position).last()
         context['staff'] = staff
         context['salary'] = salary
+        context['company_culture'] = company_culture
         context['training_info'] = training_info
         context['training_answers'] = training_answers
         return context
@@ -47,14 +49,14 @@ class StaffFormView(generic.FormView):
         return response
 
     def form_valid(self, form):
+        super().form_valid(form)
         staff_uuid = self.kwargs.get('staff_uuid')
         staff = models.Staff.objects.get(training_url=staff_uuid)
         training_answers = models.TrainingAnswer.objects.filter(staff=staff)
         for training_answer in training_answers:
             training_answer.answer = form.data.get(f'{training_answer.id}')
             training_answer.save()
-
-        return super().form_valid(form)
+        return redirect('staff_login')
 
     def form_invalid(self, form):
         return super().form_invalid(form)

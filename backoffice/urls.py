@@ -144,6 +144,13 @@ urlpatterns += [
     path('training-info/update/<int:pk>', views.TrainingInfoUpdateView.as_view(), name="training_info_update"),
 ]
 
+# CompanyCulture
+urlpatterns += [
+    path('company-culture', views.CompanyCultureCreateViewListView.as_view(), name="company_culture"),
+    path('company-culture/delete/<int:pk>', views.CompanyCultureDeleteView.as_view(), name="company_culture_delete"),
+    path('company-culture/update/<int:pk>', views.CompanyCultureUpdateView.as_view(), name="company_culture_update"),
+]
+
 # TrainingAnswerListView
 urlpatterns += [
     path('staff-training-answer', views.TrainingAnswerListView.as_view(), name="staff_training_answer")

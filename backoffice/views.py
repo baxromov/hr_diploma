@@ -862,3 +862,41 @@ class TrainingAnswerListView(LoginRequiredMixin, generic.ListView):
         ctx['staffs'] = models.Staff.objects.filter(company=company)
         ctx['answers'] = models.TrainingAnswer.objects.filter(staff__company=company)
         return ctx
+
+
+# CompanyCulture
+class CompanyCultureCreateViewListView(LoginRequiredMixin, generic.CreateView):
+    template_name = 'backoffice/pages/company-culture/index.html'
+    form_class = forms.CompanyCultureModelForm
+    success_url = reverse_lazy('company_culture')
+    model = models.CompanyCulture
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        ctx = super(CompanyCultureCreateViewListView, self).get_context_data(**kwargs)
+        company = self.request.user.company
+        training_info = models.CompanyCulture.objects.filter(company=company)
+        ctx['items'] = training_info
+        return ctx
+
+    def form_valid(self, form):
+        self.company = form.save(commit=False)
+        self.company.company = self.request.user.company
+        self.company.save()
+
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        return super(CompanyCultureCreateViewListView, self).form_invalid(form)
+
+
+class CompanyCultureDeleteView(LoginRequiredMixin, generic.DeleteView):
+    queryset = models.CompanyCulture.objects.all()
+    form_class = forms.CompanyCultureModelForm
+    success_message = "deleted..."
+    success_url = reverse_lazy('company_culture')
+
+
+class CompanyCultureUpdateView(LoginRequiredMixin, generic.UpdateView):
+    form_class = forms.CompanyCultureModelForm
+    model = models.CompanyCulture
+    success_url = reverse_lazy('company_culture')

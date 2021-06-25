@@ -131,3 +131,9 @@ class CompanyModelForm(forms.ModelForm):
     class Meta:
         model = models.Company
         exclude = ('company',)
+
+
+class CompanyCultureModelForm(forms.ModelForm):
+    class Meta:
+        model = models.CompanyCulture
+        exclude = ('company',)
