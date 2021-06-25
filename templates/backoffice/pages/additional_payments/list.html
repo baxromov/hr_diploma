@@ -89,7 +89,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content bg-white">
                 <div class="modal-header">
-                    <h4 class="title text-dark">Ish haqqini biriktirish</h4>
+                    <h4 class="title text-dark">Biriktirish</h4>
                 </div>
                 <div class="modal-body">
                     <form action="{% url 'additional_payment' staff_id %}" method="post">
@@ -148,7 +148,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content bg-white">
                     <div class="modal-header">
-                        <h4 class="title text-dark">Ish haqqini biriktirish</h4>
+                        <h4 class="title text-dark">Biriktirish</h4>
                     </div>
                     <div class="modal-body">
                         <form action="{% url 'additional_payment_update' item.id %}" method="post">
@@ -184,7 +184,7 @@
                         <div class="col-sm-12">
                                 <div class="form-group">
                                     <label for="amount" class="text-dark">Summasi:</label>
-                                    <input type="number" name="amount" id="amount" class="form-control" value="{{ item.amount }}">
+                                    <input type="number" name="amount" id="amount" class="form-control" value="{{ item.amount|stringformat:".2f" }}">
                                 </div>
                         </div>
                         <div class="col-sm-12">
