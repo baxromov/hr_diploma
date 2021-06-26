@@ -7,17 +7,17 @@ from app import models
 
 UserModel = get_user_model()
 
-
-class FlowParentModelSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = models.Staff
-        fields = (
-            'id',
-            'first_name',
-            'last_name',
-            'username',
-        )
+#
+# class FlowParentModelSerializer(serializers.ModelSerializer):
+#
+#     class Meta:
+#         model = models.Staff
+#         fields = (
+#             'id',
+#             'first_name',
+#             'last_name',
+#             'username',
+#         )
 
 
 class FlowModelSerializer(serializers.ModelSerializer):
@@ -30,8 +30,8 @@ class FlowModelSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Flow
-        fields = '__all__'
-        # exclude = ()
+        # fields = '__all__'
+        exclude = ()
 
 
 class StaffModelSerializer(serializers.ModelSerializer):
