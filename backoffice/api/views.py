@@ -21,6 +21,9 @@ class FlowModelViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticated,)
     http_method_names = ['get', 'post']
 
+    def get_queryset(self):
+        return self.queryset.filter(staff__in=self.request.user.company.staff_set.all())
+
 
 class StaffModelViewSet(viewsets.ModelViewSet):
     queryset = models.Staff.objects.all()

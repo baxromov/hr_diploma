@@ -52,9 +52,8 @@
                                 {% for flow in flows %}
                                     <tr>
                                     <td>{{ flow.staff.first_name }} {{ flow.staff.second_name }}</td>
-                                    <td>{{ flow.came }}</td>
-                                    <td>{{ flow.went }}</td>
-                                    <td>{{ flow.went }}</td>
+                                    <td>{{ flow.came|date:'H:i' }}</td>
+                                    <td>{{ flow.went|date:'H:i' }}</td>
                                 </tr>
                                 {% endfor %}
 
