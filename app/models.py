@@ -53,6 +53,29 @@ class Company(models.Model):
         verbose_name_plural = "Kompaniya ma'lumotini qo'shish"
 
 
+class CompanySchedule(models.Model):
+    DAYS_OF_THE_WEEK = (
+        ('monday', 'Monday'),
+        ('tuesday', 'Tuesday'),
+        ('wednesday', 'Wednesday'),
+        ('thursday', 'Thursday'),
+        ('friday', 'Friday'),
+        ('saturday', 'Saturday'),
+        ('sunday', 'Sunday'),
+    )
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
+    day = models.CharField(choices=DAYS_OF_THE_WEEK, max_length=15)
+    start_work = models.TimeField(verbose_name="Ish boshlanishi")
+    lunch_start = models.TimeField(verbose_name="Tushlik vaqti")
+    lunch_end = models.TimeField(verbose_name="Tushlik tugash vaqti")
+    end_work = models.TimeField(verbose_name="Ish Tugash vaqti")
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.day
+
+
 class Branch(models.Model):
     name = models.CharField(max_length=100, verbose_name="Nomi")
     company = models.ForeignKey(Company, on_delete=models.CASCADE, verbose_name="Filial")

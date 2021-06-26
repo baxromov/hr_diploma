@@ -137,3 +137,15 @@ class CompanyCultureModelForm(forms.ModelForm):
     class Meta:
         model = models.CompanyCulture
         exclude = ('company',)
+
+
+class CompanyScheduleModelForm(forms.ModelForm):
+    class Meta:
+        model = models.CompanySchedule
+        exclude = ('company',)
+        widgets = {
+            'start_work': forms.TimeInput(attrs={'class': 'form-control', 'type': 'time'}),
+            'lunch_start': forms.TimeInput(attrs={'class': 'form-control', 'type': 'time'}),
+            'lunch_end': forms.TimeInput(attrs={'class': 'form-control', 'type': 'time'}),
+            'end_work': forms.TimeInput(attrs={'class': 'form-control', 'type': 'time'}),
+        }

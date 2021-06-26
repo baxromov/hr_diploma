@@ -24,315 +24,39 @@
                 <div class="card">
                     <div class="header">
                         <h2>Kelish ketish nazorati</h2>
+                        <ul class="header-dropdown">
+                            <li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="zmdi zmdi-watch"></i> {% now "jS F Y H:i" %} </a>
+                            </li>
+                        </ul>
                     </div>
                     <div class="body">
                         <table class="table-responsive table table-bordered table-striped table-hover dataTable js-exportable">
                             <thead>
                                 <tr>
                                     <th>Xodim</th>
-                                    <th>Birinchi kelishi</th>
-                                    <th>Oxirgi ketishi</th>
+                                    <th>Kirish vaqti</th>
+                                    <th>Chiqish vaqti</th>
                                     <th>Kech qolgan vaqti</th>
-                                    <th>Erta ketishi</th>
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
                                     <th>Xodim</th>
-                                    <th>Birinchi kelishi</th>
-                                    <th>Oxirgi ketishi</th>
+                                    <th>Kirish vaqti</th>
+                                    <th>Chiqish vaqti</th>
                                     <th>Kech qolgan vaqti</th>
-                                    <th>Erta ketishi</th>
                                 </tr>
                             </tfoot>
                             <tbody>
-                                <tr>
-                                    <td>Baxromov Shahzodbek</td>
-                                    <td>08:40</td>
-                                    <td>18:00</td>
-                                    <td>09:00</td>
-                                    <td>17:40</td>
+
+                                {% for flow in flows %}
+                                    <tr>
+                                    <td>{{ flow.staff.first_name }} {{ flow.staff.second_name }}</td>
+                                    <td>{{ flow.came }}</td>
+                                    <td>{{ flow.went }}</td>
+                                    <td>{{ flow.went }}</td>
                                 </tr>
-                                <tr>
-                                    <td>Garrett Winters</td>
-                                    <td>08:40</td>
-                                    <td>18:00</td>
-                                    <td>09:00</td>
-                                    <td>17:40</td>
-                                </tr>
-                                <tr>
-                                    <td>Ashton Cox</td>
-                                    <td>08:40</td>
-                                    <td>18:00</td>
-                                    <td>09:00</td>
-                                    <td>17:40</td>
-                                </tr>
-                                <tr>
-                                    <td>Cedric Kelly</td>
-                                    <td>08:40</td>
-                                    <td>18:00</td>
-                                    <td>09:00</td>
-                                    <td>17:40</td>
-                                </tr>
-                                <tr>
-                                    <td>Airi Satou</td>
-                                    <td>08:40</td>
-                                    <td>18:00</td>
-                                    <td>09:00</td>
-                                    <td>17:40</td>
-                                </tr>
-                                <tr>
-                                    <td>Brielle Williamson</td>
-                                    <td>08:40</td>
-                                    <td>18:00</td>
-                                    <td>09:00</td>
-                                    <td>17:40</td>
-                                </tr>
-                                <tr>
-                                    <td>Herrod Chandler</td>
-                                    <td>08:40</td>
-                                    <td>18:00</td>
-                                    <td>09:00</td>
-                                    <td>17:40</td>
-                                </tr>
-                                <tr>
-                                    <td>Rhona Davidson</td>
-                                    <td>08:40</td>
-                                    <td>18:00</td>
-                                    <td>09:00</td>
-                                    <td>17:40</td>
-                                </tr>
-                                <tr>
-                                    <td>Colleen Hurst</td>
-                                    <td>08:40</td>
-                                    <td>18:00</td>
-                                    <td>09:00</td>
-                                    <td>17:40</td>
-                                </tr>
-                                <tr>
-                                    <td>Sonya Frost</td>
-                                    <td>08:40</td>
-                                    <td>18:00</td>
-                                    <td>09:00</td>
-                                    <td>17:40</td>
-                                </tr>
-                                <tr>
-                                    <td>Jena Gaines</td>
-                                    <td>08:40</td>
-                                    <td>18:00</td>
-                                    <td>09:00</td>
-                                    <td>17:40</td>
-                                </tr>
-                                <tr>
-                                    <td>Quinn Flynn</td>
-                                    <td>08:40</td>
-                                    <td>18:00</td>
-                                    <td>09:00</td>
-                                    <td>17:40</td>
-                                </tr>
-                                <tr>
-                                    <td>Charde Marshall</td>
-                                    <td>08:40</td>
-                                    <td>18:00</td>
-                                    <td>09:00</td>
-                                    <td>17:40</td>
-                                </tr>
-                                <tr>
-                                    <td>Haley Kennedy</td>
-                                    <td>08:40</td>
-                                    <td>18:00</td>
-                                    <td>09:00</td>
-                                    <td>17:40</td>
-                                </tr>
-                                <tr>
-                                    <td>Tatyana Fitzpatrick</td>
-                                    <td>08:40</td>
-                                    <td>18:00</td>
-                                    <td>09:00</td>
-                                    <td>17:40</td>
-                                </tr>
-                                <tr>
-                                    <td>Michael Silva</td>
-                                    <td>08:40</td>
-                                    <td>18:00</td>
-                                    <td>09:00</td>
-                                    <td>17:40</td>
-                                </tr>
-                                <tr>
-                                    <td>Paul Byrd</td>
-                                    <td>08:40</td>
-                                    <td>18:00</td>
-                                    <td>09:00</td>
-                                    <td>17:40</td>
-                                </tr>
-                                <tr>
-                                    <td>Gloria Little</td>
-                                    <td>08:40</td>
-                                    <td>18:00</td>
-                                    <td>09:00</td>
-                                    <td>17:40</td>
-                                </tr>
-                                <tr>
-                                    <td>Bradley Greer</td>
-                                    <td>08:40</td>
-                                    <td>18:00</td>
-                                    <td>09:00</td>
-                                    <td>17:40</td>
-                                </tr>
-                                <tr>
-                                    <td>Dai Rios</td>
-                                    <td>08:40</td>
-                                    <td>18:00</td>
-                                    <td>09:00</td>
-                                    <td>17:40</td>
-                                </tr>
-                                <tr>
-                                    <td>Jenette Caldwell</td>
-                                    <td>08:40</td>
-                                    <td>18:00</td>
-                                    <td>09:00</td>
-                                    <td>17:40</td>
-                                </tr>
-                                <tr>
-                                    <td>Yuri Berry</td>
-                                    <td>08:40</td>
-                                    <td>18:00</td>
-                                    <td>09:00</td>
-                                    <td>17:40</td>
-                                </tr>
-                                <tr>
-                                    <td>Caesar Vance</td>
-                                    <td>08:40</td>
-                                    <td>18:00</td>
-                                    <td>09:00</td>
-                                    <td>17:40</td>
-                                </tr>
-                                <tr>
-                                    <td>Doris Wilder</td>
-                                    <td>08:40</td>
-                                    <td>18:00</td>
-                                    <td>09:00</td>
-                                    <td>17:40</td>
-                                </tr>
-                                <tr>
-                                    <td>Angelica Ramos</td>
-                                    <td>08:40</td>
-                                    <td>18:00</td>
-                                    <td>09:00</td>
-                                    <td>17:40</td>
-                                </tr>
-                                <tr>
-                                    <td>Gavin Joyce</td>
-                                    <td>08:40</td>
-                                    <td>18:00</td>
-                                    <td>09:00</td>
-                                    <td>17:40</td>
-                                </tr>
-                                <tr>
-                                    <td>Jennifer Chang</td>
-                                    <td>08:40</td>
-                                    <td>18:00</td>
-                                    <td>09:00</td>
-                                    <td>17:40</td>
-                                </tr>
-                                <tr>
-                                    <td>Brenden Wagner</td>
-                                    <td>08:40</td>
-                                    <td>18:00</td>
-                                    <td>09:00</td>
-                                    <td>17:40</td>
-                                </tr>
-                                <tr>
-                                    <td>Fiona Green</td>
-                                    <td>08:40</td>
-                                    <td>18:00</td>
-                                    <td>09:00</td>
-                                    <td>17:40</td>
-                                </tr>
-                                <tr>
-                                    <td>Shou Itou</td>
-                                    <td>08:40</td>
-                                    <td>18:00</td>
-                                    <td>09:00</td>
-                                    <td>17:40</td>
-                                </tr>
-                                <tr>
-                                    <td>Michelle House</td>
-                                    <td>08:40</td>
-                                    <td>18:00</td>
-                                    <td>09:00</td>
-                                    <td>17:40</td>
-                                </tr>
-                                <tr>
-                                    <td>Suki Burks</td>
-                                    <td>08:40</td>
-                                    <td>18:00</td>
-                                    <td>09:00</td>
-                                    <td>17:40</td>
-                                </tr>
-                                <tr>
-                                    <td>Prescott Bartlett</td>
-                                    <td>08:40</td>
-                                    <td>18:00</td>
-                                    <td>09:00</td>
-                                    <td>17:40</td>
-                                </tr>
-                                <tr>
-                                    <td>Gavin Cortez</td>
-                                    <td>08:40</td>
-                                    <td>18:00</td>
-                                    <td>09:00</td>
-                                    <td>17:40</td>
-                                </tr>
-                                <tr>
-                                    <td>Martena Mccray</td>
-                                    <td>08:40</td>
-                                    <td>18:00</td>
-                                    <td>09:00</td>
-                                    <td>17:40</td>
-                                </tr>
-                                <tr>
-                                    <td>Unity Butler</td>
-                                    <td>08:40</td>
-                                    <td>18:00</td>
-                                    <td>09:00</td>
-                                    <td>17:40</td>
-                                </tr>
-                                <tr>
-                                    <td>Howard Hatfield</td>
-                                    <td>08:40</td>
-                                    <td>18:00</td>
-                                    <td>09:00</td>
-                                    <td>17:40</td>
-                                </tr>
-                                <tr>
-                                    <td>Hope Fuentes</td>
-                                    <td>08:40</td>
-                                    <td>18:00</td>
-                                    <td>09:00</td>
-                                    <td>17:40</td>
-                                </tr>
-                                <tr>
-                                    <td>Vivian Harrell</td>
-                                    <td>08:40</td>
-                                    <td>18:00</td>
-                                    <td>09:00</td>
-                                    <td>17:40</td>
-                                </tr>
-                                <tr>
-                                    <td>Timothy Mooney</td>
-                                    <td>08:40</td>
-                                    <td>18:00</td>
-                                    <td>09:00</td>
-                                    <td>17:40</td>
-                                </tr>
-                                <tr>
-                                    <td>Jackson Bradshaw</td>
-                                    <td>08:40</td>
-                                    <td>18:00</td>
-                                    <td>09:00</td>
-                                    <td>17:40</td>
-                                </tr>
+                                {% endfor %}
 
                             </tbody>
                         </table>

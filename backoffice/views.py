@@ -789,8 +789,16 @@ class FinishTexttUpdateView(LoginRequiredMixin, generic.UpdateView):
 
 
 # Control the flowing staff
-class ControlFlowingStaffTemplateView(LoginRequiredMixin, generic.TemplateView):
+class ControlFlowingStaffTemplateView(LoginRequiredMixin, generic.ListView):
     template_name = 'backoffice/pages/control_flowing_staffs/index.html'
+    model = models.Flow
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        ctx = super(ControlFlowingStaffTemplateView, self).get_context_data(**kwargs)
+
+        ctx['flows'] = self.model.objects.filter(staff__in=self.request.user.company.staff_set.all())
+
+        return ctx
 
 
 # TrainingInfo
@@ -900,3 +908,44 @@ class CompanyCultureUpdateView(LoginRequiredMixin, generic.UpdateView):
     form_class = forms.CompanyCultureModelForm
     model = models.CompanyCulture
     success_url = reverse_lazy('company_culture')
+
+
+# CompanySchadule
+
+
+# CompanySchedule
+class CompanyScheduleCreateViewListView(LoginRequiredMixin, generic.CreateView):
+    template_name = 'backoffice/pages/company-schedule/index.html'
+    form_class = forms.CompanyScheduleModelForm
+    success_url = reverse_lazy('company_schedule')
+    model = models.CompanySchedule
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        ctx = super(CompanyScheduleCreateViewListView, self).get_context_data(**kwargs)
+        company = self.request.user.company
+        company_schedule = models.CompanySchedule.objects.filter(company=company)
+        ctx['items'] = company_schedule
+        return ctx
+
+    def form_valid(self, form):
+        self.company = form.save(commit=False)
+        self.company.company = self.request.user.company
+        self.company.save()
+
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        return super(CompanyScheduleCreateViewListView, self).form_invalid(form)
+
+
+class CompanyScheduleDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = models.CompanySchedule
+    form_class = forms.CompanyScheduleModelForm
+    success_message = "deleted..."
+    success_url = reverse_lazy('company_schedule')
+
+
+class CompanyScheduleUpdateView(LoginRequiredMixin, generic.UpdateView):
+    form_class = forms.CompanyScheduleModelForm
+    model = models.CompanySchedule
+    success_url = reverse_lazy('company_schedule')

@@ -46,7 +46,7 @@ def bot_user_list_counter(request):
 def staff_gender_statistic(request):
     male = None
     female = None
-    if request.user.is_anonymous == False:
+    if request.user.is_anonymous == False and not request.user.is_superuser == True:
         company =request.user.company
         male = models.Staff.objects.filter(company=company, gender='male')
         female = models.Staff.objects.filter(company=company, gender='female')

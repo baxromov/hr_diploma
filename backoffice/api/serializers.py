@@ -28,6 +28,7 @@ class JWTTokenObtainSerializer(rest_framework_simplejwt_serializers.TokenObtainP
         data['access'] = str(refresh.access_token)
         return data
 
+
 class JWTTokenVerifySerializer(rest_framework_simplejwt_serializers.TokenVerifySerializer):
 
     def validate(self, attrs):
