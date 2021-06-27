@@ -2,6 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from ckeditor import fields
 from ckeditor_uploader.fields import RichTextUploadingField
+from django.utils.datetime_safe import date
 
 
 def get_directory(instance, filename):
@@ -307,8 +308,21 @@ class Staff(models.Model):
     def __str__(self):
         return str(f'{self.first_name} {self.second_name} {self.last_name}')
 
-    # def full_name(self):
-    #     return f'{self.first_name} {self.second_name} {self.last_name}'
+    @property
+    def get_today_flow(self):
+        from django.utils.timezone import datetime
+
+        today = datetime.today()
+        flows = Flow.objects.filter(created_at__day=today.day)
+        return flows
+
+    @property
+    def get_today_flow_count(self):
+        from django.utils.timezone import datetime
+
+        today = datetime.today()
+        flow_count = Flow.objects.filter(created_at__day=today.day).count()
+        return flow_count + 1
 
     class Meta:
         ordering = ['-created_at']

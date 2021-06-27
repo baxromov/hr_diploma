@@ -1,6 +1,6 @@
 {% extends 'backoffice/base.html' %}
 {% load static %}
-
+{% load app_tags %}
 {% block title %}Kelish ketish nazorati{% endblock %}
 
 {% block content %}
@@ -48,15 +48,27 @@
                                 </tr>
                             </tfoot>
                             <tbody>
-
-                                {% for flow in flows %}
+                            {% for staff in staff_flows %}
+                                <div>
                                     <tr>
-                                    <td>{{ flow.staff.first_name }} {{ flow.staff.second_name }}</td>
-                                    <td>{{ flow.came|date:'H:i' }}</td>
-                                    <td>{{ flow.went|date:'H:i' }}</td>
-                                </tr>
-                                {% endfor %}
+{#                                        <td rowspan="3">Shox</td>#}
+                                        <td rowspan="{{ staff.get_today_flow_count }}">{{ staff.first_name }} {{ staff.last_name }}</td>
+                                    </tr>
+                                    {% for flow in staff.get_today_flow %}
+                                        <tr>
+                                            <td>{{ flow.came|date:'H:i' }}
+                                                {% if forloop.first %}
+                                                    <i class="text-{% if flow.came|date:'H:i'|late_delta_bool:user %}danger{% else %}success{% endif %}">
+                                                        (-{{ flow.came|date:'H:i'|late_delta:user }})
+                                                    </i>
+                                                {% endif %}
+                                            </td>
+                                            <td>{{ flow.went|date:'H:i' }}{% if forloop.last %}last{% endif %}</td>
 
+                                        </tr>
+                                    {% endfor %}
+                                </div>
+                          {% endfor %}
                             </tbody>
                         </table>
                     </div>

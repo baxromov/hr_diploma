@@ -796,7 +796,8 @@ class ControlFlowingStaffTemplateView(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         ctx = super(ControlFlowingStaffTemplateView, self).get_context_data(**kwargs)
 
-        ctx['flows'] = self.model.objects.filter(staff__in=self.request.user.company.staff_set.all())
+        # ctx['flows'] = self.model.objects.filter(staff__in=self.request.user.company.staff_set.all())
+        ctx['staff_flows'] = self.request.user.company.staff_set.all()
 
         return ctx
 

@@ -19,7 +19,7 @@ class FlowModelViewSet(viewsets.ModelViewSet):
     queryset = models.Flow.objects.all()
     serializer_class = serializers.FlowModelSerializer
     permission_classes = (permissions.IsAuthenticated,)
-    http_method_names = ['get', 'post']
+    http_method_names = ['get', 'post', 'put']
 
     def get_queryset(self):
         return self.queryset.filter(staff__in=self.request.user.company.staff_set.all())
