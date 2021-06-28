@@ -311,9 +311,8 @@ class Staff(models.Model):
     @property
     def get_today_flow(self):
         from django.utils.timezone import datetime
-
         today = datetime.today()
-        flows = Flow.objects.filter(created_at__day=today.day)
+        flows = self.flow_set.filter(created_at__day=today.day)
         return flows
 
     @property
@@ -321,7 +320,7 @@ class Staff(models.Model):
         from django.utils.timezone import datetime
 
         today = datetime.today()
-        flow_count = Flow.objects.filter(created_at__day=today.day).count()
+        flow_count = self.flow_set.filter(created_at__day=today.day).count()
         return flow_count + 1
 
     class Meta:

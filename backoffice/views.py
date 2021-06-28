@@ -1,25 +1,82 @@
+import os
 from io import BytesIO
 
 import qrcode
+import pendulum
 from PIL import Image, ImageDraw
+
 from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.core.files import File
+from django.db.models import Count
 from django.urls import reverse_lazy
 from django.views import generic
-from telebot import TeleBot
+
+from project import settings
 
 from app import models
 from backoffice import forms
-from django.contrib.messages.views import SuccessMessageMixin
-import os
-from project import settings
 
 
 class MainTemplate(LoginRequiredMixin, generic.ListView):
     queryset = models.Staff.objects.all()
     template_name = 'backoffice/pages/index.html'
+
+    weekdays = {
+        "monday": 0,
+        "tuesday": 1,
+        "wednesday": 2,
+        "thursday": 3,
+        "friday": 4,
+        "saturday": 5,
+        "sunday": 6,
+    }
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        ctx = super(MainTemplate, self).get_context_data(**kwargs)
+        # from datetime import datetime, timedelta
+        # staff_flows = self.request.user.company.staff_set.filter(flow__created_at__date=datetime.today().date()).values(
+        #     'pk').annotate(count=Count('pk'))
+        # flows_list = []
+        # for staff_flow in staff_flows:
+        #     flows_list.append(staff_flow.get('pk'))
+        # ctx['staff_flows'] = models.Staff.objects.filter(id__in=flows_list)
+        # self.request.user.company.staff_set.filter(flow__created_at__date=datetime.today().date()).values(
+        #     'pk').annotate(count=Count('pk'))
+        # one_week_ago = datetime.today() - timedelta(days=7)
+        # # ctx['data_chart'] = ''
+        # print(123)
+
+
+        late_came_person_count_per_day = []
+        company_staff_ids = self.request.user.company.staff_set.all().values_list('id', flat=True)
+
+        start_of_week = pendulum.now().start_of('week')
+        flows = models.Flow.objects.filter(
+            staff_id__in=list(company_staff_ids),
+            came__date__gte=start_of_week.date()
+        )
+
+        schedules = self.request.user.company.companyschedule_set.all()
+
+        # user count by date
+        result = [0, 0, 0, 0, 0, 0, 0]
+
+        for flow in flows:
+            for schedule in schedules:
+
+                if flow.came and pendulum.instance(flow.came).day_of_week == self.weekdays[schedule.day]:
+                    if flow.came and flow.came.time() > schedule.start_work:
+                        result[pendulum.instance(flow.came).day_of_week - 1] += 1
+                    elif flow.went and flow.went.time() < schedule.end_work:
+                        result[pendulum.instance(flow.went).day_of_week - 1] += 1
+
+        late_came_person_count_per_day.append(result)
+
+        ctx['late_came_person_count_per_day'] = result
+        return ctx
 
 
 class TableTemplate(LoginRequiredMixin, generic.TemplateView):
@@ -795,10 +852,13 @@ class ControlFlowingStaffTemplateView(LoginRequiredMixin, generic.ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         ctx = super(ControlFlowingStaffTemplateView, self).get_context_data(**kwargs)
-
-        # ctx['flows'] = self.model.objects.filter(staff__in=self.request.user.company.staff_set.all())
-        ctx['staff_flows'] = self.request.user.company.staff_set.all()
-
+        import datetime
+        staff_flows = self.request.user.company.staff_set.filter(flow__created_at__date=datetime.datetime.today().date()).values(
+            'pk').annotate(count=Count('pk'))
+        flows_list = []
+        for staff_flow in staff_flows:
+            flows_list.append(staff_flow.get('pk'))
+        ctx['staff_flows'] = models.Staff.objects.filter(id__in=flows_list)
         return ctx
 
 

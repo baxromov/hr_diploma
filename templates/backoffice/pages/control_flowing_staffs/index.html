@@ -20,7 +20,7 @@
         </div>
 
         <div class="row clearfix">
-            <div class="col-lg-12">
+            <div class="col-lg-6 col-md-12 col-sm-12">
                 <div class="card">
                     <div class="header">
                         <h2>Kelish ketish nazorati</h2>
@@ -30,13 +30,12 @@
                         </ul>
                     </div>
                     <div class="body">
-                        <table class="table-responsive table table-bordered table-striped table-hover dataTable js-exportable">
+                        <table class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th>Xodim</th>
                                     <th>Kirish vaqti</th>
                                     <th>Chiqish vaqti</th>
-                                    <th>Kech qolgan vaqti</th>
                                 </tr>
                             </thead>
                             <tfoot>
@@ -44,14 +43,12 @@
                                     <th>Xodim</th>
                                     <th>Kirish vaqti</th>
                                     <th>Chiqish vaqti</th>
-                                    <th>Kech qolgan vaqti</th>
                                 </tr>
                             </tfoot>
                             <tbody>
                             {% for staff in staff_flows %}
                                 <div>
                                     <tr>
-{#                                        <td rowspan="3">Shox</td>#}
                                         <td rowspan="{{ staff.get_today_flow_count }}">{{ staff.first_name }} {{ staff.last_name }}</td>
                                     </tr>
                                     {% for flow in staff.get_today_flow %}
@@ -59,12 +56,17 @@
                                             <td>{{ flow.came|date:'H:i' }}
                                                 {% if forloop.first %}
                                                     <i class="text-{% if flow.came|date:'H:i'|late_delta_bool:user %}danger{% else %}success{% endif %}">
-                                                        (-{{ flow.came|date:'H:i'|late_delta:user }})
+                                                        ({% if flow.came|date:'H:i'|late_delta_bool:user %}-{% else %}+{% endif %}{{ flow.came|date:'H:i'|late_delta:user }})
                                                     </i>
                                                 {% endif %}
                                             </td>
-                                            <td>{{ flow.went|date:'H:i' }}{% if forloop.last %}last{% endif %}</td>
-
+                                            <td>{{ flow.went|date:'H:i' }}
+                                                {% if forloop.last %}
+                                                    <i class="text-{% if flow.went|date:'H:i'|earlier_delta_bool:user %}danger{% else %}success{% endif %}">
+                                                            ({% if flow.went|date:'H:i'|earlier_delta_bool:user %}-{% else %}+{% endif %}{{ flow.went|date:'H:i'|earlier_delta:user }})
+                                                    </i>
+                                                {% endif %}
+                                            </td>
                                         </tr>
                                     {% endfor %}
                                 </div>

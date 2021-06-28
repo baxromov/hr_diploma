@@ -161,6 +161,8 @@ AUTHENTICATION_BACKENDS = [
 SITE_ID = 1
 # REST_USE_JWT = False
 REST_FRAMEWORK = {
+
+    # 'DATETIME_FORMAT': "%Y-%m-%d %H:%M:%S",
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     ],
@@ -182,7 +184,6 @@ SIMPLE_JWT = {
     'VERIFYING_KEY': None,
     'AUDIENCE': None,
     'ISSUER': None,
-
     'AUTH_HEADER_TYPES': ('Bearer',),
     'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',
     'USER_ID_FIELD': 'id',
@@ -202,3 +203,5 @@ LOGIN_REDIRECT_URL = reverse_lazy('backoffice-main')
 LOGIN_URL = reverse_lazy('login')
 LOGOUT_REDIRECT_URL = reverse_lazy('login')
 LOGOUT_URL = reverse_lazy('login')
+
+USE_TZ = True
