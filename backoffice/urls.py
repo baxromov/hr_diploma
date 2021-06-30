@@ -113,5 +113,8 @@ urlpatterns = [
     path('company-schedule/update/<int:pk>', views.CompanyScheduleUpdateView.as_view(), name="company_schedule_update"),
 
     # TrainingAnswerListView
-    path('staff-training-answer', views.TrainingAnswerListView.as_view(), name="staff_training_answer")
+    path('staff-training-answer', views.TrainingAnswerListView.as_view(), name="staff_training_answer"),
+
+    # ORG System
+    # path('org-system', views.ORGSystemCreateView.as_view(), name="org_system"),
 ]

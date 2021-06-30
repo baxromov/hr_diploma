@@ -36,7 +36,8 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     # 'nested_inline',
-    'crispy_forms'
+    'crispy_forms',
+    'mptt',
 ]
 
 # REST_AUTH_SERIALIZERS = {
@@ -159,10 +160,8 @@ AUTHENTICATION_BACKENDS = [
 
 # Rest
 SITE_ID = 1
-# REST_USE_JWT = False
 REST_FRAMEWORK = {
 
-    # 'DATETIME_FORMAT': "%Y-%m-%d %H:%M:%S",
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     ],
@@ -204,4 +203,3 @@ LOGIN_URL = reverse_lazy('login')
 LOGOUT_REDIRECT_URL = reverse_lazy('login')
 LOGOUT_URL = reverse_lazy('login')
 
-USE_TZ = True

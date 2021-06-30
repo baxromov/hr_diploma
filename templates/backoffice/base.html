@@ -12,6 +12,7 @@
 
 
     {% include 'backoffice/../app/assets/links.html' %}
+    {% block css %}{% endblock %}
 </head>
 <body class="theme-black" style="overflow: auto">
 {% if request.path == "/backoffice/login" or request.path == "/backoffice/registration" %}

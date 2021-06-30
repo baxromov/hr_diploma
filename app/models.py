@@ -1,8 +1,8 @@
-from django.contrib.auth.models import AbstractUser
-from django.db import models
 from ckeditor import fields
 from ckeditor_uploader.fields import RichTextUploadingField
-from django.utils.datetime_safe import date
+from django.contrib.auth.models import AbstractUser
+from django.db import models
+from mptt.models import MPTTModel, TreeForeignKey
 
 
 def get_directory(instance, filename):
@@ -119,16 +119,17 @@ class Department(models.Model):
         verbose_name_plural = "Bo'limlar"
 
 
-class Position(models.Model):
+class Position(MPTTModel):
     name = models.CharField(max_length=255, verbose_name="Lavozim nomi")
     info = models.CharField(max_length=255, null=True, blank=True, verbose_name='Lavozim haqida')
     company = models.ForeignKey(Company, on_delete=models.CASCADE, verbose_name='Kompaniya')
+    parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.name
 
-    class Meta:
+    class MPTTMeta:
         ordering = ['-created_at']
         verbose_name_plural = "Lavozim"
 
@@ -258,16 +259,16 @@ class Salary(models.Model):
         return self.type_of_work
 
 
-class WorkPlan(models.Model):
-    name = models.CharField(max_length=255)
-
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        verbose_name_plural = "Ish Rejasi"
-
-    def __str__(self):
-        return self.name
+# class WorkPlan(models.Model):
+#     name = models.CharField(max_length=255)
+#
+#     created_at = models.DateTimeField(auto_now_add=True)
+#
+#     class Meta:
+#         verbose_name_plural = "Ish Rejasi"
+#
+#     def __str__(self):
+#         return self.name
 
 
 class Staff(models.Model):
@@ -302,7 +303,7 @@ class Staff(models.Model):
     position = models.ForeignKey(Position, on_delete=models.CASCADE, verbose_name="Lavozim")
 
     note = models.CharField(max_length=255, null=True, blank=True, verbose_name="Eslatma")
-    work_plan = models.ForeignKey(WorkPlan, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Ish jadvali")
+    # work_plan = models.ForeignKey(WorkPlan, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Ish jadvali")
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

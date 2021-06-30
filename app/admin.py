@@ -1,5 +1,7 @@
 from django.contrib import admin
 from app import models
+from mptt.admin import DraggableMPTTAdmin
+from django.utils.html import format_html
 
 
 @admin.register(models.Company)
@@ -20,8 +22,8 @@ class DepartmentModelAdmin(admin.ModelAdmin):
 
 
 @admin.register(models.Position)
-class CompanyModelAdmin(admin.ModelAdmin):
-    pass
+class PositionModelAdmin(DraggableMPTTAdmin):
+    mptt_level_indent = 50
 
 
 @admin.register(models.Staff)

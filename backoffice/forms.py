@@ -1,6 +1,5 @@
-from ckeditor.widgets import CKEditorWidget
 from django import forms
-
+from mptt import forms as mppt_forms
 from app import models
 
 
@@ -149,3 +148,9 @@ class CompanyScheduleModelForm(forms.ModelForm):
             'lunch_end': forms.TimeInput(attrs={'class': 'form-control', 'type': 'time'}),
             'end_work': forms.TimeInput(attrs={'class': 'form-control', 'type': 'time'}),
         }
+
+
+# class ORGSystemModelForm(forms.ModelForm):
+#     class Meta:
+#         model = models.ORGSystem
+#         exclude = ('company',)

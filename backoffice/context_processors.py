@@ -53,13 +53,20 @@ def staff_gender_statistic(request):
 
         male = male.count()
         female = female.count()
+        staff_amount = request.user.company.amount_of_staff
+        width_male = int((100*male)/staff_amount)
+        width_female = int((100*female)/staff_amount)
         return {
             "male_count": male,
             "female_count": female,
-            "company_staff_count": request.user.company.amount_of_staff
+            "company_staff_count": staff_amount,
+            "width_male": width_male,
+            "width_female": width_female,
         }
     return {
         "male_count": '',
         "female_count": '',
-        "company_staff_count": ''
+        "company_staff_count": '',
+        "width_male": '',
+        "width_female": '',
     }

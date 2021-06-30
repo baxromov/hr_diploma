@@ -1,6 +1,6 @@
 import os
 from io import BytesIO
-
+from django.db.models import Q, Count
 import qrcode
 import pendulum
 from PIL import Image, ImageDraw
@@ -24,56 +24,46 @@ class MainTemplate(LoginRequiredMixin, generic.ListView):
     queryset = models.Staff.objects.all()
     template_name = 'backoffice/pages/index.html'
 
-    weekdays = {
-        "monday": 0,
-        "tuesday": 1,
-        "wednesday": 2,
-        "thursday": 3,
-        "friday": 4,
-        "saturday": 5,
-        "sunday": 6,
+    DAYS_OF_WEEK = {
+         0: "monday",
+         1: "tuesday",
+         2: "wednesday",
+         3: "thursday",
+         4: "friday",
+         5: "saturday",
+         6: "sunday",
     }
+
+    def calculation_the_date_of_late(self, that_date, start_work_time):
+        company_staffs = self.request.user.company.staff_set.all()
+        flows = models.Flow.objects.filter(staff__in=company_staffs, created_at__startswith=that_date)
+        flows_all = flows.filter(came__time__lte=start_work_time)
+        flow_list = []
+        for flow in flows_all:
+            flow_list.append(flow.staff.id)
+
+        flows.exclude(id__in=flows)
+        # for flow in flows:
+        #     print(flow)
+        ll = models.Flow.objects.filter(staff__in=company_staffs, created_at__startswith=that_date).exclude(
+            staff__in=flow_list).values_list('staff__pk', flat=True)
+
+        return len(set(ll))
 
     def get_context_data(self, *, object_list=None, **kwargs):
         ctx = super(MainTemplate, self).get_context_data(**kwargs)
-        # from datetime import datetime, timedelta
-        # staff_flows = self.request.user.company.staff_set.filter(flow__created_at__date=datetime.today().date()).values(
-        #     'pk').annotate(count=Count('pk'))
-        # flows_list = []
-        # for staff_flow in staff_flows:
-        #     flows_list.append(staff_flow.get('pk'))
-        # ctx['staff_flows'] = models.Staff.objects.filter(id__in=flows_list)
-        # self.request.user.company.staff_set.filter(flow__created_at__date=datetime.today().date()).values(
-        #     'pk').annotate(count=Count('pk'))
-        # one_week_ago = datetime.today() - timedelta(days=7)
-        # # ctx['data_chart'] = ''
-        # print(123)
-
-
-        late_came_person_count_per_day = []
-        company_staff_ids = self.request.user.company.staff_set.all().values_list('id', flat=True)
-
-        start_of_week = pendulum.now().start_of('week')
-        flows = models.Flow.objects.filter(
-            staff_id__in=list(company_staff_ids),
-            came__date__gte=start_of_week.date()
-        )
-
+        k_day = pendulum.now().day_of_week
         schedules = self.request.user.company.companyschedule_set.all()
 
         # user count by date
         result = [0, 0, 0, 0, 0, 0, 0]
-
-        for flow in flows:
-            for schedule in schedules:
-
-                if flow.came and pendulum.instance(flow.came).day_of_week == self.weekdays[schedule.day]:
-                    if flow.came and flow.came.time() > schedule.start_work:
-                        result[pendulum.instance(flow.came).day_of_week - 1] += 1
-                    elif flow.went and flow.went.time() < schedule.end_work:
-                        result[pendulum.instance(flow.went).day_of_week - 1] += 1
-
-        late_came_person_count_per_day.append(result)
+        if schedules:
+            for i in range(k_day, 0, -1):
+                that_day = pendulum.now().subtract(days=k_day - i).strftime('%Y-%m-%d')
+                start_work_time = self.request.user.company.companyschedule_set.get(day=self.DAYS_OF_WEEK.get(i-1)).start_work
+                late_count = self.calculation_the_date_of_late(that_day, start_work_time)
+                result[i-1] = late_count
+        print(result)
 
         ctx['late_came_person_count_per_day'] = result
         return ctx
@@ -155,7 +145,7 @@ class StaffCreate(LoginRequiredMixin, generic.CreateView):
             'id': staff.id,
         }
         qr_code_image = qrcode.make(user_data)
-        canvas = Image.new('RGB', (450, 450), 'white')
+        canvas = Image.new('RGB', (300, 300), 'white')
         ImageDraw.Draw(canvas)
         canvas.paste(qr_code_image)
         buffer = BytesIO()
@@ -221,7 +211,7 @@ class PositionListView(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         position = super(PositionListView, self).get_context_data(**kwargs)
         company = self.request.user.company
-        position['positions'] = models.Position.objects.filter(company=company).order_by('-created_at')
+        position['positions'] = models.Position.objects.filter(company=company)
         return position
 
 
@@ -1010,3 +1000,28 @@ class CompanyScheduleUpdateView(LoginRequiredMixin, generic.UpdateView):
     form_class = forms.CompanyScheduleModelForm
     model = models.CompanySchedule
     success_url = reverse_lazy('company_schedule')
+
+
+# ORG
+# class ORGSystemCreateView(LoginRequiredMixin, generic.CreateView):
+#     template_name = 'backoffice/pages/org-system/index.html'
+#     form_class = forms.ORGSystemModelForm
+#     success_url = reverse_lazy('company_schedule')
+#     model = models.ORGSystem
+#
+#     def get_context_data(self, *, object_list=None, **kwargs):
+#         ctx = super(ORGSystemCreateView, self).get_context_data(**kwargs)
+#         company = self.request.user.company
+#         org_system = models.ORGSystem.objects.filter(company=company)
+#         ctx['items'] = org_system
+#         return ctx
+#
+#     def form_valid(self, form):
+#         self.company = form.save(commit=False)
+#         self.company.company = self.request.user.company
+#         self.company.save()
+#
+#         return super().form_valid(form)
+#
+#     def form_invalid(self, form):
+#         return super(ORGSystemCreateView, self).form_invalid(form)

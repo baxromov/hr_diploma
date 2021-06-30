@@ -20,13 +20,16 @@ def late_delta(action_time, user):
         coming_time = action_time
     else:
         coming_time = datetime.datetime.strptime(action_time, "%H:%M")
-        schedule = datetime.datetime.strptime(str(company_schedule.start_work), "%H:%M:%S")
+        try:
+            schedule = datetime.datetime.strptime(str(company_schedule.start_work), "%H:%M:%S")
 
-        if coming_time > schedule:
-            # late
-            return coming_time - schedule
-        elif coming_time < schedule:
-            return schedule - coming_time
+            if coming_time > schedule:
+                # late
+                return coming_time - schedule
+            elif coming_time < schedule:
+                return schedule - coming_time
+        except:
+            print("123")
 
 
 @register.filter
@@ -37,13 +40,16 @@ def late_delta_bool(action_time, user):
     if action_time == "":
         coming_time = action_time
     else:
-        coming_time = datetime.datetime.strptime(action_time, "%H:%M")
-        schedule = datetime.datetime.strptime(str(company_schedule.start_work), "%H:%M:%S")
-        if coming_time > schedule:
-            return True
-        elif coming_time < schedule:
-            return False
 
+        coming_time = datetime.datetime.strptime(action_time, "%H:%M")
+        try:
+            schedule = datetime.datetime.strptime(str(company_schedule.start_work), "%H:%M:%S")
+            if coming_time > schedule:
+                return True
+            elif coming_time < schedule:
+                return False
+        except:
+            print("123")
 
 @register.filter
 def earlier_delta(action_time, user):
@@ -54,14 +60,16 @@ def earlier_delta(action_time, user):
         coming_time = action_time
     else:
         coming_time = datetime.datetime.strptime(action_time, "%H:%M")
-        schedule = datetime.datetime.strptime(str(company_schedule.end_work), "%H:%M:%S")
+        try:
+            schedule = datetime.datetime.strptime(str(company_schedule.end_work), "%H:%M:%S")
 
-        if coming_time > schedule:
-            # late
-            return coming_time - schedule
-        elif coming_time < schedule:
-            return schedule - coming_time
-
+            if coming_time > schedule:
+                # late
+                return coming_time - schedule
+            elif coming_time < schedule:
+                return schedule - coming_time
+        except:
+            print("Asd")
 
 
 @register.filter
@@ -73,8 +81,11 @@ def earlier_delta_bool(action_time, user):
         coming_time = action_time
     else:
         coming_time = datetime.datetime.strptime(action_time, "%H:%M")
-        schedule = datetime.datetime.strptime(str(company_schedule.end_work), "%H:%M:%S")
-        if coming_time < schedule:
-            return True
-        elif coming_time > schedule:
-            return False
+        try:
+            schedule = datetime.datetime.strptime(str(company_schedule.end_work), "%H:%M:%S")
+            if coming_time < schedule:
+                return True
+            elif coming_time > schedule:
+                return False
+        except:
+            print("1223")
