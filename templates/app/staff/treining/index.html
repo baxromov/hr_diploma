@@ -23,21 +23,69 @@
                                     </a>
                                     </div>
                                     <div class="media-body">
-                                        <ul class="nav justify-content-between">
-                                            <li class="nav-item">
-                                                <h4 class="media-heading">{{ staff.first_name }} {{ staff.last_name }}</h4>
-                                                <p class="mt-5"><strong>Department:</strong> {{ staff.department.name }}
-                                                </p>
-                                                <p><strong>Position:</strong> {{ staff.position.name }}</p>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <ul class="nav justify-content-between ">
+                                                    <li class="nav-item">
+                                                        <h4 class="media-heading">{{ staff.first_name }} {{ staff.last_name }}</h4>
+                                                        <p class="mt-5">
+                                                            <strong>Department:</strong> {{ staff.department.name }}
+                                                        </p>
+                                                        <p><strong>Position:</strong> {{ staff.position.name }}</p>
 
-                                                <p><strong>Salary:</strong> {{ salary.amount }} so'm</p>
+                                                        <p><strong>Salary:</strong> {{ salary.amount }} so'm</p>
 
-                                            </li>
-                                            <li class="nav-item">
-                                                <p><strong>QR-code</strong></p>
-                                                <img src="{{ staff.qr_code.url }}" style="width: 200px;" alt="">
-                                            </li>
-                                        </ul>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <p><strong>QR-code</strong></p>
+                                                        <img src="{{ staff.qr_code.url }}" style="width: 70px;" alt="">
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h2>Super Staff</h2>
+                                                <ul class="inbox-widget list-unstyled clearfix">
+                                                    <li class="inbox-inner">
+                                                        <a href="javascript:void(0);"></a>
+                                                        <div class="inbox-item"><a href="javascript:void(0);">
+                                                            <div class="inbox-img"><img
+                                                                    src="{{ super_staff_weekly.staff.image.url }}"
+                                                                    class="rounded"
+                                                                    alt=""></div>
+                                                            <div class="inbox-item-info">
+                                                                <p class="author">{{ super_staff_weekly.staff.first_name }} {{ super_staff_weekly.staff.second_name }} {{ super_staff_weekly.staff.last_name }}</p>
+                                                                <p class="inbox-message">{{ super_staff_weekly.text }}</p>
+                                                                <p class="inbox-date">{{ super_staff_weekly.created_at }}</p>
+                                                            </div>
+                                                        </a>
+                                                            <div class="hover_action">
+                                                                <a href="javascript:void(0);">Weekly</a>
+                                                            </div>
+                                                        </div>
+
+                                                    </li>
+                                                    <li class="inbox-inner"><a href="javascript:void(0);">
+                                                    </a>
+                                                        <div class="inbox-item"><a href="javascript:void(0);">
+                                                            <div class="inbox-img"><img
+                                                                    src="{{ super_staff_monthly.staff.image.url }}"
+                                                                    class="rounded"
+                                                                    alt=""></div>
+                                                            <div class="inbox-item-info">
+                                                                <p class="author">{{ super_staff_monthly.staff.first_name }} {{ super_staff_monthly.staff.second_name }} {{ super_staff_monthly.staff.last_name }}</p>
+                                                                <p class="inbox-message">{{ super_staff_monthly.text }}</p>
+                                                                <p class="inbox-date">{{ super_staff_monthly.created_at }}</p>
+                                                            </div>
+                                                        </a>
+                                                            <div class="hover_action">
+                                                                <a href="javascript:void(0);">Monthly</a>
+                                                            </div>
+                                                        </div>
+
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -63,7 +111,8 @@
                             <div class="body">
                                 <!-- Nav tabs -->
                                 <ul class="nav nav-tabs">
-                                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#training_info">Advanced training</a>
+                                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#training_info">Advanced
+                                        training</a>
                                     </li>
                                     <li class="nav-item"><a class="nav-link" data-toggle="tab"
                                                             href="#profile">Company culture</a></li>
@@ -78,10 +127,10 @@
                                         </div>
                                     </div>
                                     <div role="tabpanel" class="tab-pane" id="profile"><b>Profile Content</b>
-                                            <h2 class="text-center">{{ company_culture.title }}</h2>
-                                            <div>
-                                                {{ company_culture.text|safe }}
-                                            </div>
+                                        <h2 class="text-center">{{ company_culture.title }}</h2>
+                                        <div>
+                                            {{ company_culture.text|safe }}
+                                        </div>
                                     </div>
                                 </div>
                             </div>

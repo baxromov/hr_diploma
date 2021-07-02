@@ -6,8 +6,7 @@ from django.core.files import File
 from telebot import TeleBot
 from telebot.types import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove
 
-
-TOKEN = "567316052:AAEiB4vt7evup-R-6PAdZHHXo4nQmWxELCA"
+TOKEN = "1808087529:AAHwN3jlCuI2pBluEi4-AwfaVmtI398mIdQ"
 bot = TeleBot(TOKEN)
 
 import os
@@ -15,7 +14,6 @@ import sys
 import django
 from django.apps import apps
 
-# os.chdir('../')
 BASE_DIR = os.getcwd()
 sys.path.append(BASE_DIR)
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project.settings')
@@ -34,8 +32,6 @@ FinishText = apps.get_model(app_label='app', model_name='FinishText')
 
 @bot.message_handler(commands=['start'])
 def start(message):
-    bot.send_message(message.from_user.id, 'hello')
-
     NewStaff.objects.filter(tg_user_id=message.from_user.id).delete()
     NewStaff.objects.create(tg_user_id=message.from_user.id)
     entry_text = EntryText.objects.last()
@@ -66,6 +62,9 @@ def auth_bot_or_info(message):
         # bot.send_media_group(message.from_user.id, images)
 
         bot.register_next_step_handler(message, auth_bot_or_info)
+    elif message.text == "/start":
+        message.text = None
+        start(message)
     else:
         rkm = ReplyKeyboardMarkup(True)
         rkm.add("🔙 Orqaga")
@@ -75,6 +74,9 @@ def auth_bot_or_info(message):
 
 def get_name(message):
     if message.text == "🔙 Orqaga":
+        start(message)
+    elif message.text == "/start":
+        message.text = None
         start(message)
     else:
         rkm = ReplyKeyboardMarkup(True)
@@ -91,6 +93,9 @@ def get_name(message):
 def get_address(message):
     if message.text == "🔙 Orqaga":
         auth_bot_or_info(message)
+    elif message.text == "/start":
+        message.text = None
+        start(message)
     else:
         rkm = ReplyKeyboardMarkup(True)
         rkm.add("🔙 Orqaga")
@@ -106,6 +111,9 @@ def get_age(message):
     if message.text == "🔙 Orqaga":
         message.text = None
         get_name(message)
+    elif message.text == "/start":
+        message.text = None
+        start(message)
     else:
         rkm = ReplyKeyboardMarkup(True)
         rkm.add("🔙 Orqaga")
@@ -131,6 +139,9 @@ def get_image(message):
     if message.text == "🔙 Orqaga":
         message.text = None
         get_address(message)
+    elif message.text == "/start":
+        message.text = None
+        start(message)
     else:
         if message.photo:
             user = NewStaff.objects.get(tg_user_id=message.from_user.id)
@@ -157,6 +168,9 @@ def get_phone(message):
     if message.text == "🔙 Orqaga":
         message.text = None
         get_age(message)
+    elif message.text == "/start":
+        message.text = None
+        start(message)
     else:
         if message.contact:
             user = NewStaff.objects.get(tg_user_id=message.from_user.id)
@@ -277,7 +291,7 @@ def finish(message):
     current_bot = Bot.objects.filter(token=bot.token).last()
     user.company = current_bot.company
     user.save()
-    bot.send_message(message.from_user.id, finish_text)
+    bot.send_message(message.from_user.id, finish_text.name)
 
 
 bot.polling(none_stop=True)

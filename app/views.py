@@ -35,6 +35,15 @@ class StaffFormView(generic.FormView):
         company_culture = models.CompanyCulture.objects.filter(company=staff.company).last()
         position = staff.position
         training_info = models.TrainingInfo.objects.filter(position=position).last()
+        import datetime
+        date = datetime.date.today()
+        today = datetime.datetime.now()
+        start_week = date - datetime.timedelta(date.weekday())
+        end_week = start_week + datetime.timedelta(7)
+        super_staff_weekly = models.SuperStaffs.objects.filter(created_at__range=[start_week, end_week], type='weekly').last()
+        super_staff_monthly = models.SuperStaffs.objects.filter(created_at__month=today.month, type='monthly').last()
+        context['super_staff_weekly'] = super_staff_weekly
+        context['super_staff_monthly'] = super_staff_monthly
         context['staff'] = staff
         context['salary'] = salary
         context['company_culture'] = company_culture

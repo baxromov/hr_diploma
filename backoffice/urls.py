@@ -115,6 +115,9 @@ urlpatterns = [
     # TrainingAnswerListView
     path('staff-training-answer', views.TrainingAnswerListView.as_view(), name="staff_training_answer"),
 
-    # ORG System
-    # path('org-system', views.ORGSystemCreateView.as_view(), name="org_system"),
+    # Super Staff
+    path('super-staff', views.SuperStaffCreateView.as_view(), name='super_staff'),
+    path('super-staff/delete/<int:pk>', views.SuperStaffDeleteView.as_view(), name='super_staff_delete'),
+    path('super-staff/update/<int:pk>', views.SuperStaffUpdateView.as_view(), name='super_staff_update'),
+
 ]

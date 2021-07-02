@@ -23,6 +23,7 @@ urlpatterns = [
     path('', include('app.urls')),
     path('api/v1/', include('backoffice.api.urls')),
     path('backoffice/', include('backoffice.urls')),
+    path('graph', include('mptt_graph.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -65,6 +65,11 @@ class VacationTypeModelAdmin(admin.ModelAdmin):
     pass
 
 
+@admin.register(models.SuperStaffs)
+class SuperStaffsModelAdmin(admin.ModelAdmin):
+    pass
+
+
 @admin.register(models.Vacation)
 class VacationModelAdmin(admin.ModelAdmin):
     pass

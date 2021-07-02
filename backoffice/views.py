@@ -43,8 +43,6 @@ class MainTemplate(LoginRequiredMixin, generic.ListView):
             flow_list.append(flow.staff.id)
 
         flows.exclude(id__in=flows)
-        # for flow in flows:
-        #     print(flow)
         ll = models.Flow.objects.filter(staff__in=company_staffs, created_at__startswith=that_date).exclude(
             staff__in=flow_list).values_list('staff__pk', flat=True)
 
@@ -1002,26 +1000,43 @@ class CompanyScheduleUpdateView(LoginRequiredMixin, generic.UpdateView):
     success_url = reverse_lazy('company_schedule')
 
 
-# ORG
-# class ORGSystemCreateView(LoginRequiredMixin, generic.CreateView):
-#     template_name = 'backoffice/pages/org-system/index.html'
-#     form_class = forms.ORGSystemModelForm
-#     success_url = reverse_lazy('company_schedule')
-#     model = models.ORGSystem
-#
-#     def get_context_data(self, *, object_list=None, **kwargs):
-#         ctx = super(ORGSystemCreateView, self).get_context_data(**kwargs)
-#         company = self.request.user.company
-#         org_system = models.ORGSystem.objects.filter(company=company)
-#         ctx['items'] = org_system
-#         return ctx
-#
-#     def form_valid(self, form):
-#         self.company = form.save(commit=False)
-#         self.company.company = self.request.user.company
-#         self.company.save()
-#
-#         return super().form_valid(form)
-#
-#     def form_invalid(self, form):
-#         return super(ORGSystemCreateView, self).form_invalid(form)
+# Super Staff
+class SuperStaffCreateView(LoginRequiredMixin, generic.CreateView):
+    template_name = 'backoffice/pages/super-staff/index.html'
+    form_class = forms.SuperStaffsModelForm
+    success_url = reverse_lazy('super_staff')
+    model = models.SuperStaffs
+
+    def get_form(self, form_class=None):
+        f = super().get_form(form_class)
+        f.fields['staff'].queryset = self.request.user.company.staff_set.all()
+        return f
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        ctx = super(SuperStaffCreateView, self).get_context_data(**kwargs)
+        company = self.request.user.company
+        company_super_staff = models.SuperStaffs.objects.filter(company=company)
+        ctx['items'] = company_super_staff
+        return ctx
+
+    def form_valid(self, form):
+        self.company = form.save(commit=False)
+        self.company.company = self.request.user.company
+        self.company.save()
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        return super(SuperStaffCreateView, self).form_invalid(form)
+
+
+class SuperStaffDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = models.SuperStaffs
+    form_class = forms.SuperStaffsModelForm
+    success_message = "deleted..."
+    success_url = reverse_lazy('super_staff')
+
+
+class SuperStaffUpdateView(LoginRequiredMixin, generic.UpdateView):
+    form_class = forms.SuperStaffsModelForm
+    model = models.SuperStaffs
+    success_url = reverse_lazy('super_staff')

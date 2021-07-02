@@ -150,7 +150,10 @@ class CompanyScheduleModelForm(forms.ModelForm):
         }
 
 
-# class ORGSystemModelForm(forms.ModelForm):
-#     class Meta:
-#         model = models.ORGSystem
-#         exclude = ('company',)
+class SuperStaffsModelForm(forms.ModelForm):
+    class Meta:
+        model = models.SuperStaffs
+        exclude = ('company',)
+        widgets = {
+            'text': forms.TextInput(attrs={'class': 'form-control', 'type': 'text', 'style': 'height:100px'}),
+        }

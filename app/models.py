@@ -505,3 +505,19 @@ class CompanyCulture(models.Model):
     class Meta:
         ordering = ['-created_at']
         verbose_name_plural = "Company Culture"
+
+
+class SuperStaffs(models.Model):
+    TYPE_OF_GRADE = (
+        ('weekly', 'Haftalik'),
+        ('monthly', 'Oylik')
+    )
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
+    type = models.CharField(choices=TYPE_OF_GRADE, max_length=20)
+    staff = models.ForeignKey(Staff, on_delete=models.CASCADE)
+    text = models.TextField(null=True, blank=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.staff.first_name
