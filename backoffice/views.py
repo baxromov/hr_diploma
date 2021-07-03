@@ -46,7 +46,7 @@ class MainTemplate(LoginRequiredMixin, generic.ListView):
         ll = models.Flow.objects.filter(staff__in=company_staffs, created_at__startswith=that_date).exclude(
             staff__in=flow_list).values_list('staff__pk', flat=True)
 
-        return len(set(ll))
+        return set(ll)
 
     def get_context_data(self, *, object_list=None, **kwargs):
         ctx = super(MainTemplate, self).get_context_data(**kwargs)
@@ -59,13 +59,17 @@ class MainTemplate(LoginRequiredMixin, generic.ListView):
             for i in range(k_day, 0, -1):
                 that_day = pendulum.now().subtract(days=k_day - i).strftime('%Y-%m-%d')
                 start_work_time = self.request.user.company.companyschedule_set.get(day=self.DAYS_OF_WEEK.get(i-1)).start_work
-                late_count = self.calculation_the_date_of_late(that_day, start_work_time)
+                late_count = len(self.calculation_the_date_of_late(that_day, start_work_time))
                 result[i-1] = late_count
         print(result)
-
+        import datetime
+        today = datetime.datetime.today().date()
+        start_work = self.request.user.company.companyschedule_set.get(day=self.DAYS_OF_WEEK.get(datetime.datetime.today().weekday())).start_work
+        staff_id = self.calculation_the_date_of_late(today, start_work)
+        ctx['late_today'] = models.Staff.objects.filter(id__in=staff_id)
         ctx['late_came_person_count_per_day'] = result
         return ctx
-
+    
 
 class TableTemplate(LoginRequiredMixin, generic.TemplateView):
     template_name = 'backoffice/pages/table/table.html'

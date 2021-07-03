@@ -106,6 +106,35 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="body m-b-20">
+                            <h3>Kech qolganlar</h3>
+                             <table class="table table-responsive table-bordered table-striped table-hover dataTable js-exportable">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Position</th>
+                                        <th>Office</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Position</th>
+                                        <th>Office</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    {% for item in late_today %}
+                                        <tr>
+                                            <td>{{ item.first_name }} {{ item.second_name }} {{ item.last_name }}</td>
+                                            <td>{{ item.position.name }}</td>
+                                            <td>{{ item.mobile_phone }}</td>
+                                        </tr>
+                                    {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-12">
