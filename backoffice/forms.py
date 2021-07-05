@@ -39,6 +39,12 @@ class PositionModelForm(forms.ModelForm):
         }
 
 
+class StaffORGSystemModelForm(forms.ModelForm):
+    class Meta:
+        model = models.StaffORGSystem
+        exclude = ('company',)
+
+
 class StaffModelForm(forms.ModelForm):
     class Meta:
         model = models.Staff

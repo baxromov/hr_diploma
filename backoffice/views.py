@@ -25,13 +25,13 @@ class MainTemplate(LoginRequiredMixin, generic.ListView):
     template_name = 'backoffice/pages/index.html'
 
     DAYS_OF_WEEK = {
-         0: "monday",
-         1: "tuesday",
-         2: "wednesday",
-         3: "thursday",
-         4: "friday",
-         5: "saturday",
-         6: "sunday",
+        0: "monday",
+        1: "tuesday",
+        2: "wednesday",
+        3: "thursday",
+        4: "friday",
+        5: "saturday",
+        6: "sunday",
     }
 
     def calculation_the_date_of_late(self, that_date, start_work_time):
@@ -58,18 +58,20 @@ class MainTemplate(LoginRequiredMixin, generic.ListView):
         if schedules:
             for i in range(k_day, 0, -1):
                 that_day = pendulum.now().subtract(days=k_day - i).strftime('%Y-%m-%d')
-                start_work_time = self.request.user.company.companyschedule_set.get(day=self.DAYS_OF_WEEK.get(i-1)).start_work
+                start_work_time = self.request.user.company.companyschedule_set.get(
+                    day=self.DAYS_OF_WEEK.get(i - 1)).start_work
                 late_count = len(self.calculation_the_date_of_late(that_day, start_work_time))
-                result[i-1] = late_count
+                result[i - 1] = late_count
         print(result)
         import datetime
         today = datetime.datetime.today().date()
-        start_work = self.request.user.company.companyschedule_set.get(day=self.DAYS_OF_WEEK.get(datetime.datetime.today().weekday())).start_work
+        start_work = self.request.user.company.companyschedule_set.get(
+            day=self.DAYS_OF_WEEK.get(datetime.datetime.today().weekday())).start_work
         staff_id = self.calculation_the_date_of_late(today, start_work)
         ctx['late_today'] = models.Staff.objects.filter(id__in=staff_id)
         ctx['late_came_person_count_per_day'] = result
         return ctx
-    
+
 
 class TableTemplate(LoginRequiredMixin, generic.TemplateView):
     template_name = 'backoffice/pages/table/table.html'
@@ -245,6 +247,57 @@ class PositionDeleteView(LoginRequiredMixin, generic.DeleteView):
         message = request.session['name'] + ' deleted successfully'
         messages.success(self.request, message)
         return super(PositionDeleteView, self).delete(request, *args, **kwargs)
+
+
+# StaffORGSystem
+class StaffORGSystemListView(LoginRequiredMixin, generic.ListView):
+    template_name = 'backoffice/pages/staff_org/list.html'
+    queryset = models.StaffORGSystem.objects.all()
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        position = super(StaffORGSystemListView, self).get_context_data(**kwargs)
+        company = self.request.user.company
+        position['items'] = models.StaffORGSystem.objects.filter(company=company)
+        return position
+
+
+class StaffORGSystemCreateView(LoginRequiredMixin, generic.CreateView):
+    template_name = 'backoffice/pages/staff_org/create.html'
+    form_class = forms.StaffORGSystemModelForm
+    success_url = reverse_lazy('staff_org_system')
+
+    def get_form(self, form_class=None):
+        f = super().get_form(form_class)
+        f.fields['staff'].queryset = self.request.user.company.staff_set.all()
+        return f
+
+    def form_valid(self, form):
+        self.company = form.save(commit=False)
+        company = self.request.user.company
+        self.company.company = company
+        self.company.save()
+        return super().form_valid(form)
+
+
+class StaffORGSystemUpdateView(LoginRequiredMixin, generic.UpdateView):
+    template_name = 'backoffice/pages/staff_org/update.html'
+    form_class = forms.StaffORGSystemModelForm
+    model = models.StaffORGSystem
+    context_object_name = "staff_org_system"
+    success_url = reverse_lazy('staff_org_system')
+
+    def form_valid(self, form):
+        self.company = form.save(commit=False)
+        company = self.request.user.company
+        self.company.company = company
+        self.company.save()
+        return super().form_valid(form)
+
+
+class StaffORGSystemDeleteView(LoginRequiredMixin, generic.DeleteView):
+    queryset = models.StaffORGSystem.objects.all()
+    form_class = forms.StaffORGSystemModelForm
+    success_url = reverse_lazy('staff_org_system')
 
 
 # Departments
@@ -845,7 +898,8 @@ class ControlFlowingStaffTemplateView(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         ctx = super(ControlFlowingStaffTemplateView, self).get_context_data(**kwargs)
         import datetime
-        staff_flows = self.request.user.company.staff_set.filter(flow__created_at__date=datetime.datetime.today().date()).values(
+        staff_flows = self.request.user.company.staff_set.filter(
+            flow__created_at__date=datetime.datetime.today().date()).values(
             'pk').annotate(count=Count('pk'))
         flows_list = []
         for staff_flow in staff_flows:

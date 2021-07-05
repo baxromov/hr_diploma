@@ -1,0 +1,41 @@
+{% extends 'backoffice/base.html' %}
+
+{% block title %}
+    Staff's ORG System - Taxrirlash
+{% endblock %}
+
+{% block content %}
+    <section class="content home">
+        <div class="container-fluid">
+        <div class="block-header">
+            <div class="row clearfix">
+                <div class="col-lg-5 col-md-5 col-sm-12">
+                    <h2>Staff's ORG System - Taxrirlash</h2>
+                    <ul class="breadcrumb padding-0">
+                        <li class="breadcrumb-item"><a href="{% url 'backoffice-main' %}"><i class="zmdi zmdi-home"></i></a></li>
+                        <li class="breadcrumb-item active"><a href="{% url 'staff_org_system' %}">Staff's ORG System</a></li>
+                        <li class="breadcrumb-item active">Staff's ORG System - Taxrirlash</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row clearfix">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="header">
+                    </div>
+                    <div class="body">
+                        <form action="{% url 'staff_org_system_update' staff_org_system.id %}" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button type="submit" class="btn btn-success waves-effect">O'zgarishlarni saqlash</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </section>
+{% endblock %}

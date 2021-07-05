@@ -26,6 +26,11 @@ class PositionModelAdmin(DraggableMPTTAdmin):
     mptt_level_indent = 50
 
 
+@admin.register(models.StaffORGSystem)
+class StaffORGSystemDraggableMPTTAdmin(DraggableMPTTAdmin):
+    mptt_level_indent = 50
+
+
 @admin.register(models.Staff)
 class StaffModelAdmin(admin.ModelAdmin):
     list_display = ['first_name', 'second_name', 'last_name', 'mobile_phone']

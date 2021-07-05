@@ -22,6 +22,12 @@ urlpatterns = [
     path('position/update/<int:pk>', views.PositionUpdateView.as_view(), name="position_update"),
     path('position/delete/<int:pk>', views.PositionDeleteView.as_view(), name="position_delete"),
 
+    # StaffORGSystem
+    path('staff-org-system/create', views.StaffORGSystemCreateView.as_view(), name="staff_org_system_create"),
+    path('staff-org-system', views.StaffORGSystemListView.as_view(), name="staff_org_system"),
+    path('staff-org-system/update/<int:pk>', views.StaffORGSystemUpdateView.as_view(), name="staff_org_system_update"),
+    path('staff-org-system/delete/<int:pk>', views.StaffORGSystemDeleteView.as_view(), name="staff_org_system_delete"),
+
     # Department URL
     path('department', views.DepartmentListView.as_view(), name='department'),
     path('department/create', views.DepartmentCreateView.as_view(), name='department_create'),

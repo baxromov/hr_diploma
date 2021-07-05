@@ -521,3 +521,17 @@ class SuperStaffs(models.Model):
 
     def __str__(self):
         return self.staff.first_name
+
+
+class StaffORGSystem(MPTTModel):
+    staff = models.ForeignKey(Staff, on_delete=models.CASCADE)
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
+    parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.staff.first_name} {self.staff.second_name} {self.staff.last_name}'
+
+    class Meta:
+        verbose_name_plural = "Xodimlarning ORG sistemasi"

@@ -1,0 +1,152 @@
+{% extends 'backoffice/base.html' %}
+{% load static %}
+{% load mptt_tags %}
+{% block title %}
+    Staff's ORG System
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'backoffice/assets/plugins/nestable/jquery-nestable.css' %}">
+{% endblock %}
+
+{% block content %}
+    <section class="content">
+        <div class="container-fluid">
+            <div class="block-header">
+                <div class="row clearfix">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
+                        <h2>Lavozim</h2>
+                        <ul class="breadcrumb padding-0">
+                            <li class="breadcrumb-item"><a href="create.html"><i class="zmdi zmdi-home"></i></a></li>
+                            <li class="breadcrumb-item active">Staff's ORG System</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="card">
+                        <div class="header">
+                            <a href="{% url 'staff_org_system_create' %}" class="btn btn-success">Xodim<i class="zmdi zmdi-plus"></i></a>
+                        </div>
+                        <div class="body table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Xodim</th>
+                                    <th>O'shirish</th>
+                                    <th>Taxrirlash</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for item in items %}
+                                    <tr>
+                                        <th scope="row">{{ item.id }}</th>
+                                        <td>
+                                            <a href="#" data-toggle="modal" data-target="#defaultModal{{ item.id }}">
+                                                {{ item.staff.first_name }} {{ item.staff.second_name }} {{ item.staff.last_name }}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <form action="{% url 'staff_org_system_delete' pk=item.pk %}" method="POST">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn btn-neutral waves-effect"><i class="zmdi zmdi-delete"></i></button>
+                                            </form>
+                                        </td>
+                                    <td>
+                                        <a href="{% url 'staff_org_system_update' item.id %}" class="btn btn-neutral waves-effect"><i class="zmdi zmdi-edit"></i></a>
+                                    </td>
+                                    </tr>
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="card">
+                    <div class="header">
+                        <h2><strong>Position</strong> Tree</h2>
+                        <ul class="header-dropdown">
+                            <li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="zmdi zmdi-more"></i> </a>
+                                <ul class="dropdown-menu dropdown-menu-right">
+									<li><a href="javascript:void(0);" class="boxs-close">Hide</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="body">
+                        <div class="clearfix m-b-20">
+                                <link rel="stylesheet" media="screen, projection" href="{% static 'mptt_graph/tree.css' %}" />
+                            <div class="text-center">
+                                <div class="text-left" style="display:inline-block">
+                                    <div class="tree">
+                                        <ul>
+                                        {% recursetree items %}
+                                            <li>
+                                                <a href="{% if node.url %}{{ node.url }}{% else %}{{ node.get_absolute_url }}{% endif %}" id="{{ id }}">
+                                                    <div class="card" style="width: 10rem; height: 10rem !important;">
+                                                      <img src="{{ node.staff.image.url }}" class="card-img-top" alt="...">
+                                                      <div class="card-body">
+                                                        <p class="card-title">{{ node.staff.first_name }} {{ node.staff.second_name }} {{ node.staff.last_name }}</p>
+                                                        <small class="card-text">{{ node.staff.position.name }}</small>
+                                                      </div>
+                                                    </div>
+                                                    <div id="displayzone_{{ id }}" class="displayzone"></div>
+                                                </a>
+                                                {% if not node.is_leaf_node %}
+                                                    <ul>
+                                                        {{ children }}
+                                                    </ul>
+                                                {% endif %}
+                                            </li>
+                                        {% endrecursetree %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+   {% for item in items %}
+         <div class="modal fade" id="defaultModal{{ item.id }}" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="title" id="defaultModalLabel">{{ item.name }}</h4>
+                    </div>
+                    <div class="modal-body">
+                        {% if item.info %}
+                            {{ item.info }}
+                        {% else %}
+                            Ma'lumot yo'q
+                        {% endif %}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">CLOSE</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+   {% endfor %}
+
+{% endblock %}
+
+{% block js %}
+
+    <script src="{% static 'backoffice/assets/plugins/nestable/jquery.nestable.js' %}"></script>
+    <script>
+
+    </script>
+{% endblock %}w
