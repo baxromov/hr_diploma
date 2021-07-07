@@ -42,6 +42,8 @@ class StaffFormView(generic.FormView):
         end_week = start_week + datetime.timedelta(7)
         super_staff_weekly = models.SuperStaffs.objects.filter(created_at__range=[start_week, end_week], type='weekly').last()
         super_staff_monthly = models.SuperStaffs.objects.filter(created_at__month=today.month, type='monthly').last()
+        staff_org_system = models.StaffORGSystem.objects.filter(company=staff.company)
+        context['staff_org_system'] = staff_org_system
         context['super_staff_weekly'] = super_staff_weekly
         context['super_staff_monthly'] = super_staff_monthly
         context['staff'] = staff

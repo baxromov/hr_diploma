@@ -1,10 +1,13 @@
 {% extends 'app/base.html' %}
 
-
+{% load static %}
+{% load mptt_tags %}
 {% block title %}
     Login
 {% endblock %}
-
+{% block css %}
+    <link rel="stylesheet" media="screen, projection" href="{% static 'mptt_graph/tree.css' %}" />
+{% endblock %}
 {% block content %}
     <section class="">
         <div class="container-fluid">
@@ -93,6 +96,8 @@
                     </div>
                 </div>
 
+
+
                 <div class="row clearfix">
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="card">
@@ -170,6 +175,55 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="card">
+                            <div class="header">
+                                <h2><strong>Staff </strong> ORG <small> System</small></h2>
+                                <ul class="header-dropdown">
+                                    <li class="dropdown"><a href="javascript:void(0);" class="dropdown-toggle"
+                                                            data-toggle="dropdown" role="button" aria-haspopup="true"
+                                                            aria-expanded="false"> <i class="zmdi zmdi-more"></i> </a>
+                                        <ul class="dropdown-menu dropdown-menu-right">
+                                            <li><a href="javascript:void(0);" class="boxs-close">Hide</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="body">
+                                 <div class="text-center">
+                                <div class="text-left" style="display:inline-block">
+                                    <div class="tree">
+                                        <ul>
+                                        {% recursetree staff_org_system %}
+                                            <li>
+                                                <a href="{% if node.url %}{{ node.url }}{% else %}{{ node.get_absolute_url }}{% endif %}" id="{{ id }}">
+                                                    <div class="card" style="width: 10rem; height: 10rem !important;">
+                                                      <img src="{{ node.staff.image.url }}" class="card-img-top" alt="...">
+                                                      <div class="card-body">
+                                                        <p class="card-title">{{ node.staff.first_name }} {{ node.staff.second_name }} {{ node.staff.last_name }}</p>
+                                                        <small class="card-text">{{ node.staff.position.name }}</small>
+                                                      </div>
+                                                    </div>
+                                                    <div id="displayzone_{{ id }}" class="displayzone"></div>
+                                                </a>
+                                                {% if not node.is_leaf_node %}
+                                                    <ul>
+                                                        {{ children }}
+                                                    </ul>
+                                                {% endif %}
+                                            </li>
+                                        {% endrecursetree %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -177,9 +231,9 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-            var maxField = 50; //Input fields increment limitation<
-            var addButton = $('.add_button'); //Add button selector
-            var wrapper = $('.field_wrapper'); //Input field wrapper
+            var maxField = 50;
+            var addButton = $('.add_button');
+            var wrapper = $('.field_wrapper');
             var x = 1; //Initial field counter is 1
 
 
@@ -192,20 +246,28 @@
                     '<a href="javascript:void(0);" class="remove_button m-l-5 btn btn-neutral">' +
                     '<i class="zmdi zmdi-minus"></i>' +
                     '</a>' +
-                    '</div>'; //New input field html
+                    '</div>';
                 if (x < maxField) {
-                    x++; //Increment field counter
-                    $(wrapper).append(fieldHTML); //Add field html
+                    x++;
+                    $(wrapper).append(fieldHTML);
                 }
             });
 
-            //Once remove button is clicked
+
             $(wrapper).on('click', '.remove_button', function (e) {
                 e.preventDefault();
-                $(this).parent('div').remove(); //Remove field html
-                x--; //Decrement field counter
+                $(this).parent('div').remove();
+                x--;
             });
         });
 
     </script>
 {% endblock %}
+
+{% block js %}
+
+    <script src="{% static 'backoffice/assets/plugins/nestable/jquery.nestable.js' %}"></script>
+    <script>
+
+    </script>
+{% endblock %}w

@@ -12,6 +12,7 @@
 
 
     {% include 'backoffice/../app/assets/links.html' %}
+    {% block css %}{% endblock %}
 </head>
 <body class="theme-black" style="overflow: auto">
 
@@ -19,5 +20,6 @@
 {% block content %}{% endblock %}
 
 {% include 'backoffice/../app/assets/scripts.html' %}
+{% block js %}{% endblock %}
 </body>
 </html>

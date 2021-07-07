@@ -52,17 +52,17 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
-    var maxField = 50; //Input fields increment limitation<
-    var addButton = $('.add_button'); //Add button selector
-    var wrapper = $('.field_wrapper'); //Input field wrapper
-    var x = 1; //Initial field counter is 1
+    let maxField = 50; //Input fields increment limitation<
+    let addButton = $('.add_button'); //Add button selector
+    let wrapper = $('.field_wrapper'); //Input field wrapper
+    let x = 1; //Initial field counter is 1
 
 
     //Once add button is clicked
     $(addButton).click(function(){
         var fieldHTML = '<div class="mt-3">' +
             '<label for="explicit-label-name' + (x+1) + '">Savol-' + (x+1) + ': </label>' +
-            '<input type="text" id="explicit-label-name' + (x+1) + '" name="field_name" class="form-control" value="" required/>' +
+            '<input type="text" id="explicit-label-name' + (x+1) + '" name="field_name" class="form-control" required/>' +
                 '<a href="javascript:void(0);" class="remove_button m-l-5 btn btn-neutral waves-effect">' +
                     '<i class="zmdi zmdi-minus"></i>' +
                 '</a>' +
