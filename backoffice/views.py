@@ -65,10 +65,15 @@ class MainTemplate(LoginRequiredMixin, generic.ListView):
         print(result)
         import datetime
         today = datetime.datetime.today().date()
-        start_work = self.request.user.company.companyschedule_set.get(
-            day=self.DAYS_OF_WEEK.get(datetime.datetime.today().weekday())).start_work
-        staff_id = self.calculation_the_date_of_late(today, start_work)
-        ctx['late_today'] = models.Staff.objects.filter(id__in=staff_id)
+        try:
+            start_work = self.request.user.company.companyschedule_set.get(
+                day=self.DAYS_OF_WEEK.get(datetime.datetime.today().weekday())).start_work
+            staff_id = self.calculation_the_date_of_late(today, start_work)
+            late_today = models.Staff.objects.filter(id__in=staff_id)
+            ctx['late_today'] = late_today
+        except:
+            ctx['late_today'] = ""
+
         ctx['late_came_person_count_per_day'] = result
         return ctx
 
@@ -331,13 +336,25 @@ class DepartmentUpdateView(LoginRequiredMixin, generic.UpdateView):
     template_name = 'backoffice/pages/departments/update.html'
     form_class = forms.DepartmentsModelForm
     model = models.Department
+    context_object_name = 'department'
     success_url = reverse_lazy('department')
+
+    def get_context_data(self, **kwargs):
+        ctx = super(DepartmentUpdateView, self).get_context_data(**kwargs)
+        questions = models.Question.objects.filter(department_id=self.kwargs.get('pk'))
+        ctx['questions'] = questions
+        return ctx
 
     def form_valid(self, form):
         self.department = form.save(commit=False)
+        post_questions = self.request.POST.getlist('field_name')
         company = self.request.user.company
         self.department.company = company
         self.department.save()
+        questions_a = models.Question.objects.filter(department_id=self.kwargs.get('pk'))
+        for pk, question in enumerate(questions_a):
+            question.question = post_questions[pk-1]
+            question.save()
         return super().form_valid(form)
 
     def form_invalid(self, form):
