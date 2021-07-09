@@ -14243,11 +14243,11 @@ img {
     -webkit-transition: all 0.5s;
     transition: all 0.5s;
     font-family: "Muli", sans-serif;
-    border-radius: .1875rem;
+    /*border-radius: .1875rem;*/
     width: 230px;
     height: calc(100vh - 20px);
-    margin: 10px;
-    background: #f4f7f6;
+    /*margin: 10px;*/
+    background: #363740;
     position: fixed;
     top: 0px;
     left: 50px;
@@ -14268,7 +14268,7 @@ img {
 
 .sidebar .user-info {
     position: relative;
-    border-bottom: 1px solid #eee;
+    /*border-bottom: 1px solid #eee;*/
     color: #424242
 }
 
@@ -14379,14 +14379,14 @@ img {
 }
 
 .sidebar .menu .list a {
-    color: #313740;
+    color: #9FA2B4;
     position: relative;
     padding: 15px
 }
 
 .sidebar .menu .list a:hover, .sidebar .menu .list a:active, .sidebar .menu .list a:focus {
     text-decoration: none !important;
-    color: #525a65
+    color: white
 }
 
 .sidebar .menu .list a i {

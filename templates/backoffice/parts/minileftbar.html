@@ -354,54 +354,239 @@
                         {% endif %}
                         </div>
                         <div class="detail">
-                            <p>{{ request.user.company }}</p>
-{#                            <p class="m-b-0">{{ user.email }}</p>#}
-{#                            <a href="javascript:void(0);" title="" class=" waves-effect waves-block"><i class="zmdi zmdi-facebook-box"></i></a>#}
-{#                            <a href="javascript:void(0);" title="" class=" waves-effect waves-block"><i class="zmdi zmdi-linkedin-box"></i></a>#}
-{#                            <a href="javascript:void(0);" title="" class=" waves-effect waves-block"><i class="zmdi zmdi-instagram"></i></a>#}
-{#                            <a href="javascript:void(0);" title="" class=" waves-effect waves-block"><i class="zmdi zmdi-twitter-box"></i></a>#}
+                            <p style="color:#9FA2B4;">{{ request.user.company }}</p>
                         </div>
                     </div>
                 </li>
-                <li><a href="{% url 'backoffice-main' %}" class="toggled waves-effect waves-block"><i class="zmdi zmdi-home"></i><span>Dashboard</span></a></li>
-                <li>
-                    <a href="{% url 'info' %}" class="menu-toggle waves-effect waves-block"><i class="zmdi zmdi-desktop-windows"></i><span>Info</span></a>
-                </li>
-                <li>
-                    <a href="{% url 'search_staff' %}" class="menu-toggle waves-effect waves-block"><i class="zmdi zmdi-search"></i><span>Hodim qidirish</span></a>
-                </li>
-                <li>
-                    <a href="{% url 'department' %}" class="menu-toggle waves-effect waves-block"><i class="zmdi zmdi-window-maximize"></i><span>Bo'limlar</span> <span class="badge badge-default float-right">{{ department_amounts }}</span></a>
-                </li>
-                <li><a href="{% url 'position' %}" class="menu-toggle waves-effect waves-block"><i class="zmdi zmdi-ticket-star"></i><span>Lavozimlar</span><span class="badge badge-default float-right">{{ position_amounts }}</span></a>
+                <li><a href="{% url 'backoffice-main' %}" class="toggled waves-effect waves-block">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                     <path d="M2 13L11.293 3.707C11.6835 3.31662 12.3165 3.31662 12.707 3.707L22 13H20V21C20 21.5523 19.5523 22 19 22H14V15H10V22H5C4.44772 22 4 21.5523 4 21V13H2Z" fill="#DDE2FF"/>
+                    </svg>
 
-                <li><a href="{% url 'staff' %}" class="menu-toggle waves-effect waves-block"><i class="zmdi zmdi zmdi-accounts-add"></i><span>Xodimlar</span><span class="badge badge-success float-right">{{ amount_staff }}</span></a></li>
-                <li>
-                    <a href="{% url 'training_info' %}" class="menu-toggle waves-effect waves-block"><i class="zmdi zmdi-desktop-windows"></i><span>Hodim Adaptatsiya</span></a>
+                    <span>Dashboard</span>
+                    </a>
+                </li>
+
+                <li><a href="javascript:void(0);" class="menu-toggle waves-effect waves-block toggled">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.8877 10.8967C19.2827 10.7007 20.3567 9.5047 20.3597 8.0557C20.3597 6.6277 19.3187 5.4437 17.9537 5.2197" stroke="#9FA2B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M19.7285 14.2503C21.0795 14.4523 22.0225 14.9253 22.0225 15.9003C22.0225 16.5713 21.5785 17.0073 20.8605 17.2813" stroke="#9FA2B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M11.8867 14.6638C8.67273 14.6638 5.92773 15.1508 5.92773 17.0958C5.92773 19.0398 8.65573 19.5408 11.8867 19.5408C15.1007 19.5408 17.8447 19.0588 17.8447 17.1128C17.8447 15.1668 15.1177 14.6638 11.8867 14.6638Z" stroke="#9FA2B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M11.8867 11.8879C13.9957 11.8879 15.7057 10.1789 15.7057 8.0689C15.7057 5.9599 13.9957 4.2499 11.8867 4.2499C9.77766 4.2499 8.06766 5.9599 8.06766 8.0689C8.05966 10.1709 9.75666 11.8809 11.8587 11.8879H11.8867Z" stroke="#9FA2B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M5.88472 10.8967C4.48872 10.7007 3.41572 9.5047 3.41272 8.0557C3.41272 6.6277 4.45372 5.4437 5.81872 5.2197" stroke="#9FA2B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M4.04388 14.2503C2.69288 14.4523 1.74988 14.9253 1.74988 15.9003C1.74988 16.5713 2.19388 17.0073 2.91188 17.2813" stroke="#9FA2B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+
+                    <span>Xodimlar</span></a>
+                    <ul class="ml-menu" style="display: block;">
+                        <li>
+                                <a href="{% url 'staff' %}" class="waves-effect waves-block">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.8877 10.8967C19.2827 10.7007 20.3567 9.5047 20.3597 8.0557C20.3597 6.6277 19.3187 5.4437 17.9537 5.2197" stroke="#9FA2B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M19.7285 14.2503C21.0795 14.4523 22.0225 14.9253 22.0225 15.9003C22.0225 16.5713 21.5785 17.0073 20.8605 17.2813" stroke="#9FA2B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M11.8867 14.6638C8.67273 14.6638 5.92773 15.1508 5.92773 17.0958C5.92773 19.0398 8.65573 19.5408 11.8867 19.5408C15.1007 19.5408 17.8447 19.0588 17.8447 17.1128C17.8447 15.1668 15.1177 14.6638 11.8867 14.6638Z" stroke="#9FA2B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M11.8867 11.8879C13.9957 11.8879 15.7057 10.1789 15.7057 8.0689C15.7057 5.9599 13.9957 4.2499 11.8867 4.2499C9.77766 4.2499 8.06766 5.9599 8.06766 8.0689C8.05966 10.1709 9.75666 11.8809 11.8587 11.8879H11.8867Z" stroke="#9FA2B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M5.88472 10.8967C4.48872 10.7007 3.41572 9.5047 3.41272 8.0557C3.41272 6.6277 4.45372 5.4437 5.81872 5.2197" stroke="#9FA2B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M4.04388 14.2503C2.69288 14.4523 1.74988 14.9253 1.74988 15.9003C1.74988 16.5713 2.19388 17.0073 2.91188 17.2813" stroke="#9FA2B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                                    <span>Xodimlar</span>
+                                    <span class="badge badge-success float-right">{{ amount_staff }}</span>
+                                </a>
+                        </li>
+                        <li>
+                                <a href="{% url 'position' %}" class="waves-effect waves-block">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M9.59151 15.2068C13.2805 15.2068 16.4335 15.7658 16.4335 17.9988C16.4335 20.2318 13.3015 20.8068 9.59151 20.8068C5.90151 20.8068 2.74951 20.2528 2.74951 18.0188C2.74951 15.7848 5.88051 15.2068 9.59151 15.2068Z" stroke="#9FA2B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M9.59157 12.0198C7.16957 12.0198 5.20557 10.0568 5.20557 7.6348C5.20557 5.2128 7.16957 3.2498 9.59157 3.2498C12.0126 3.2498 13.9766 5.2128 13.9766 7.6348C13.9856 10.0478 12.0356 12.0108 9.62257 12.0198H9.59157Z" stroke="#9FA2B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M16.4832 10.8816C18.0842 10.6566 19.3172 9.2826 19.3202 7.6196C19.3202 5.9806 18.1252 4.6206 16.5582 4.3636" stroke="#9FA2B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M18.5955 14.7322C20.1465 14.9632 21.2295 15.5072 21.2295 16.6272C21.2295 17.3982 20.7195 17.8982 19.8955 18.2112" stroke="#9FA2B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                    <span>Lavozimlar</span>
+                                    <span class="badge badge-default float-right">{{ position_amounts }}</span>
+                                </a>
+                        </li>
+                        <li>
+                                <a href="{% url 'department' %}" class="waves-effect waves-block">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M17.8877 10.8967C19.2827 10.7007 20.3567 9.5047 20.3597 8.0557C20.3597 6.6277 19.3187 5.4437 17.9537 5.2197"
+                                          stroke="#9FA2B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M19.7285 14.2503C21.0795 14.4523 22.0225 14.9253 22.0225 15.9003C22.0225 16.5713 21.5785 17.0073 20.8605 17.2813"
+                                          stroke="#9FA2B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                          d="M11.8867 14.6638C8.67273 14.6638 5.92773 15.1508 5.92773 17.0958C5.92773 19.0398 8.65573 19.5408 11.8867 19.5408C15.1007 19.5408 17.8447 19.0588 17.8447 17.1128C17.8447 15.1668 15.1177 14.6638 11.8867 14.6638Z"
+                                          stroke="#9FA2B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                          d="M11.8867 11.8879C13.9957 11.8879 15.7057 10.1789 15.7057 8.0689C15.7057 5.9599 13.9957 4.2499 11.8867 4.2499C9.77766 4.2499 8.06766 5.9599 8.06766 8.0689C8.05966 10.1709 9.75666 11.8809 11.8587 11.8879H11.8867Z"
+                                          stroke="#9FA2B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M5.88472 10.8967C4.48872 10.7007 3.41572 9.5047 3.41272 8.0557C3.41272 6.6277 4.45372 5.4437 5.81872 5.2197"
+                                          stroke="#9FA2B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M4.04388 14.2503C2.69288 14.4523 1.74988 14.9253 1.74988 15.9003C1.74988 16.5713 2.19388 17.0073 2.91188 17.2813"
+                                          stroke="#9FA2B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                    <span>Bo'limlar</span>
+                                    <span class="badge badge-default float-right">{{ department_amounts }}</span>
+                                </a>
+                        </li>
+                        <li>
+                                <a href="{% url 'staff_org_system' %}" class="waves-effect waves-block">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M23.027 14.5367H21.1274V12.0811C21.1274 11.8031 20.9421 11.6178 20.6641 11.6178H12.4633V9.62548H14.3629C14.9189 9.62548 15.3359 9.2085 15.3359 8.65251V3.97297C15.3359 3.41699 14.9189 3 14.3629 3H9.63706C9.08108 3 8.66409 3.41699 8.66409 3.97297V8.69884C8.66409 9.25483 9.08108 9.67182 9.63706 9.67182H11.5367V11.6178H3.33591C3.05791 11.6178 2.87259 11.8031 2.87259 12.0811V14.5367H0.972973C0.416988 14.5367 0 14.9537 0 15.5097V20.2355C0 20.7915 0.416988 21.2085 0.972973 21.2085H5.69884C6.25483 21.2085 6.67181 20.7915 6.67181 20.2355V15.5097C6.67181 14.9537 6.25483 14.5367 5.69884 14.5367H3.79923V12.5444H11.5367V14.5367H9.63706C9.08108 14.5367 8.66409 14.9537 8.66409 15.5097V20.2355C8.66409 20.7915 9.08108 21.2085 9.63706 21.2085H14.3629C14.9189 21.2085 15.3359 20.7915 15.3359 20.2355V15.5097C15.3359 14.9537 14.9189 14.5367 14.3629 14.5367H12.4633V12.5444H20.2008V14.5367H18.3012C17.7452 14.5367 17.3282 14.9537 17.3282 15.5097V20.2355C17.3282 20.7915 17.7452 21.2085 18.3012 21.2085H23.027C23.583 21.2085 24 20.7915 24 20.2355V15.5097C24 14.9537 23.5367 14.5367 23.027 14.5367ZM5.74517 15.5097C5.69884 15.4633 5.74517 15.4633 5.74517 15.5097V20.2355C5.74517 20.2819 5.74517 20.2819 5.69884 20.2819H0.972973C0.926641 20.2819 0.926641 20.2819 0.926641 20.2355V15.5097C0.926641 15.4633 0.926641 15.4633 0.972973 15.4633L5.74517 15.5097ZM14.4093 15.5097C14.3629 15.4633 14.4093 15.4633 14.4093 15.5097V20.2355C14.4093 20.2819 14.4093 20.2819 14.3629 20.2819H9.63706C9.59073 20.2819 9.59073 20.2819 9.59073 20.2355V15.5097C9.59073 15.4633 9.59073 15.4633 9.63706 15.4633L14.4093 15.5097ZM9.59073 8.65251C9.63707 8.69884 9.59073 8.69884 9.59073 8.65251V3.97297C9.59073 3.92664 9.59073 3.92664 9.63706 3.92664H14.3629C14.4093 3.92664 14.4093 3.92664 14.4093 3.97297V8.69884C14.4093 8.74517 14.4093 8.74517 14.3629 8.74517L9.59073 8.65251ZM23.0734 20.1892C23.0734 20.2355 23.027 20.2355 23.0734 20.1892L18.3012 20.2355C18.2548 20.2355 18.2548 20.2355 18.2548 20.1892V15.5097C18.2548 15.4633 18.2548 15.4633 18.3012 15.4633H23.027C23.0734 15.4633 23.0734 15.4633 23.0734 15.5097V20.1892Z" fill="#9FA2B4"/>
+                                    </svg>
+
+                                    <span>Org. sxema</span>
+                                </a>
+                        </li>
+                        <li>
+                                <a href="{% url 'search_staff' %}" class="waves-effect waves-block">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="11.7666" cy="11.7666" r="8.98856" stroke="#9FA2B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M18.0183 18.4851L21.5423 22" stroke="#9FA2B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                    Hodim qidirish
+                                </a>
+                        </li>
+                    </ul>
+                </li>
+                <li><a href="javascript:void(0);" class="menu-toggle waves-effect waves-block toggled">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M9.59151 15.2068C13.2805 15.2068 16.4335 15.7658 16.4335 17.9988C16.4335 20.2318 13.3015 20.8068 9.59151 20.8068C5.90151 20.8068 2.74951 20.2528 2.74951 18.0188C2.74951 15.7848 5.88051 15.2068 9.59151 15.2068Z" stroke="#9FA2B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M9.59157 12.0198C7.16957 12.0198 5.20557 10.0568 5.20557 7.63476C5.20557 5.21276 7.16957 3.24976 9.59157 3.24976C12.0126 3.24976 13.9766 5.21276 13.9766 7.63476C13.9856 10.0478 12.0356 12.0108 9.62257 12.0198H9.59157Z" stroke="#9FA2B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M16.4832 10.8815C18.0842 10.6565 19.3172 9.28253 19.3202 7.61953C19.3202 5.98053 18.1252 4.62053 16.5582 4.36353" stroke="#9FA2B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M18.5955 14.7322C20.1465 14.9632 21.2295 15.5072 21.2295 16.6272C21.2295 17.3982 20.7195 17.8982 19.8955 18.2112" stroke="#9FA2B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+
+
+                    <span>Hodim adaptatsiya</span></a>
+                    <ul class="ml-menu" style="display: block;">
+                        <li>
+                            <a href="{% url 'training_info' %}" class=" waves-effect waves-block">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M17.7739 2.24769H14.158C13.7482 1.31921 12.8289 0.719971 11.8139 0.719971C10.7988 0.719971 9.87944 1.31921 9.4697 2.24769H5.85352C4.48946 2.24927 3.38415 3.35476 3.38257 4.71883V20.7489C3.38415 22.113 4.48946 23.2185 5.85352 23.22H17.7739C19.138 23.2185 20.2435 22.113 20.2451 20.7489V4.71883C20.2435 3.35476 19.138 2.24927 17.7739 2.24769ZM9.87663 3.37269C10.1407 3.37269 10.3692 3.189 10.4259 2.93078C10.5641 2.30183 11.1479 1.84497 11.8139 1.84497C12.4799 1.84497 13.0635 2.30183 13.2017 2.93078C13.2583 3.189 13.4868 3.37269 13.7512 3.37269H14.8665V3.86629C14.8657 4.60932 14.2636 5.21137 13.5206 5.21225H10.1071C9.36387 5.21137 8.76182 4.60932 8.76095 3.86629V3.37269H9.87663ZM19.1201 20.7489C19.1194 21.4921 18.5172 22.0943 17.7739 22.095H5.85352C5.1105 22.0943 4.50845 21.4921 4.50757 20.7489V4.71883C4.50845 3.97562 5.1105 3.37357 5.85352 3.37269H7.63595V3.86629C7.63753 5.23035 8.74302 6.33567 10.1071 6.33725H13.5206C14.8846 6.33567 15.9899 5.23035 15.9915 3.86629V3.37269H17.7739C18.5172 3.37357 19.1192 3.97562 19.1201 4.71883V20.7489Z" fill="#9FA2B4"/>
+                                    <path d="M14.5978 11.1132L10.9049 14.7188L9.0297 12.8884C8.8091 12.6725 8.45578 12.6752 8.23798 12.8939C8.02037 13.1127 8.01949 13.466 8.23622 13.6858L8.24378 13.6931L10.5117 15.9076C10.7304 16.121 11.0793 16.121 11.2978 15.9076L15.3835 11.9184C15.6045 11.7012 15.608 11.3463 15.3918 11.1246C15.1752 10.9029 14.8205 10.898 14.5978 11.1135V11.1132Z" fill="#9FA2B4"/>
+                                </svg>
+
+                                <span>Hodim Adaptatsiyasi</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'staff_training_answer' %}" class=" waves-effect waves-block">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M17.7739 2.24769H14.158C13.7482 1.31921 12.8289 0.719971 11.8139 0.719971C10.7988 0.719971 9.87944 1.31921 9.4697 2.24769H5.85352C4.48946 2.24927 3.38415 3.35476 3.38257 4.71883V20.7489C3.38415 22.113 4.48946 23.2185 5.85352 23.22H17.7739C19.138 23.2185 20.2435 22.113 20.2451 20.7489V4.71883C20.2435 3.35476 19.138 2.24927 17.7739 2.24769ZM9.87663 3.37269C10.1407 3.37269 10.3692 3.189 10.4259 2.93078C10.5641 2.30183 11.1479 1.84497 11.8139 1.84497C12.4799 1.84497 13.0635 2.30183 13.2017 2.93078C13.2583 3.189 13.4868 3.37269 13.7512 3.37269H14.8665V3.86629C14.8657 4.60932 14.2636 5.21137 13.5206 5.21225H10.1071C9.36387 5.21137 8.76182 4.60932 8.76095 3.86629V3.37269H9.87663ZM19.1201 20.7489C19.1194 21.4921 18.5172 22.0943 17.7739 22.095H5.85352C5.1105 22.0943 4.50845 21.4921 4.50757 20.7489V4.71883C4.50845 3.97562 5.1105 3.37357 5.85352 3.37269H7.63595V3.86629C7.63753 5.23035 8.74302 6.33567 10.1071 6.33725H13.5206C14.8846 6.33567 15.9899 5.23035 15.9915 3.86629V3.37269H17.7739C18.5172 3.37357 19.1192 3.97562 19.1201 4.71883V20.7489Z" fill="#9FA2B4"/>
+                                    <path d="M14.5978 11.1132L10.9049 14.7188L9.0297 12.8884C8.8091 12.6725 8.45578 12.6752 8.23798 12.8939C8.02037 13.1127 8.01949 13.466 8.23622 13.6858L8.24378 13.6931L10.5117 15.9076C10.7304 16.121 11.0793 16.121 11.2978 15.9076L15.3835 11.9184C15.6045 11.7012 15.608 11.3463 15.3918 11.1246C15.1752 10.9029 14.8205 10.898 14.5978 11.1135V11.1132Z" fill="#9FA2B4"/>
+                                </svg>
+
+                                <span>Treining natijalari</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <li>
-                    <a href="{% url 'staff_training_answer' %}" class="menu-toggle waves-effect waves-block"><i class="zmdi zmdi-refresh-sync"></i><span>Training results</span></a>
+                    <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block toggled">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3.09265 9.40421H20.9166" stroke="#9FA2B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M16.4421 13.3097H16.4514" stroke="#9FA2B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12.0046 13.3097H12.0139" stroke="#9FA2B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M7.55793 13.3097H7.5672" stroke="#9FA2B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M16.4421 17.1962H16.4514" stroke="#9FA2B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12.0046 17.1962H12.0139" stroke="#9FA2B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M7.55793 17.1962H7.5672" stroke="#9FA2B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M16.0438 2V5.29078" stroke="#9FA2B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M7.96552 2V5.29078" stroke="#9FA2B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M16.2383 3.5791H7.77096C4.83427 3.5791 3 5.21504 3 8.22213V17.2718C3 20.3261 4.83427 21.9999 7.77096 21.9999H16.229C19.175 21.9999 21 20.3545 21 17.3474V8.22213C21.0092 5.21504 19.1842 3.5791 16.2383 3.5791Z" stroke="#9FA2B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span>Davomat</span></a>
+                    <ul class="ml-menu" style="display: block;">
+                        <li>
+                            <a href="{% url 'control_staff_flow' %}" class=" waves-effect waves-block">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M16.3344 2.75024H7.66537C4.64437 2.75024 2.75037 4.88924 2.75037 7.91624V16.0842C2.75037 19.1112 4.63537 21.2502 7.66537 21.2502H16.3334C19.3644 21.2502 21.2504 19.1112 21.2504 16.0842V7.91624C21.2504 4.88924 19.3644 2.75024 16.3344 2.75024Z" stroke="#9FA2B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M8.43982 12.0002L10.8138 14.3732L15.5598 9.6272" stroke="#9FA2B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+
+
+                                <span>Kelish ketish nazorati</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'company_schedule' %}" class=" waves-effect waves-block">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M16.3347 2.75024H7.66573C4.64473 2.75024 2.75073 4.88924 2.75073 7.91624V16.0842C2.75073 19.1112 4.63473 21.2502 7.66573 21.2502H16.3337C19.3647 21.2502 21.2507 19.1112 21.2507 16.0842V7.91624C21.2507 4.88924 19.3647 2.75024 16.3347 2.75024Z" stroke="#9FA2B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M15.3914 14.0178L12.0004 11.9948V7.63379" stroke="#9FA2B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+
+                                <span>Kompaniya ish vaqti</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <li>
-                    <a href="{% url 'company_culture' %}" class="menu-toggle waves-effect waves-block"><i class="zmdi zmdi-view-headline"></i><span>Company culture</span></a>
+                    <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block toggled">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M9.87663 15.2063C6.03263 15.2063 2.74963 15.7873 2.74963 18.1153C2.74963 20.4433 6.01263 21.0453 9.87663 21.0453C13.7216 21.0453 17.0036 20.4633 17.0036 18.1363C17.0036 15.8093 13.7416 15.2063 9.87663 15.2063Z" stroke="#9FA2B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M9.8766 11.886C12.3996 11.886 14.4446 9.841 14.4446 7.318C14.4446 4.795 12.3996 2.75 9.8766 2.75C7.3546 2.75 5.3096 4.795 5.3096 7.318C5.3006 9.832 7.3306 11.877 9.8456 11.886H9.8766Z" stroke="#9FA2B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M19.2037 8.66919V12.6792" stroke="#9FA2B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M21.2497 10.6741H17.1597" stroke="#9FA2B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+
+                    <span>Recruitment</span></a>
+                    <ul class="ml-menu" style="display: block;">
+                        <li>
+                            <a href="{% url 'new_telegram_staff' %}" class=" waves-effect waves-block">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M2.86261 7.96547C2.77547 7.87823 2.65453 7.82812 2.53125 7.82812C2.40797 7.82812 2.28708 7.87828 2.19984 7.96547C2.11261 8.05266 2.0625 8.17359 2.0625 8.29688C2.0625 8.42016 2.11261 8.54109 2.19984 8.62823C2.28703 8.71547 2.40797 8.76562 2.53125 8.76562C2.65453 8.76562 2.77547 8.71547 2.86261 8.62823C2.94984 8.54109 3 8.42016 3 8.29688C3 8.17359 2.94984 8.05266 2.86261 7.96547Z" fill="#9FA2B4"/>
+                                    <path d="M20.5312 0H11.0469C10.788 0 10.5781 0.209906 10.5781 0.46875C10.5781 0.727594 10.788 0.9375 11.0469 0.9375H20.5312C20.7897 0.9375 21 1.14778 21 1.40625V22.5938C21 22.8522 20.7897 23.0625 20.5312 23.0625H3.46875C3.21028 23.0625 3 22.8522 3 22.5938V10.0469C3 9.78802 2.79009 9.57811 2.53125 9.57811C2.27241 9.57811 2.0625 9.78802 2.0625 10.0469V22.5938C2.0625 23.3692 2.69334 24 3.46875 24H20.5312C21.3067 24 21.9375 23.3692 21.9375 22.5938V1.40625C21.9375 0.630844 21.3067 0 20.5312 0Z" fill="#9FA2B4"/>
+                                    <path d="M12 1.875C11.681 1.875 11.3605 1.89937 11.0473 1.94737C10.7914 1.98666 10.6158 2.22586 10.655 2.48175C10.6942 2.73764 10.9336 2.91305 11.1894 2.87405C11.4558 2.83317 11.7285 2.8125 12 2.8125C14.9207 2.8125 17.2969 5.18869 17.2969 8.10942C17.2969 9.40645 16.8281 10.5958 16.0512 11.5177C15.7075 10.9266 15.238 10.4167 14.6681 10.0213C14.3356 9.79045 13.9782 9.60623 13.6042 9.46988C14.0311 9.05255 14.2969 8.47097 14.2969 7.82822V7.37119C14.2969 6.10462 13.2665 5.07427 12 5.07427C10.7335 5.07427 9.7031 6.10462 9.7031 7.37119V7.82822C9.7031 8.47097 9.96879 9.05255 10.3958 9.46988C10.0218 9.60623 9.66443 9.79045 9.3318 10.0213C8.75923 10.4187 8.28785 10.9314 7.94369 11.526C7.3518 10.8227 6.93809 9.95756 6.77623 8.99245C6.73343 8.73722 6.49151 8.565 6.23641 8.6077C5.98109 8.6505 5.80882 8.89219 5.85162 9.14752C6.09265 10.5847 6.83876 11.9002 7.95255 12.8516C9.07901 13.8139 10.5164 14.3439 11.9999 14.3439C15.4376 14.3439 18.2344 11.5471 18.2344 8.10947C18.2344 4.6718 15.4376 1.875 12 1.875ZM10.6406 7.37114C10.6406 6.62156 11.2504 6.01172 12 6.01172C12.7495 6.01172 13.3594 6.62156 13.3594 7.37114V7.82817C13.3594 8.5777 12.7495 9.18755 12 9.18755C11.2504 9.18755 10.6406 8.5777 10.6406 7.82817V7.37114ZM12 13.4063C10.7309 13.4063 9.5576 12.9632 8.63932 12.2119C9.26876 10.9344 10.5555 10.125 12 10.125C13.4414 10.125 14.7258 10.9311 15.3566 12.2039C14.4422 12.9549 13.2728 13.4063 12 13.4063Z" fill="#9FA2B4"/>
+                                    <path d="M16.3293 18.6565H9.6731C9.41425 18.6565 9.20435 18.8664 9.20435 19.1252C9.20435 19.3841 9.41425 19.594 9.6731 19.594H16.3293C16.5882 19.594 16.7981 19.3841 16.7981 19.1252C16.7981 18.8664 16.5882 18.6565 16.3293 18.6565Z" fill="#9FA2B4"/>
+                                    <path d="M8.00206 16.1686C7.91487 16.0814 7.79394 16.0312 7.67065 16.0312C7.54737 16.0312 7.42644 16.0814 7.33925 16.1686C7.25206 16.2558 7.2019 16.3767 7.2019 16.5C7.2019 16.6237 7.25211 16.7442 7.33925 16.8314C7.42644 16.9186 7.54737 16.9688 7.67065 16.9688C7.79394 16.9688 7.91487 16.9186 8.00206 16.8314C8.08972 16.7442 8.1394 16.6233 8.1394 16.5C8.1394 16.3767 8.08972 16.2558 8.00206 16.1686Z" fill="#9FA2B4"/>
+                                    <path d="M8.00206 18.7936C7.91487 18.7064 7.7944 18.6562 7.67065 18.6562C7.54737 18.6562 7.42644 18.7064 7.33925 18.7936C7.25206 18.8808 7.2019 19.0017 7.2019 19.125C7.2019 19.2487 7.25211 19.3692 7.33925 19.4564C7.42644 19.5436 7.54737 19.5938 7.67065 19.5938C7.79394 19.5938 7.91487 19.5436 8.00206 19.4564C8.08972 19.3692 8.1394 19.2488 8.1394 19.125C8.1394 19.0017 8.08972 18.8808 8.00206 18.7936Z" fill="#9FA2B4"/>
+                                    <path d="M16.3293 16.0315H9.6731C9.41425 16.0315 9.20435 16.2414 9.20435 16.5002C9.20435 16.7591 9.41425 16.969 9.6731 16.969H16.3293C16.5882 16.969 16.7981 16.7591 16.7981 16.5002C16.7981 16.2414 16.5882 16.0315 16.3293 16.0315Z" fill="#9FA2B4"/>
+                                    <path d="M7.57622 2.70146C7.39308 2.51846 7.09636 2.51846 6.91327 2.70146L5.38673 4.22799L4.86506 3.70632C4.68192 3.52332 4.3852 3.52332 4.2021 3.70632C4.01906 3.88941 4.01906 4.18623 4.2021 4.36927L5.05523 5.2224C5.14678 5.3139 5.26669 5.3597 5.38669 5.3597C5.50669 5.3597 5.62659 5.3139 5.71819 5.22245L7.57622 3.36441C7.75927 3.18132 7.75927 2.88451 7.57622 2.70146Z" fill="#9FA2B4"/>
+                                    <path d="M5.90625 0C3.7868 0 2.0625 1.7243 2.0625 3.84375C2.0625 5.9632 3.7868 7.6875 5.90625 7.6875C8.0257 7.6875 9.75 5.9632 9.75 3.84375C9.75 1.7243 8.0257 0 5.90625 0ZM5.90625 6.75C4.30373 6.75 3 5.44627 3 3.84375C3 2.24123 4.30373 0.9375 5.90625 0.9375C7.50877 0.9375 8.8125 2.24123 8.8125 3.84375C8.8125 5.44627 7.50877 6.75 5.90625 6.75Z" fill="#9FA2B4"/>
+                                </svg>
+                                <span>Kandidatlar</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <li>
-                    <a href="{% url 'company_schedule' %}" class="menu-toggle waves-effect waves-block"><i class="zmdi zmdi-time-interval"></i><span>Company Schedule</span></a>
+                    <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block toggled">
+                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M16.3341 2.75011H7.66512C4.64412 2.75011 2.75012 4.88911 2.75012 7.91611V16.0841C2.75012 19.1111 4.63512 21.2501 7.66512 21.2501H16.3331C19.3641 21.2501 21.2501 19.1111 21.2501 16.0841V7.91611C21.2501 4.88911 19.3641 2.75011 16.3341 2.75011Z" stroke="#9FA2B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M11.9948 16.0001V12.0001" stroke="#9FA2B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M11.9899 8.2043H11.9999" stroke="#9FA2B4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+
+                    <span>Info</span></a>
+                    <ul class="ml-menu" style="display: block;">
+                        <li>
+                            <a href="{% url 'info' %}" class=" waves-effect waves-block">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M16.3341 2.75011H7.66512C4.64412 2.75011 2.75012 4.88911 2.75012 7.91611V16.0841C2.75012 19.1111 4.63512 21.2501 7.66512 21.2501H16.3331C19.3641 21.2501 21.2501 19.1111 21.2501 16.0841V7.91611C21.2501 4.88911 19.3641 2.75011 16.3341 2.75011Z" stroke="#9FA2B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M11.9948 16.0001V12.0001" stroke="#9FA2B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M11.9899 8.2043H11.9999" stroke="#9FA2B4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+
+                                <span>Kompaniya info</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'company_culture' %}" class=" waves-effect waves-block">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M0.692393 6.62852C0.683671 6.67594 0.678755 6.72399 0.677169 6.77204V7.75905C0.678438 8.16581 0.931058 8.52944 1.31213 8.67232V10.1246C1.31387 10.6108 1.69621 11.0104 2.18179 11.0334V19.4235C1.69621 19.4466 1.31387 19.8463 1.31213 20.3323V21.7803C0.930265 21.927 0.677803 22.2933 0.677169 22.7022V23.6676C0.677169 23.8476 0.823381 23.9937 1.00337 23.9937H22.9973C23.1773 23.9937 23.3234 23.8476 23.3234 23.6676V22.7022C23.3227 22.2932 23.0703 21.9269 22.6886 21.7803V20.3238C22.6868 19.8376 22.3043 19.4379 21.8189 19.4149V11.0334C22.3043 11.0104 22.6868 10.6108 22.6886 10.1246V8.67232C23.0695 8.52944 23.3221 8.16581 23.3234 7.75905V6.77854C23.3219 6.73049 23.3169 6.68244 23.3081 6.63503C23.4721 6.70766 23.6638 6.63376 23.7365 6.46978C23.8091 6.30597 23.7352 6.11425 23.5714 6.04146L12.1504 0.0386793C12.0551 -0.011591 11.9412 -0.011591 11.8459 0.0386793L0.425025 6.03496C0.265651 6.11916 0.204597 6.31628 0.288486 6.47565C0.36524 6.62123 0.53841 6.68688 0.692393 6.62852ZM1.96437 9.2375V8.73528H5.7256V9.23322L1.96437 9.2375ZM10.3392 11.0357V19.4235C9.85363 19.4466 9.47129 19.8463 9.46955 20.3323V21.7194H6.37341V20.3323C6.37166 19.8463 5.98933 19.4466 5.50375 19.4235V11.0334C5.98933 11.0104 6.37166 10.6108 6.37341 10.1246V8.73528H9.46511V10.1225C9.4659 10.6095 9.84856 11.0101 10.3349 11.0334L10.3392 11.0357ZM10.1218 9.2375V8.73528H13.8832V9.23322L10.1218 9.2375ZM18.4968 11.0357V19.4235C18.0112 19.4466 17.6287 19.8463 17.627 20.3323V21.7194H14.531V20.3323C14.5292 19.8463 14.1467 19.4466 13.6613 19.4235V11.0334C14.1467 11.0104 14.5292 10.6108 14.531 10.1246V8.73528H17.6227V10.1225C17.6233 10.6095 18.006 11.0101 18.4923 11.0334L18.4968 11.0357ZM18.2794 9.2375V8.73528H22.0406V9.23322L18.2794 9.2375ZM22.0406 21.2217V21.7194H18.2749V21.2217H22.0406ZM13.8832 21.2217V21.7194H10.1175V21.2217H13.8832ZM10.661 10.3877H10.3784C10.2342 10.3877 10.1175 10.271 10.1175 10.1268V9.88975H13.8787V10.1268C13.8787 10.271 13.762 10.3877 13.6179 10.3877H10.661ZM13.0113 11.0399V19.4192H10.9872V11.0399H13.0113ZM10.661 20.0715H13.6179C13.762 20.0715 13.8787 20.1882 13.8787 20.3323V20.5694H10.1175V20.3323C10.1175 20.1882 10.2342 20.0715 10.3784 20.0715H10.661ZM5.72132 21.2217V21.7194H1.95993V21.2217H5.72132ZM1.95993 10.1333V9.88975H5.72132V10.1268C5.72132 10.271 5.60461 10.3877 5.4603 10.3877H2.2143C2.07189 10.3842 1.95866 10.267 1.95993 10.1246V10.1333ZM4.85166 11.0464V19.4192H2.82959V11.0399L4.85166 11.0464ZM1.95993 20.339C1.95993 20.1947 2.07665 20.078 2.2208 20.078H5.4603C5.60461 20.078 5.72132 20.1947 5.72132 20.339V20.5759H1.95993V20.339ZM22.6711 22.7153V23.3544H1.32513V22.7153C1.32513 22.5292 1.47594 22.3782 1.66212 22.3782H22.3341C22.5176 22.3782 22.6676 22.5252 22.6711 22.7087V22.7153ZM22.0363 20.339V20.5759H18.2749V20.339C18.2749 20.1947 18.3917 20.078 18.5358 20.078H21.782C21.921 20.0815 22.0328 20.1933 22.0363 20.3323V20.339ZM19.1446 19.4257V11.0399H21.1687V19.4192L19.1446 19.4257ZM22.0363 10.1333C22.0363 10.2775 21.9196 10.3942 21.7755 10.3942H18.538C18.3939 10.3942 18.2772 10.2775 18.2772 10.1333V9.88975H22.0384L22.0363 10.1333ZM11.9981 0.690924L21.7101 5.79581H2.28613L11.9981 0.690924ZM1.32513 6.77854C1.32513 6.59855 1.47119 6.4525 1.65118 6.4525H22.3451C22.5251 6.4525 22.6711 6.59855 22.6711 6.77854V7.76571C22.6711 7.9457 22.5251 8.09175 22.3451 8.09175H1.65118C1.47119 8.09175 1.32513 7.9457 1.32513 7.76571V6.77854Z" fill="#9FA2B4"/>
+                                </svg>
+
+                                <span>Kompaniya madaniyati</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <li>
-                    <a href="{% url 'control_staff_flow' %}" class="menu-toggle waves-effect waves-block"><i class="zmdi zmdi-run"></i><span>Kelish ketish nazorati</span></a>
-                </li>
-                <li>
-                    <a href="" class="menu-toggle waves-effect waves-block"><i class="zmdi zmdi-money-box"></i><span>Maosh hisoblash</span></a>
-                </li>
-                <li>
-                    <a href="{% url 'new_telegram_staff' %}" class="menu-toggle waves-effect waves-block"><i class="zmdi zmdi-account-box-o "></i><span>Kondidatlar</span><span class="badge badge-default float-right">{{ bot_user_list_counter }}</span></a>
-                </li>
-                <li>
-                    <a href="{% url 'super_staff' %}" class="menu-toggle waves-effect waves-block"><i class="zmdi zmdi-label-heart"></i><span>Super Staff</span></a>
-                </li>
-                <li>
-                    <a href="{% url 'staff_org_system' %}" class="menu-toggle waves-effect waves-block"><i class="zmdi zmdi-label-heart"></i><span>Staff's ORG System</span></a>
+                    <a href="{% url 'super_staff' %}" class="menu-toggle waves-effect waves-block">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.1043 4.17701L14.9317 7.82776C15.1108 8.18616 15.4565 8.43467 15.8573 8.49218L19.9453 9.08062C20.9554 9.22644 21.3573 10.4505 20.6263 11.1519L17.6702 13.9924C17.3797 14.2718 17.2474 14.6733 17.3162 15.0676L18.0138 19.0778C18.1856 20.0698 17.1298 20.8267 16.227 20.3574L12.5732 18.4627C12.215 18.2768 11.786 18.2768 11.4268 18.4627L7.773 20.3574C6.87023 20.8267 5.81439 20.0698 5.98724 19.0778L6.68385 15.0676C6.75257 14.6733 6.62033 14.2718 6.32982 13.9924L3.37368 11.1519C2.64272 10.4505 3.04464 9.22644 4.05466 9.08062L8.14265 8.49218C8.54354 8.43467 8.89028 8.18616 9.06937 7.82776L10.8957 4.17701C11.3477 3.27433 12.6523 3.27433 13.1043 4.17701Z" stroke="#9FA2B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+
+                        <span>Shuxrat devori</span></a>
                 </li>
             </ul>
         </div>
