@@ -1,24 +1,22 @@
 import os
 from io import BytesIO
-from django.db.models import Q, Count
-import qrcode
-import pendulum
-from PIL import Image, ImageDraw
 
+import pendulum
+import qrcode
+from PIL import Image, ImageDraw
 from django.contrib import messages
-from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
+from django.contrib.messages.views import SuccessMessageMixin
 from django.core.files import File
 from django.db.models import Count
-from django.shortcuts import render
+from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views import generic
 
-from project import settings
-
 from app import models
 from backoffice import forms
+from project import settings
 
 
 class MainTemplate(LoginRequiredMixin, generic.ListView):
@@ -164,7 +162,8 @@ class StaffCreate(LoginRequiredMixin, generic.CreateView):
         staff.save()
         canvas.close()
         # *****************************************
-        return super().form_valid(form)
+        messages.success(self.request, 'Xodim yaratildi !!!')
+        return HttpResponseRedirect(reverse_lazy('staff'))
 
     def form_invalid(self, form):
         return super(StaffCreate, self).form_invalid(form)
@@ -174,6 +173,14 @@ class StaffDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = models.Staff
     form_class = forms.StaffModelForm
     success_url = reverse_lazy('staff')
+
+    def delete(self, request, *args, **kwargs):
+        try:
+            super().delete(request, *args, **kwargs)
+            messages.warning(self.request, "Xodim o'chirildi!!!")
+            return HttpResponseRedirect(reverse_lazy('staff'))
+        except:
+            print("asd")
 
 
 # Authentication
@@ -212,11 +219,13 @@ class PositionCreateView(LoginRequiredMixin, generic.CreateView):
         return f
 
     def form_valid(self, form):
+        from django.contrib import messages
         self.position = form.save(commit=False)
         company = self.request.user.company
         self.position.company = company
         self.position.save()
-        return super().form_valid(form)
+        messages.success(self.request, 'Xodim lavozimi yaratildi')
+        return HttpResponseRedirect(reverse_lazy('position'))
 
 
 class PositionListView(LoginRequiredMixin, generic.ListView):
@@ -241,7 +250,8 @@ class PositionUpdateView(LoginRequiredMixin, generic.UpdateView):
         company = self.request.user.company
         self.position.company = company
         self.position.save()
-        return super().form_valid(form)
+        messages.success(self.request, "Xodim lavozimi o'zgartirildi")
+        return HttpResponseRedirect(reverse_lazy('position'))
 
 
 class PositionDeleteView(LoginRequiredMixin, generic.DeleteView):
@@ -252,12 +262,12 @@ class PositionDeleteView(LoginRequiredMixin, generic.DeleteView):
     success_url = '/backoffice/position'
 
     def delete(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        name = self.object.name
-        request.session['name'] = name  # name will be change according to your need
-        message = request.session['name'] + ' deleted successfully'
-        messages.success(self.request, message)
-        return super(PositionDeleteView, self).delete(request, *args, **kwargs)
+        try:
+            super().delete(request, *args, **kwargs)
+            messages.warning(self.request, "Xodim lavozimi o'chirildi!!!")
+            return HttpResponseRedirect(reverse_lazy('position'))
+        except:
+            print("asd")
 
 
 # StaffORGSystem
@@ -327,16 +337,12 @@ class DepartmentListView(LoginRequiredMixin, generic.ListView):
 class DepartmentDeleteView(LoginRequiredMixin, generic.DeleteView):
     queryset = models.Department.objects.all()
     form_class = forms.DepartmentsModelForm
-    success_message = "deleted..."
     success_url = reverse_lazy('department')
 
     def delete(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        name = self.object.name
-        request.session['name'] = name
-        message = request.session['name'] + ' deleted successfully'
-        messages.success(self.request, message)
-        return super(DepartmentDeleteView, self).delete(request, *args, **kwargs)
+        super(DepartmentDeleteView, self).delete(request, *args, **kwargs)
+        messages.warning(self.request, "Bo'lim o'chirildi !!!")
+        return HttpResponseRedirect(reverse_lazy('department'))
 
 
 class DepartmentUpdateView(LoginRequiredMixin, generic.UpdateView):
@@ -362,7 +368,8 @@ class DepartmentUpdateView(LoginRequiredMixin, generic.UpdateView):
         for pk, question in enumerate(questions_a):
             question.question = post_questions[pk-1]
             question.save()
-        return super().form_valid(form)
+        messages.success(self.request, "Bo'lim o'zgartirildi !!!")
+        return HttpResponseRedirect(reverse_lazy('department'))
 
     def form_invalid(self, form):
         return super(DepartmentUpdateView, self).form_invalid(form)
@@ -381,7 +388,8 @@ class DepartmentCreateView(LoginRequiredMixin, generic.CreateView):
         self.department.save()
         for question in questions:
             models.Question.objects.create(question=question, department=self.department)
-        return super().form_valid(form)
+        messages.success(self.request, "Bo'lim yaratildi !!!")
+        return HttpResponseRedirect(reverse_lazy('department'))
 
 
 # Salary
@@ -410,7 +418,8 @@ class SalaryCreateView(LoginRequiredMixin, generic.CreateView):
         staff = models.Staff.objects.get(pk=staff_id)
         self.object.staff = staff
         self.object.save()
-        return super(SalaryCreateView, self).form_valid(form)
+        messages.success(self.request, 'Xodim ish haqqi biriktirildi')
+        return HttpResponseRedirect(reverse_lazy('salary', kwargs={'pk': staff_id}))
 
     def form_invalid(self, form):
         return super(SalaryCreateView, self).form_invalid(form)
@@ -424,11 +433,24 @@ class SalaryUpdateView(LoginRequiredMixin, generic.UpdateView):
         staff_id = self.request.META['HTTP_REFERER'].split("/")[-1]
         return reverse_lazy('salary', kwargs={'pk': staff_id})
 
+    def form_valid(self, form):
+        staff_id = self.request.META['HTTP_REFERER'].split("/")[-1]
+        messages.success(self.request, "Xodim ish haqqi o'zgartirildi")
+        return HttpResponseRedirect(reverse_lazy('salary', kwargs={'pk': staff_id}))
+
+    def form_invalid(self, form):
+        return super(SalaryUpdateView, self).form_invalid(form)
+
 
 class SalaryDeleteView(LoginRequiredMixin, generic.DeleteView):
     queryset = models.Salary.objects.all()
     form_class = forms.SalaryModelForm
-    success_message = "deleted..."
+
+    def delete(self, request, *args, **kwargs):
+        super(SalaryDeleteView, self).delete(*args, **kwargs)
+        staff_id = self.request.META['HTTP_REFERER'].split("/")[-1]
+        messages.success(self.request, "Xodim ish haqqi o'chirildi")
+        return HttpResponseRedirect(reverse_lazy('salary', kwargs={'pk': staff_id}))
 
     def get_success_url(self):
         staff_id = self.request.META['HTTP_REFERER'].split("/")[-1]
@@ -462,7 +484,8 @@ class VacationCreateView(LoginRequiredMixin, generic.CreateView):
         staff = models.Staff.objects.get(pk=staff_id)
         self.object.staff = staff
         self.object.save()
-        return super(VacationCreateView, self).form_valid(form)
+        messages.warning(self.request, "Qo'shimcha dam olish biriktirildi !!!")
+        return reverse_lazy('vacation', kwargs={'pk': staff_id})
 
     def form_invalid(self, form):
         return super(VacationCreateView, self).form_invalid(form)
@@ -471,10 +494,15 @@ class VacationCreateView(LoginRequiredMixin, generic.CreateView):
 class VacationDeleteView(LoginRequiredMixin, generic.DeleteView):
     queryset = models.Vacation.objects.all()
     form_class = forms.VacationModelForm
-    success_message = "deleted..."
 
     def get_success_url(self):
         staff_id = self.request.META['HTTP_REFERER'].split("/")[-1]
+        return reverse_lazy('vacation', kwargs={'pk': staff_id})
+
+    def delete(self, request, *args, **kwargs):
+        super(VacationDeleteView, self).delete(request, *args, **kwargs)
+        staff_id = self.request.META['HTTP_REFERER'].split("/")[-1]
+        messages.warning(self.request, "Qo'shimcha dam olish o'chirildi !!!")
         return reverse_lazy('vacation', kwargs={'pk': staff_id})
 
 
@@ -486,6 +514,11 @@ class VacationUpdateView(LoginRequiredMixin, generic.UpdateView):
         staff_id = self.request.META['HTTP_REFERER'].split("/")[-1]
         return reverse_lazy('vacation', kwargs={'pk': staff_id})
 
+
+    def form_valid(self, form):
+        staff_id = self.request.META['HTTP_REFERER'].split("/")[-1]
+        messages.warning(self.request, "Qo'shimcha dam olish biriktirildi !!!")
+        return reverse_lazy('vacation', kwargs={'pk': staff_id})
 
 # VacationType
 class VacationTypeTypeListView(LoginRequiredMixin, generic.ListView):
@@ -591,10 +624,6 @@ class AdditionalPaymentsTypeListView(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         ctx = super(AdditionalPaymentsTypeListView, self).get_context_data(**kwargs)
         company = self.request.user.company
-        # staff_id = self.request.META['HTTP_REFERER'].split("/")[-1]
-        # ctx['staff'] = models.Staff.objects.get(id=staff_id)
-        prev_page = self.request.META['HTTP_REFERER']
-        ctx['prev_page'] = prev_page
         ctx['additional_payments_types'] = models.AdditionalPaymentType.objects.filter(company=company)
         return ctx
 
@@ -610,7 +639,8 @@ class AdditionalPaymentsTypeCreateView(LoginRequiredMixin, generic.CreateView):
         company = self.request.user.company
         self.company.company = company
         self.company.save()
-        return super().form_valid(form)
+        messages.success(self.request, "Ushlab qolish yoki qo’shimcha to’lovlar nomini yaratildi")
+        return HttpResponseRedirect(reverse_lazy('additional_payment_type'))
 
     def form_invalid(self, form):
         return super(AdditionalPaymentsTypeCreateView, self).form_invalid(form)
@@ -621,11 +651,23 @@ class AdditionalPaymentsTypeDeleteView(LoginRequiredMixin, generic.DeleteView):
     form_class = forms.AdditionalPaymentTypeModelForm
     success_url = reverse_lazy('additional_payment_type')
 
+    def delete(self, request, *args, **kwargs):
+        try:
+            super().delete(request, *args, **kwargs)
+            messages.warning(self.request, "Ushlab qolish yoki qo’shimcha to’lovlar nomi o'chirildi!!!")
+            return HttpResponseRedirect(reverse_lazy('additional_payment_type'))
+        except:
+            print("asd")
+
 
 class AdditionalPaymentsTypeUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = models.AdditionalPaymentType
     form_class = forms.AdditionalPaymentTypeModelForm
     success_url = reverse_lazy('additional_payment_type')
+
+    def form_valid(self, form):
+        messages.warning(self.request, "Ushlab qolish yoki qo’shimcha to’lovlar nomi o'zgartirildi!!!")
+        return HttpResponseRedirect(reverse_lazy('additional_payment_type'))
 
 
 # Document
@@ -652,7 +694,9 @@ class DocumentListCreateView(LoginRequiredMixin, generic.CreateView):
         staff = models.Staff.objects.get(pk=staff_id)
         self.object.staff = staff
         self.object.save()
-        return super(DocumentListCreateView, self).form_valid(form)
+        messages.success(self.request, 'Xujjat biriktirildi')
+        return HttpResponseRedirect(reverse_lazy('document', kwargs={'pk': staff_id}))
+
 
     def form_invalid(self, form):
         return super(DocumentListCreateView, self).form_invalid(form)
@@ -661,7 +705,13 @@ class DocumentListCreateView(LoginRequiredMixin, generic.CreateView):
 class DocumentDeleteView(LoginRequiredMixin, generic.DeleteView):
     queryset = models.Document.objects.all()
     form_class = forms.DocumentModelForm
-    success_message = "deleted..."
+
+    def delete(self, request, *args, **kwargs):
+        super(DocumentDeleteView, self).delete(*args, **kwargs)
+        staff_id = self.request.META['HTTP_REFERER'].split("/")[-1]
+        messages.success(self.request, "Xujjat o'chirildi")
+        return HttpResponseRedirect(reverse_lazy('document', kwargs={'pk': staff_id}))
+
 
     def get_success_url(self):
         staff_id = self.request.META['HTTP_REFERER'].split("/")[-1]
@@ -675,6 +725,11 @@ class DocumentUpdateView(LoginRequiredMixin, generic.UpdateView):
     def get_success_url(self):
         staff_id = self.request.META['HTTP_REFERER'].split("/")[-1]
         return reverse_lazy('document', kwargs={'pk': staff_id})
+
+    def form_valid(self, form):
+        staff_id = self.request.META['HTTP_REFERER'].split("/")[-1]
+        messages.success(self.request, "Xujjat o'zgartirildi")
+        return HttpResponseRedirect(reverse_lazy('document', kwargs={'pk': staff_id}))
 
 
 # NewTelegramStaff
