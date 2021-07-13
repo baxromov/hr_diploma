@@ -33,7 +33,7 @@
 
                         </div>
                         <div class="body table-responsive">
-                            <table class="table table-hover">
+                            <table class="table table-hover" id="training_info">
                                 <thead>
                                 <tr>
                                     <th>#</th>
@@ -45,7 +45,7 @@
                                 <tbody>
                                 {% for item in items %}
                                     <tr>
-                                        <th scope="row">{{ item.id }}</th>
+                                        <th scope="row">{{ forloop.counter }}</th>
                                         <td>
 
                                             {{ item.title }}
@@ -176,7 +176,6 @@
             </div>
         </div>
     {% endfor %}
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <script type="text/javascript">
@@ -208,5 +207,25 @@
             });
         });
 
+    </script>
+    <script>
+        $(function () {
+
+            $('#training_info').DataTable({
+                 dom: 'Bfrtip',
+                 paging: true,
+                 autoWidth: false,
+                 buttons: [
+                    'copy', 'excel', 'pdf', 'print'
+                ],
+                "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+                "columnDefs": [
+                    { type: "num", targets: 0 },
+                    { type: "phoneNumber", targets: 1 },
+                    { type: "phoneNumber", targets: 2 },
+                    { type: "phoneNumber", targets: 3 },
+                ],
+            });
+        })
     </script>
 {% endblock %}

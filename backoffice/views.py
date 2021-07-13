@@ -11,6 +11,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.core.files import File
 from django.db.models import Count
+from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 
@@ -205,6 +206,11 @@ class PositionCreateView(LoginRequiredMixin, generic.CreateView):
     form_class = forms.PositionModelForm
     success_url = reverse_lazy('position')
 
+    def get_form(self, form_class=None):
+        f = super().get_form(form_class)
+        f.fields['parent'].queryset = self.request.user.company.position_set.all()
+        return f
+
     def form_valid(self, form):
         self.position = form.save(commit=False)
         company = self.request.user.company
@@ -274,6 +280,7 @@ class StaffORGSystemCreateView(LoginRequiredMixin, generic.CreateView):
     def get_form(self, form_class=None):
         f = super().get_form(form_class)
         f.fields['staff'].queryset = self.request.user.company.staff_set.all()
+        f.fields['parent'].queryset = models.StaffORGSystem.objects.filter(company=self.request.user.company)
         return f
 
     def form_valid(self, form):

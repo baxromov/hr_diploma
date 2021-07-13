@@ -44,7 +44,7 @@
                                 <tbody>
                                 {% for item in items %}
                                     <tr>
-                                        <th scope="row">{{ item.id }}</th>
+                                        <th scope="row">{{ forloop.counter }}</th>
                                         <td>
 
                                             {{ item.title }}

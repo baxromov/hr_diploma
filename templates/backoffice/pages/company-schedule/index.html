@@ -2,7 +2,7 @@
 
 {% load app_tags %}
 {% block title %}
-    Company Schedule
+    Kompaniya ish vaqti
 {% endblock %}
 
 {#zmdi-hc-spin#}
@@ -12,10 +12,10 @@
             <div class="block-header">
             <div class="row clearfix">
                 <div class="col-lg-5 col-md-5 col-sm-12">
-                    <h2>Company Schedule</h2>
+                    <h2>Kompaniya ish vaqti</h2>
                     <ul class="breadcrumb padding-0">
                         <li class="breadcrumb-item"><a href="{% url 'backoffice-main' %}"><i class="zmdi zmdi-home"></i></a></li>
-                        <li class="breadcrumb-item active">Company Schedule</li>
+                        <li class="breadcrumb-item active">Kompaniya ish vaqti</li>
                     </ul>
                 </div>
             </div>
@@ -32,7 +32,7 @@
 
                         </div>
                         <div class="body table-responsive">
-                            <table class="table table-hover">
+                            <table class="table table-hover" id="company-schedule">
                                 <thead>
                                 <tr>
                                     <th>#</th>
@@ -48,7 +48,7 @@
                                 <tbody>
                                 {% for item in items %}
                                     <tr>
-                                        <th scope="row">{{ item.id }}</th>
+                                        <th scope="row">{{ forloop.counter }}</th>
                                         <td>{{ item.day }}</td>
                                         <td>{{ item.start_work }}</td>
                                         <td>{{ item.end_work }}</td>
@@ -132,4 +132,30 @@
             </div>
         </div>
     {% endfor %}
+{% endblock %}
+
+{% block js %}
+    <script>
+        $(function () {
+
+            $('#company-schedule').DataTable({
+                 dom: 'Bfrtip',
+                 paging: true,
+                 autoWidth: false,
+                 buttons: [
+                    'copy', 'excel', 'pdf', 'print'
+                ],
+                "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+                "columnDefs": [
+                    { type: "num", targets: 0 },
+                    { type: "phoneNumber", targets: 1 },
+                    { type: "phoneNumber", targets: 2 },
+                    { type: "phoneNumber", targets: 4 },
+                    { type: "phoneNumber", targets: 5 },
+                    { type: "phoneNumber", targets: 6 },
+                    { type: "phoneNumber", targets: 7 },
+                ],
+            });
+        })
+    </script>
 {% endblock %}

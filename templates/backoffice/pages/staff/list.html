@@ -28,9 +28,10 @@
                     </div>
                     <div class="body">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                            <table class="table table-bordered table-striped table-hover" id="example_1">
                                 <thead>
                                    <tr>
+                                        <th>#</th>
                                         <th>To'liq ismi</th>
                                         <th>Ish boshlagan sana</th>
                                         <th>Bo'lim</th>
@@ -40,6 +41,7 @@
                                 </thead>
                                 <tfoot>
                                     <tr>
+                                        <th>#</th>
                                         <th>To'liq ismi</th>
                                         <th>Ish boshlagan sana</th>
                                         <th>Bo'lim</th>
@@ -50,6 +52,7 @@
                                 <tbody>
                                     {% for staff in staffs %}
                                         <tr>
+                                            <td>{{ forloop.counter }}</td>
                                             <td><a href="{% url 'staff-detail' staff.pk %}">{{ staff.first_name }} {{ staff.second_name }} {{ staff.last_name }}</a></td>
                                             <td>{{ staff.birth_date }}</td>
                                             <td>{{ staff.department }}</td>
@@ -57,7 +60,13 @@
                                             <td>
                                                 <form action="{% url 'staff_delete' pk=staff.id %}" method="POST">
                                                     {% csrf_token %}
-                                                    <button type="submit" class="btn btn-neutral waves-effect"><i class="zmdi zmdi-delete"></i></button>
+                                                    <button type="submit" class="btn btn-neutral waves-effect">
+                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M19.3248 9.4682C19.3248 9.4682 18.7818 16.2032 18.4668 19.0402C18.3168 20.3952 17.4798 21.1892 16.1088 21.2142C13.4998 21.2612 10.8878 21.2642 8.27979 21.2092C6.96079 21.1822 6.13779 20.3782 5.99079 19.0472C5.67379 16.1852 5.13379 9.4682 5.13379 9.4682" stroke="#ED5E5E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                            <path d="M20.708 6.2397H3.75" stroke="#ED5E5E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                            <path d="M17.4406 6.2397C16.6556 6.2397 15.9796 5.6847 15.8256 4.9157L15.5826 3.6997C15.4326 3.1387 14.9246 2.7507 14.3456 2.7507H10.1126C9.53358 2.7507 9.02558 3.1387 8.87558 3.6997L8.63258 4.9157C8.47858 5.6847 7.80258 6.2397 7.01758 6.2397" stroke="#ED5E5E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                        </svg>
+                                                    </button>
                                                 </form>
                                             </td>
                                         </tr>
@@ -72,4 +81,37 @@
 
     </div>
 </section>
+{% endblock %}
+
+
+{% block js %}
+     <script>
+        $(function () {
+
+            $('#example_1').DataTable({
+                 dom: 'Bfrtip',
+                 paging: true,
+                 autoWidth: true,
+                 orderCellsTop: true,
+                 fixedHeader: true,
+                 buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ],
+                "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+                "columnDefs": [
+                    { type: "num", targets: 0 },
+                    { type: "phoneNumber", targets: 1 },
+                    { type: "phoneNumber", targets: 2 },
+                    { type: "phoneNumber", targets: 3 },
+                    { type: "phoneNumber", targets: 4 },
+                    { type: "phoneNumber", targets: 5 },
+                ],
+            });
+        })
+
+
+
+
+    </script>
+
 {% endblock %}

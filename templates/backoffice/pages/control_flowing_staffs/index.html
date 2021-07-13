@@ -29,10 +29,11 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="body">
-                        <table class="table table-bordered">
+                    <div class="body table-responsive">
+                        <table class="table table-bordered" id="flow-list">
                             <thead>
                                 <tr>
+                                    <th>#</th>
                                     <th>Xodim</th>
                                     <th>Kirish vaqti</th>
                                     <th>Chiqish vaqti</th>
@@ -40,6 +41,7 @@
                             </thead>
                             <tfoot>
                                 <tr>
+                                    <th>#</th>
                                     <th>Xodim</th>
                                     <th>Kirish vaqti</th>
                                     <th>Chiqish vaqti</th>
@@ -48,6 +50,7 @@
                             <tbody>
                             {% for staff in staff_flows %}
                                 <div>
+                                <tr>{{ forloop.counter }}</tr>
                                     <tr>
                                         <td rowspan="{{ staff.get_today_flow_count }}">{{ staff.first_name }} {{ staff.last_name }}</td>
                                     </tr>
@@ -80,4 +83,27 @@
     </div>
 </section>
 <!-- Jquery Core Js -->
+{% endblock %}
+
+{% block js %}
+    <script>
+         $(function () {
+
+            $('#flow-list').DataTable({
+                 dom: 'Bfrtip',
+                 paging: true,
+                 autoWidth: false,
+                 buttons: [
+                    'copy', 'excel', 'pdf', 'print'
+                ],
+                "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+                "columnDefs": [
+                    { type: "num", targets: 0 },
+                    { type: "phoneNumber", targets: 1 },
+                    { type: "phoneNumber", targets: 2 },
+                    { type: "phoneNumber", targets: 3 },
+                ],
+            });
+        })
+    </script>
 {% endblock %}

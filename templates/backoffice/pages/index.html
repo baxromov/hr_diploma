@@ -106,11 +106,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="body m-b-20">
+                        <div class="body m-b-20 table-responsive">
                             <h3>Kech qolganlar</h3>
-                             <table class="table table-responsive table-bordered table-striped table-hover dataTable js-exportable">
+                             <table class="table table-bordered table-striped table-hover" id="late_staff">
                                 <thead>
                                     <tr>
+                                        <th>#</th>
                                         <th>Name</th>
                                         <th>Position</th>
                                         <th>Telefon</th>
@@ -118,6 +119,7 @@
                                 </thead>
                                 <tfoot>
                                     <tr>
+                                        <th>#</th>
                                         <th>Name</th>
                                         <th>Position</th>
                                         <th>Telefon</th>
@@ -126,6 +128,7 @@
                                 <tbody>
                                     {% for item in late_today %}
                                         <tr>
+                                            <td>{{ forloop.counter }}</td>
                                             <td>{{ item.first_name }} {{ item.second_name }} {{ item.last_name }}</td>
                                             <td>{{ item.position.name }}</td>
                                             <td>{{ item.mobile_phone }}</td>
@@ -229,7 +232,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-6 col-md-12">
+               {% comment %} <div class="col-lg-6 col-md-12">
                     <div class="card">
                         <div class="header">
                             <h2>Bayramlar</h2>
@@ -281,7 +284,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>{% endcomment %}
             </div>
         </div>
 
@@ -293,8 +296,22 @@
 
 
 {% block js %}
+    <script>
+    {% comment %}late_staff{% endcomment %}
+     $(function () {
 
-
+            $('#late_staff').DataTable({
+                 dom: 'Bfrtip',
+                 paging: true,
+                 autoWidth: true,
+                 buttons: [
+                    'copy', 'excel', 'pdf', 'print'
+                ],
+                responsive: true,
+                "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]]
+            });
+        })
+    </script>
     <script>
         // Kechikanlar soni
         (function () {

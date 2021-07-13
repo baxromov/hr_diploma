@@ -33,28 +33,21 @@
 
                                     </div>
                                     <div class="body table-responsive">
-                                        <table class="table table-hover">
+                                        <table class="table table-hover" id="training_answer">
                                             <thead>
                                             <tr>
                                                 <th>#</th>
                                                 <th>To'liq ismi</th>
-                                                <th>O'shirish</th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                                 {% for staff in staffs %}
                                                     <tr>
-                                                        <td>{{ staff.id }}</td>
+                                                        <td>{{ forloop.counter }}</td>
                                                         <td>
                                                             <a href="#" data-toggle="modal" data-target="#defaultModal{{ staff.id }}">
                                                                 {{ staff.first_name }} {{ staff.second_name }} {{ staff.last_name }}</a>
                                                             </a>
-                                                        </td>
-                                                        <td>
-                                                            <form action="" method="POST">
-                                                                {% csrf_token %}
-                                                                <button class="btn btn-neutral" type="submit" ><i class="zmdi zmdi-delete"></i></button>
-                                                            </form>
                                                         </td>
                                                     </tr>
                                                 {% endfor %}
@@ -97,4 +90,25 @@
             </div>
         </div>
    {% endfor %}
+{% endblock %}
+
+{% block js %}
+    <script>
+         $(function () {
+
+            $('#training_answer').DataTable({
+                 dom: 'Bfrtip',
+                 paging: true,
+                 autoWidth: false,
+                 buttons: [
+                    'copy', 'excel', 'pdf', 'print'
+                ],
+                "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+                "columnDefs": [
+                    { type: "num", targets: 0 },
+                    { type: "phoneNumber", targets: 1 },
+                ],
+            });
+        })
+    </script>
 {% endblock %}

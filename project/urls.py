@@ -5,6 +5,7 @@ from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 
 from . import settings
+from .views import page_404
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -24,7 +25,9 @@ urlpatterns = [
     path('api/v1/', include('backoffice.api.urls')),
     path('backoffice/', include('backoffice.urls')),
     path('graph', include('mptt_graph.urls')),
+    path('page_404', page_404, name='page_404'),
 ]
+
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
@@ -32,3 +35,6 @@ urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 admin.site.site_title = "HR"
 admin.site.site_header = "Algorithm-Getaway HR"
 admin.site.index_title = "Algorithm-Getaway HRga hush kelibsiz"
+
+
+# handler404 = 'backoffice.views.page_404'

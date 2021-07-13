@@ -11,9 +11,7 @@
             <div class="row clearfix">
                 <div class="col-lg-5 col-md-5 col-sm-12">
                     <h2>Hodim Qidirish</h2>
-{#                    <ul class="breadcrumb padding-0">#}
-{#                        <li class="breadcrumb-item"><a href="{% url 'backoffice-main' %}"><i class="zmdi zmdi-home"></i></a></li>#}
-{#                    </ul>#}
+
                 </div>
             </div>
         </div>
@@ -25,7 +23,7 @@
                         <h2>Hodim Qidirish</h2>
                     </div>
                     <div class="body">
-                        <table class="table-responsive table table-bordered table-striped table-hover dataTable js-exportable">
+                        <table class="table-responsive table table-striped table-hover" id="searching_staff">
                             <thead>
                                 <tr>
                                     <th>Xodim</th>
@@ -75,4 +73,17 @@
     </div>
 </section>
 <!-- Jquery Core Js -->
+{% endblock %}
+
+{% block js %}
+    <script>
+    $(function () {
+
+            $('#searching_staff').DataTable({
+                 paging: true,
+                 autoWidth: true,
+                "lengthMenu": [[3, 5, 10, 25, 50, -1], [3, 5, 10, 25, 50, "All"]]
+            });
+        })
+    </script>
 {% endblock %}

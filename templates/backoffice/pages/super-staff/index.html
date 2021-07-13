@@ -32,11 +32,12 @@
 
                         </div>
                         <div class="body table-responsive">
-                            <table class="table table-hover">
+                            <table class="table table-hover" id="super-staff">
                                 <thead>
                                 <tr>
                                     <th>#</th>
                                     <th>Haftaing/Oyning</th>
+                                    <th>Sana</th>
                                     <th>Eng zo'r hodimi</th>
                                     <th>O'chirish</th>
                                     <th>Taxrirlash</th>
@@ -46,10 +47,13 @@
                                 {% for item in items %}
                                     <tr>
                                         <td>
-                                            <p>{{ item.id }}</p>
+                                            <p>{{ forloop.counter }}</p>
                                         </td>
                                         <td>
-                                            <p>{{ item.type }}</p>
+                                            <p>{{ item.type|capfirst }}</p>
+                                        </td>
+                                        <td>
+                                            <p>{{ item.created_at }}</p>
                                         </td>
                                         <td>
                                             <p>{{ item.staff.first_name }} {{ item.staff.second_name }}</p>
@@ -132,4 +136,28 @@
             </div>
         </div>
     {% endfor %}
+{% endblock %}
+
+{% block js %}
+    <script>
+        $(function () {
+
+            $('#super-staff').DataTable({
+                 dom: 'Bfrtip',
+                 paging: true,
+                 autoWidth: false,
+                 buttons: [
+                    'copy', 'excel', 'pdf', 'print'
+                ],
+                "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+                "columnDefs": [
+                    { type: "num", targets: 0 },
+                    { type: "phoneNumber", targets: 1 },
+                    { type: "datetime", targets: 2 },
+                    { type: "phoneNumber", targets: 4 },
+                    { type: "phoneNumber", targets: 5 },
+                ],
+            });
+        })
+    </script>
 {% endblock %}
