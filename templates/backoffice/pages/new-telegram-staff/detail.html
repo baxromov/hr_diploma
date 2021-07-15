@@ -43,6 +43,24 @@
                 </div>
             </div>
         </div>
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="card">
+                    <div class="header">
+
+                    </div>
+                    <div class="body table-responsive">
+                       {% for answer in answers %}
+                            {% if answer.staff == item %}
+                                <p>{{ answer.question }}</p>
+                                <p>{{ answer.answer }}</p>
+                                <hr>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- #END# Striped Rows -->
     </div>
 </section>

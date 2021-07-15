@@ -165,6 +165,9 @@
     </script>
     <script src="{% static 'backoffice/assets/plugins/nestable/jquery.nestable.js' %}"></script>
     <script>
-
+        setTimeout(fade_out, 3000);
+        function fade_out() {
+            $(".messages").fadeOut().empty();
+        }
     </script>
 {% endblock %}w

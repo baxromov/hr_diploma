@@ -12,11 +12,11 @@
     <section class="">
         <div class="container-fluid">
             <div class="block-header">
-
             <div class="row clearfix">
                     <div class="col-lg-12 col-md-12 col-sm-12 ">
                         <div class="card">
                             <div class="header">
+                                <h2 class="text-center">{{ staff.company.name }}</h2>
                             </div>
                             <div class="body" style="background: url({% static 'defaults/1.png' %})">
                                 <div class="row">
@@ -42,97 +42,51 @@
                         </div>
                     </div>
                 </div>
-                <div class="row clearfix">
-                    <div class="col-lg-12 col-md-12 col-sm-12 ">
-                        <div class="card">
-                            <div class="header">
-                            </div>
-                            <div class="body">
-                                <div class="media mleft">
-                                    <div class="media-left"><a href="javascript:void(0);">
-                                        <img class="media-object" src="{{ staff.image.url }}"
-                                             style="width: 200px;height: 200px;"
-                                             alt="">
-                                    </a>
-                                    </div>
-                                    <div class="media-body">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <ul class="nav justify-content-between ">
-                                                    <li class="nav-item">
-                                                        <h4 class="media-heading">{{ staff.first_name }} {{ staff.last_name }}</h4>
-                                                        <p class="mt-5">
-                                                            <strong>Department:</strong> {{ staff.department.name }}
-                                                        </p>
-                                                        <p><strong>Position:</strong> {{ staff.position.name }}</p>
 
-                                                        <p><strong>Salary:</strong> {{ salary.amount }} so'm</p>
-
-                                                    </li>
-                                                    <li class="nav-item">
-                                                        <p><strong>QR-code</strong></p>
-                                                        <img src="{{ staff.qr_code.url }}" style="width: 70px;" alt="">
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <h2>Super Staff</h2>
-                                                <ul class="inbox-widget list-unstyled clearfix">
-                                                    <li class="inbox-inner">
-                                                        <a href="javascript:void(0);"></a>
-                                                        <div class="inbox-item"><a href="javascript:void(0);">
-                                                            <div class="inbox-img"><img
-                                                                    src="{{ super_staff_weekly.staff.image.url }}"
-                                                                    class="rounded"
-                                                                    alt=""></div>
-                                                            <div class="inbox-item-info">
-                                                                <p class="author">{{ super_staff_weekly.staff.first_name }} {{ super_staff_weekly.staff.second_name }} {{ super_staff_weekly.staff.last_name }}</p>
-                                                                <p class="inbox-message">{{ super_staff_weekly.text }}</p>
-                                                                <p class="inbox-date">{{ super_staff_weekly.created_at }}</p>
-                                                            </div>
-                                                        </a>
-                                                            <div class="hover_action">
-                                                                <a href="javascript:void(0);">Weekly</a>
-                                                            </div>
-                                                        </div>
-
-                                                    </li>
-                                                    <li class="inbox-inner"><a href="javascript:void(0);">
-                                                    </a>
-                                                        <div class="inbox-item"><a href="javascript:void(0);">
-                                                            <div class="inbox-img"><img
-                                                                    src="{{ super_staff_monthly.staff.image.url }}"
-                                                                    class="rounded"
-                                                                    alt=""></div>
-                                                            <div class="inbox-item-info">
-                                                                <p class="author">{{ super_staff_monthly.staff.first_name }} {{ super_staff_monthly.staff.second_name }} {{ super_staff_monthly.staff.last_name }}</p>
-                                                                <p class="inbox-message">{{ super_staff_monthly.text }}</p>
-                                                                <p class="inbox-date">{{ super_staff_monthly.created_at }}</p>
-                                                            </div>
-                                                        </a>
-                                                            <div class="hover_action">
-                                                                <a href="javascript:void(0);">Monthly</a>
-                                                            </div>
-                                                        </div>
-
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 ">
+                    <div class="card">
+                        <div class="header">
+                        </div>
+                        <div class="body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h2>Oyning eng yaxshi ishchisi</h2>
+                                    <div class="align-center">
+                                        {% if super_staff_monthly %}
+                                            <img src="{{ super_staff_monthly.staff.image.url }}" style="width: 150px;height: 150px; border-radius: 50%" alt="">
+                                            <p class="text-dark font-weight-bolder">{{ super_staff_monthly.staff.first_name }} {{ super_staff_monthly.staff.second_name }} {{ super_staff_monthly.staff.last_name }}</p>
+                                            <p class="inbox-message">{{ super_staff_monthly.text }}</p>
+                                            <p class="inbox-date">{{ super_staff_monthly.created_at|date:"d.m.Y" }}</p>
+                                        {% else %}
+                                            <img src="{% static 'defaults/2.jpg' %}" style="width: 150px;height: 150px; border-radius: 50%" alt="">
+                                        {% endif %}
                                     </div>
                                 </div>
+                                <div class="col-md-6">
+                                    <h2>Haftaning eng yaxshi ishchisi</h2>
+                                    <div class="align-center">
+                                        {% if super_staff_weekly %}
+                                        <img src="{{ super_staff_weekly.staff.image.url }}" style="width: 150px;height: 150px; border-radius: 50%" alt="">
+                                        <p class="text-dark font-weight-bolder">{{ super_staff_weekly.staff.first_name }} {{ super_staff_weekly.staff.second_name }} {{ super_staff_weekly.staff.last_name }}</p>
+                                        <p class="inbox-message">{{ super_staff_weekly.text }}</p>
+                                        <p class="inbox-date">{{ super_staff_weekly.created_at|date:"d.m.Y" }}</p>
+                                        {% else %}
+                                            <img src="{% static 'defaults/2.jpg' %}" style="width: 150px;height: 150px; border-radius: 50%" alt="">
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-
+            </div>
 
                 <div class="row clearfix">
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="card">
                             <div class="header">
-                                <h2><strong>Something </strong> Interesting <small> Content</small></h2>
                                 <ul class="header-dropdown">
                                     <li class="dropdown"><a href="javascript:void(0);" class="dropdown-toggle"
                                                             data-toggle="dropdown" role="button" aria-haspopup="true"
@@ -146,11 +100,10 @@
                             <div class="body">
                                 <!-- Nav tabs -->
                                 <ul class="nav nav-tabs">
-                                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#training_info">Advanced
-                                        training</a>
+                                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#training_info">Training</a>
                                     </li>
                                     <li class="nav-item"><a class="nav-link" data-toggle="tab"
-                                                            href="#profile">Company culture</a></li>
+                                                            href="#profile">Kompaniya madaniyati</a></li>
                                 </ul>
                                 <!-- Tab panes -->
                                 <div class="tab-content">
@@ -161,7 +114,7 @@
                                             {{ training_info.info|safe }}
                                         </div>
                                     </div>
-                                    <div role="tabpanel" class="tab-pane" id="profile"><b>Profile Content</b>
+                                    <div role="tabpanel" class="tab-pane" id="profile">
                                         <h2 class="text-center">{{ company_culture.title }}</h2>
                                         <div>
                                             {{ company_culture.text|safe }}
@@ -210,7 +163,7 @@
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="card">
                             <div class="header">
-                                <h2><strong>Staff </strong> ORG <small> System</small></h2>
+                                <h2><strong>ORG.</strong>Sxema</h2>
                                 <ul class="header-dropdown">
                                     <li class="dropdown"><a href="javascript:void(0);" class="dropdown-toggle"
                                                             data-toggle="dropdown" role="button" aria-haspopup="true"

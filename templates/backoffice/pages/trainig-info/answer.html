@@ -97,12 +97,8 @@
          $(function () {
 
             $('#training_answer').DataTable({
-                 dom: 'Bfrtip',
                  paging: true,
                  autoWidth: false,
-                 buttons: [
-                    'copy', 'excel', 'pdf', 'print'
-                ],
                 "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
                 "columnDefs": [
                     { type: "num", targets: 0 },

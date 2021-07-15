@@ -136,12 +136,25 @@ class CompanyModelForm(forms.ModelForm):
     class Meta:
         model = models.Company
         exclude = ('company',)
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'phone': forms.TextInput(attrs={'class': 'form-control'}),
+            'address': forms.TextInput(attrs={'class': 'form-control'}),
+            'creator': forms.TextInput(attrs={'class': 'form-control'}),
+            'info': forms.TextInput(attrs={'class': 'form-control'}),
+            'amount_of_staff': forms.NumberInput(attrs={'class': 'form-control'}),
+            'video': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'logo': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+        }
 
 
 class CompanyCultureModelForm(forms.ModelForm):
     class Meta:
         model = models.CompanyCulture
         exclude = ('company',)
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+        }
 
 
 class CompanyScheduleModelForm(forms.ModelForm):

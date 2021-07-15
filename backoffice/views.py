@@ -368,6 +368,7 @@ class DepartmentUpdateView(LoginRequiredMixin, generic.UpdateView):
         for pk, question in enumerate(questions_a):
             question.question = post_questions[pk-1]
             question.save()
+        super(DepartmentUpdateView, self).form_valid(form)
         messages.success(self.request, "Bo'lim o'zgartirildi !!!")
         return HttpResponseRedirect(reverse_lazy('department'))
 
@@ -434,6 +435,7 @@ class SalaryUpdateView(LoginRequiredMixin, generic.UpdateView):
         return reverse_lazy('salary', kwargs={'pk': staff_id})
 
     def form_valid(self, form):
+        super(SalaryUpdateView, self).form_valid(form)
         staff_id = self.request.META['HTTP_REFERER'].split("/")[-1]
         messages.success(self.request, "Xodim ish haqqi o'zgartirildi")
         return HttpResponseRedirect(reverse_lazy('salary', kwargs={'pk': staff_id}))
@@ -516,9 +518,11 @@ class VacationUpdateView(LoginRequiredMixin, generic.UpdateView):
 
 
     def form_valid(self, form):
+        super(VacationUpdateView, self).form_valid(form)
         staff_id = self.request.META['HTTP_REFERER'].split("/")[-1]
         messages.warning(self.request, "Qo'shimcha dam olish biriktirildi !!!")
         return reverse_lazy('vacation', kwargs={'pk': staff_id})
+
 
 # VacationType
 class VacationTypeTypeListView(LoginRequiredMixin, generic.ListView):
@@ -666,6 +670,7 @@ class AdditionalPaymentsTypeUpdateView(LoginRequiredMixin, generic.UpdateView):
     success_url = reverse_lazy('additional_payment_type')
 
     def form_valid(self, form):
+        super(AdditionalPaymentsTypeUpdateView, self).form_valid(form)
         messages.warning(self.request, "Ushlab qolish yoki qo’shimcha to’lovlar nomi o'zgartirildi!!!")
         return HttpResponseRedirect(reverse_lazy('additional_payment_type'))
 
@@ -727,6 +732,7 @@ class DocumentUpdateView(LoginRequiredMixin, generic.UpdateView):
         return reverse_lazy('document', kwargs={'pk': staff_id})
 
     def form_valid(self, form):
+        super(DocumentUpdateView, self).form_valid(form)
         staff_id = self.request.META['HTTP_REFERER'].split("/")[-1]
         messages.success(self.request, "Xujjat o'zgartirildi")
         return HttpResponseRedirect(reverse_lazy('document', kwargs={'pk': staff_id}))
@@ -749,6 +755,12 @@ class NewTelegramStaffDetailView(LoginRequiredMixin, generic.DetailView):
     queryset = models.NewStaff.objects.all()
     context_object_name = 'new_staff'
 
+    def get_context_data(self, **kwargs):
+        ctx = super(NewTelegramStaffDetailView, self).get_context_data(**kwargs)
+        company = self.request.user.company
+        new_staff = models.NewStaff.objects.filter(company=self.request.user.company)
+        ctx['answers'] = models.Answer.objects.filter(candidate__company=self.request.user.company)
+        return ctx
 
 # -----------------------------------------------------------------------------------------
 
@@ -994,6 +1006,11 @@ class TrainingInfoTemplateView(LoginRequiredMixin, generic.CreateView):
     success_url = reverse_lazy('training_info')
     model = models.TrainingInfo
 
+    def get_form(self, form_class=None):
+        f = super().get_form(form_class)
+        f.fields['position'].queryset = self.request.user.company.position_set.all()
+        return f
+
     def get_context_data(self, *, object_list=None, **kwargs):
         ctx = super(TrainingInfoTemplateView, self).get_context_data(**kwargs)
         company = self.request.user.company
@@ -1026,7 +1043,8 @@ class TrainingInfoTemplateView(LoginRequiredMixin, generic.CreateView):
                 training_questions.traininganswer_set.add(traininganswer)
                 training_questions.save()
 
-        return super().form_valid(form)
+        messages.success(self.request, 'Hodim Adaptatsiyasi biriktirildi !!!')
+        return HttpResponseRedirect(reverse_lazy('training_info'))
 
     def form_invalid(self, form):
         return super(TrainingInfoTemplateView, self).form_invalid(form)
@@ -1043,6 +1061,11 @@ class TrainingInfoUpdateView(LoginRequiredMixin, generic.UpdateView):
     form_class = forms.TrainingInfoModelForm
     model = models.TrainingInfo
     success_url = reverse_lazy('training_info')
+    
+    def form_valid(self, form):
+        super(TrainingInfoUpdateView, self).form_valid(form)
+        messages.success(self.request, "Xodim adaptatsiyasi o'zgartirildi !!!")
+        return HttpResponseRedirect(reverse_lazy('training_info'))
 
 
 # TrainingAnswerListView
@@ -1094,6 +1117,11 @@ class CompanyCultureUpdateView(LoginRequiredMixin, generic.UpdateView):
     form_class = forms.CompanyCultureModelForm
     model = models.CompanyCulture
     success_url = reverse_lazy('company_culture')
+    
+    def form_valid(self, form):
+        super(CompanyCultureUpdateView, self).form_valid(form)
+        messages.success(self.request, "Kompaniya madaniyati o'zgartirildi !!!")
+        return HttpResponseRedirect(reverse_lazy('company_culture'))
 
 
 # CompanySchadule
@@ -1117,8 +1145,8 @@ class CompanyScheduleCreateViewListView(LoginRequiredMixin, generic.CreateView):
         self.company = form.save(commit=False)
         self.company.company = self.request.user.company
         self.company.save()
-
-        return super().form_valid(form)
+        messages.success(self.request, "Kompaniya ish vaqti yaratildi !!!")
+        return HttpResponseRedirect(reverse_lazy('company_schedule'))
 
     def form_invalid(self, form):
         return super(CompanyScheduleCreateViewListView, self).form_invalid(form)
@@ -1130,11 +1158,21 @@ class CompanyScheduleDeleteView(LoginRequiredMixin, generic.DeleteView):
     success_message = "deleted..."
     success_url = reverse_lazy('company_schedule')
 
+    def delete(self, request, *args, **kwargs):
+        super(CompanyScheduleDeleteView, self).delete(request, *args, **kwargs)
+        messages.warning(self.request, "Kompaniya ish vaqti o'chirildi !!!")
+        return HttpResponseRedirect(reverse_lazy('company_schedule'))
+
 
 class CompanyScheduleUpdateView(LoginRequiredMixin, generic.UpdateView):
     form_class = forms.CompanyScheduleModelForm
     model = models.CompanySchedule
     success_url = reverse_lazy('company_schedule')
+
+    def form_valid(self, form):
+        super(CompanyScheduleUpdateView, self).form_valid(form)
+        messages.success(self.request, "Kompaniya ish vaqti o'zgartirildi !!!")
+        return HttpResponseRedirect(reverse_lazy('company_schedule'))
 
 
 # Super Staff
@@ -1177,3 +1215,8 @@ class SuperStaffUpdateView(LoginRequiredMixin, generic.UpdateView):
     form_class = forms.SuperStaffsModelForm
     model = models.SuperStaffs
     success_url = reverse_lazy('super_staff')
+    
+    def form_valid(self, form):
+        super(SuperStaffUpdateView, self).form_valid(form)
+        messages.success(self.request, "Shuxrat burchagi o'zgartirildi !!!")
+        return HttpResponseRedirect(reverse_lazy('super_staff'))
