@@ -7,26 +7,8 @@ from app import models
 
 UserModel = get_user_model()
 
-#
-# class FlowParentModelSerializer(serializers.ModelSerializer):
-#
-#     class Meta:
-#         model = models.Staff
-#         fields = (
-#             'id',
-#             'first_name',
-#             'last_name',
-#             'username',
-#         )
-
 
 class FlowModelSerializer(serializers.ModelSerializer):
-
-    # def to_representation(self, instance):
-    #     response = super().to_representation(instance)
-    #     # response['child'] = ChildSerializer(instance.child).data
-    #     response['staff'] = FlowParentModelSerializer(self.context['request'].user.company.staff_set.all()).data
-    #     return response
 
     class Meta:
         model = models.Flow

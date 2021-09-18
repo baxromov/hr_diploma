@@ -11,11 +11,11 @@
             <div class="row">
                 <div class="col-lg-6 col-md-12">
                     <div class="company_detail">
-                        <h4 class="logo"><img src="assets/images/logo.svg" alt=""> Alpino</h4>
-                        <h3>The ultimate <strong>Bootstrap 4</strong> Admin Dashboard</h3>
-                        <p>Alpino is fully based on HTML5 + CSS3 Standards. Is fully responsive and clean on every device and every browser</p>
+                          <h4 class="logo"><img src="assets/images/logo.svg" alt=""> HRM yoki HR</h4>
+                        <h3>Inson <strong>resurslarini</strong> boshqarish</h3>
+                        <p>Inson resurslarini boshqarish ( HRM yoki HR ) - bu kompaniya yoki tashkilotdagi odamlarni o'z biznesiga raqobatbardosh ustunlikka ega bo'lishiga yordam beradigan darajada samarali va samarali boshqarish bo'yicha strategik yondashuv . U ish beruvchining strategik maqsadlariga xizmat qilishda xodimlarning ish faoliyatini maksimal darajada oshirish uchun mo'ljallangan</p>
                         <div class="footer">
-                            <ul  class="social_link list-unstyled">
+                            {% comment %}<ul  class="social_link list-unstyled">
                                 <li><a href="https://thememakker.com" title="ThemeMakker"><i class="zmdi zmdi-globe"></i></a></li>
                                 <li><a href="https://themeforest.net/user/thememakker" title="Themeforest"><i class="zmdi zmdi-shield-check"></i></a></li>
                                 <li><a href="https://www.linkedin.com/company/thememakker/" title="LinkedIn"><i class="zmdi zmdi-linkedin"></i></a></li>
@@ -23,7 +23,7 @@
                                 <li><a href="http://twitter.com/thememakker" title="Twitter"><i class="zmdi zmdi-twitter"></i></a></li>
                                 <li><a href="http://plus.google.com/+thememakker" title="Google plus"><i class="zmdi zmdi-google-plus"></i></a></li>
                                 <li><a href="https://www.behance.net/thememakker" title="Behance"><i class="zmdi zmdi-behance"></i></a></li>
-                            </ul>
+                            </ul>{% endcomment %}
                             <hr>
                         </div>
                     </div>
@@ -69,15 +69,11 @@
                                 <input type="password" name="password" placeholder="Password" class="form-control" required/>
                                 <span class="input-group-addon"><i class="zmdi zmdi-lock"></i></span>
                             </div>
-{#                            <div class="checkbox">#}
-{#                                <input id="terms" type="checkbox">#}
-{#                                <label for="terms">I read and Agree to the <a href="javascript:void(0);">Terms of Usage</a></label>#}
-{#                            </div>#}
                             <div class="footer">
-                                <button type="submit" class="btn btn-primary btn-round btn-block">SIGN UP</button>
+                                <button type="submit" class="btn btn-primary btn-round btn-block">Ro'yxatdan o'tish</button>
                             </div>
                         </form>
-                        <a class="link" href="{% url 'login' %}">You already have a membership?</a>
+                        <a class="link" href="{% url 'login' %}">Siz allaqachon a'zo bo'lganmisiz?</a>
                     </div>
                 </div>
             </div>
