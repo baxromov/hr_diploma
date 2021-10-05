@@ -1,3 +1,4 @@
+/*
 .modal-dialog{
     width: 100% !important;
 }
@@ -9,10 +10,10 @@
     }
 }
 
-.modal {
-    width: 71%;
-    margin: 0 216px;
-}
+!*.modal {*!
+!*    width: 71%;*!
+!*    margin: 0 216px;*!
+!*}*!
 #DataTables_Table_0_length{
     display: none;
-}
+}*/

@@ -19,8 +19,8 @@
             </div>
         </div>
 
-        <div class="row clearfix">
-            <div class="col-lg-6 col-md-12 col-sm-12">
+        <div class="row">
+            <div class="col-12 col-md-12 col-sm-12">
                 <div class="card">
                     <div class="header">
                         <h2>Kelish ketish nazorati</h2>
@@ -29,8 +29,8 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="body table-responsive">
-                        <table class="table table-bordered" id="flow-list">
+                    <div class="body">
+                        <table class="table table-borderless table-striped table-hover" id="flow-list">
                             <thead>
                                 <tr>
                                     <th>Xodim</th>
@@ -38,13 +38,6 @@
                                     <th>Chiqish vaqti</th>
                                 </tr>
                             </thead>
-                            <tfoot>
-                                <tr>
-                                    <th>Xodim</th>
-                                    <th>Kirish vaqti</th>
-                                    <th>Chiqish vaqti</th>
-                                </tr>
-                            </tfoot>
                             <tbody>
                             {% for staff in staff_flows %}
                                 <div>
@@ -88,18 +81,22 @@
 
             $('#flow-list').DataTable({
                  dom: 'Bfrtip',
-                 paging: true,
-                 autoWidth: false,
                  buttons: [
                     'copy', 'excel', 'pdf', 'print'
                 ],
-                "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
-                "columnDefs": [
-                    { type: "num", targets: 0 },
-                    { type: "phoneNumber", targets: 1 },
-                    { type: "phoneNumber", targets: 2 },
-                    { type: "phoneNumber", targets: 3 },
-                ],
+                "oLanguage": {
+
+                    "sSearch": "Qidiruv:",
+                    "sLengthMenu": "Ko’rsatkich _MENU_ talik",
+                    "sInfo": "Sahifa _START_ dan _END_ gacha, umumiy _TOTAL_",
+                    "oPaginate": {
+                        "sFirst": "Birinchi sahifa", // This is the link to the first page
+                        "sPrevious": "Oldingi sahifa", // This is the link to the previous page
+                        "sNext": "Keyengi sahifa", // This is the link to the next page
+                        "sLast": "Oxirgi sahifa" // This is the link to the last page
+                    }
+
+                }
             });
         })
     </script>

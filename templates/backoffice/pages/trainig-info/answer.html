@@ -9,16 +9,17 @@
     <section class="content">
         <div class="container-fluid">
             <div class="block-header">
-            <div class="row clearfix">
-                <div class="col-lg-5 col-md-5 col-sm-12">
-                    <h2>Hodim Training</h2>
-                    <ul class="breadcrumb padding-0">
-                        <li class="breadcrumb-item"><a href="{% url 'backoffice-main' %}"><i class="zmdi zmdi-home"></i></a></li>
-                        <li class="breadcrumb-item active">Hodim Training</li>
-                    </ul>
+                <div class="row clearfix">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
+                        <h2>Hodim Training</h2>
+                        <ul class="breadcrumb padding-0">
+                            <li class="breadcrumb-item"><a href="{% url 'backoffice-main' %}"><i
+                                    class="zmdi zmdi-home"></i></a></li>
+                            <li class="breadcrumb-item active">Hodim Training</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
             <!-- Disabled Items -->
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12">
@@ -41,17 +42,15 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                                {% for staff in staffs %}
-                                                    <tr>
-                                                        <td>{{ forloop.counter }}</td>
-                                                        <td>
-                                                            <a href="#" data-toggle="modal" data-target="#defaultModal{{ staff.id }}">
-                                                                {{ staff.first_name }} {{ staff.second_name }} {{ staff.last_name }}</a>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                {% endfor %}
-
+                                            {% for staff in staffs %}
+                                                <tr>
+                                                    <td>{{ forloop.counter }}</td>
+                                                    <td>
+                                                        <a href="#" data-toggle="modal"
+                                                           data-target="#defaultModal{{ staff.id }}">{{ staff.first_name }} {{ staff.second_name }} {{ staff.last_name }}</a>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
                                             </tbody>
                                         </table>
                                     </div>
@@ -66,8 +65,9 @@
         </div>
     </section>
 
-       {% for item in staffs %}
-         <div class="modal fade" id="defaultModal{{ item.id }}" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+    {% for item in staffs %}
+        <div class="modal fade" id="defaultModal{{ item.id }}" tabindex="-1" role="dialog" style="display: none;"
+             aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -84,25 +84,27 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">CLOSE</button>
+                        <button type="button" class="btn btn-danger btn-simple btn-round waves-effect"
+                                data-dismiss="modal">CLOSE
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
-   {% endfor %}
+    {% endfor %}
 {% endblock %}
 
 {% block js %}
     <script>
-         $(function () {
+        $(function () {
 
             $('#training_answer').DataTable({
-                 paging: true,
-                 autoWidth: false,
+                paging: true,
+                autoWidth: false,
                 "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
                 "columnDefs": [
-                    { type: "num", targets: 0 },
-                    { type: "phoneNumber", targets: 1 },
+                    {type: "num", targets: 0},
+                    {type: "phoneNumber", targets: 1},
                 ],
             });
         })

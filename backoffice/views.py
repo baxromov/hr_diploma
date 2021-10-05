@@ -1050,6 +1050,56 @@ class TrainingInfoTemplateView(LoginRequiredMixin, generic.CreateView):
         return super(TrainingInfoTemplateView, self).form_invalid(form)
 
 
+class TrainingInfoCreateViewTemplateView(LoginRequiredMixin, generic.CreateView):
+    template_name = 'backoffice/pages/trainig-info/create.html'
+    form_class = forms.TrainingInfoModelForm
+    success_url = reverse_lazy('training_info')
+    model = models.TrainingInfo
+
+    def get_form(self, form_class=None):
+        f = super().get_form(form_class)
+        f.fields['position'].queryset = self.request.user.company.position_set.all()
+        return f
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        ctx = super(TrainingInfoCreateViewTemplateView, self).get_context_data(**kwargs)
+        company = self.request.user.company
+        training_info = models.TrainingInfo.objects.filter(company=company)
+        staffs = models.Staff.objects.filter(company=company)
+        ctx['items'] = training_info
+        ctx['staffs'] = staffs
+        return ctx
+
+    def form_valid(self, form):
+        self.training_info = form.save(commit=False)
+        self.training_info.company = self.request.user.company
+        self.training_info.save()
+        questions = self.request.POST.getlist('field_name')
+        position_id = self.request.POST.get('position')
+        staffs = self.request.POST.getlist('staff')
+
+        for staff_id in staffs:
+            staff = models.Staff.objects.get(id=staff_id)
+            staff.traininganswer_set.all().delete()
+        for question in questions:
+            training_questions = models.TrainingQuestion.objects.create(question=question,
+                                                                        position=self.training_info.position)
+            for staff_id in staffs:
+                traininganswer = models.TrainingAnswer.objects.create()
+                staff = models.Staff.objects.get(id=staff_id)
+                staff.traininganswer_set.add(traininganswer)
+
+                staff.save()
+                training_questions.traininganswer_set.add(traininganswer)
+                training_questions.save()
+
+        messages.success(self.request, 'Hodim Adaptatsiyasi biriktirildi !!!')
+        return HttpResponseRedirect(reverse_lazy('training_info'))
+
+    def form_invalid(self, form):
+        return super(TrainingInfoCreateViewTemplateView, self).form_invalid(form)
+
+
 class TrainingInfoDeleteView(LoginRequiredMixin, generic.DeleteView):
     queryset = models.TrainingInfo.objects.all()
     form_class = forms.TrainingInfoModelForm

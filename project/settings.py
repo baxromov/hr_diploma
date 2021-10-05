@@ -1,6 +1,7 @@
 import os
-from pathlib import Path
 from datetime import timedelta
+from pathlib import Path
+
 from django.urls import reverse
 from rest_framework.reverse import reverse_lazy
 
@@ -144,6 +145,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CKEDITOR_CONFIGS = {
     'default': {
         'toolbar': 'full',
+        'width': 'auto',
     },
 }
 CKEDITOR_UPLOAD_PATH = 'uploads/'
