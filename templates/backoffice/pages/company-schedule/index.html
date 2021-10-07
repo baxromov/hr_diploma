@@ -98,27 +98,22 @@
 
     <div class="modal fade" id="colorModal" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <div class="modal-content bg-white">
+            <div class="modal-content">
                 <div class="modal-header">
-
+                    <h5 class="modal-title">Biriktirish</h5>
+                    <button type="button" class="btn btn-neutral" data-dismiss="modal"><i
+                            class="zmdi zmdi-close"></i></button>
                 </div>
                 <div class="modal-body">
                     <div class="card">
-                        <div class="header">
-                            <h2>Biriktirish</h2>
-                        </div>
                         <div class="body">
                             <form action="{% url 'company_schedule' %}" method="POST" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 {{ form.as_p }}
-                                <input type="submit" class="btn btn-info" value="Save">
+                                <input type="submit" class="btn btn-outline-success" value="Saqlash">
                             </form>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary btn-round" data-dismiss="modal"><i
-                            class="zmdi zmdi-close"></i></button>
                 </div>
             </div>
         </div>
@@ -128,9 +123,11 @@
         <div class="modal fade" id="staff_adaptation{{ item.id }}" tabindex="-1" role="dialog" style="display: none;"
              aria-hidden="true">
             <div class="modal-dialog" role="document">
-                <div class="modal-content bg-white">
+                <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="title text-dark">Taxrirlash</h4>
+                        <h5 class="modal-title">Taxrirlash</h5>
+                        <button type="button" class="btn btn-neutral" style="padding: 0 !important;" data-dismiss="modal"><i
+                                class="zmdi zmdi-close"></i></button>
                     </div>
                     <div class="modal-body">
                         <form action="{% url 'company_schedule_update' pk=item.id %}" method="POST"
@@ -139,12 +136,8 @@
                             {% with form|fill_fields:item as f %}
                                 {{ f.as_p }}
                             {% endwith %}
-                            <input type="submit" class="btn btn-info" value="Save">
+                            <input type="submit" class="btn btn-info" value="Saqlash">
                         </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal"><i
-                                class="zmdi zmdi-close"></i></button>
                     </div>
                 </div>
             </div>
