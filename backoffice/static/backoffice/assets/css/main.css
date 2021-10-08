@@ -14247,7 +14247,7 @@ img {
     width: 230px;
     height: calc(100vh - 20px);
     /*margin: 10px;*/
-    background: #363740;
+    background: #363740 !important;
     position: fixed;
     top: 0px;
     left: 50px;

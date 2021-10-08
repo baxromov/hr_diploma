@@ -2,7 +2,7 @@
 
 {% load app_tags %}
 {% block title %}
-    Company Schedule
+    Shuxrat devori
 {% endblock %}
 
 {#zmdi-hc-spin#}
@@ -12,11 +12,11 @@
             <div class="block-header">
                 <div class="row clearfix">
                     <div class="col-lg-5 col-md-5 col-sm-12">
-                        <h2>Company Schedule</h2>
+                        <h2>Shuxrat devori</h2>
                         <ul class="breadcrumb padding-0">
                             <li class="breadcrumb-item"><a href="{% url 'backoffice-main' %}"><i
                                     class="zmdi zmdi-home"></i></a></li>
-                            <li class="breadcrumb-item active">Company Schedule</li>
+                            <li class="breadcrumb-item active">Shuxrat devori</li>
                         </ul>
                     </div>
                 </div>
@@ -33,7 +33,7 @@
 
                         </div>
                         <div class="body table-responsive">
-                            <table class="table table-hover" id="super-staff">
+                            <table class="table table-hover table-striped table-borderless" id="super-staff">
                                 <thead>
                                 <tr>
                                     <th>#</th>
@@ -149,13 +149,19 @@
                     'copy', 'excel', 'pdf', 'print'
                 ],
                 "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
-                "columnDefs": [
-                    {type: "num", targets: 0},
-                    {type: "phoneNumber", targets: 1},
-                    {type: "datetime", targets: 2},
-                    {type: "phoneNumber", targets: 4},
-                    {type: "phoneNumber", targets: 5},
-                ],
+                 "oLanguage": {
+                    "sEmptyTable": "Ro'yxat bo'sh",
+                    "sSearch": "Qidiruv:",
+                    "sLengthMenu": "Ko’rsatkich _MENU_ talik",
+                    "sInfo": "Sahifa _START_ dan _END_ gacha, umumiy _TOTAL_",
+                    "oPaginate": {
+                        "sFirst": "Birinchi sahifa", // This is the link to the first page
+                        "sPrevious": "Oldingi sahifa", // This is the link to the previous page
+                        "sNext": "Keyengi sahifa", // This is the link to the next page
+                        "sLast": "Oxirgi sahifa" // This is the link to the last page
+                    }
+
+                },
             });
         })
     </script>

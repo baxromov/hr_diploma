@@ -47,6 +47,7 @@ class MainTemplate(LoginRequiredMixin, generic.ListView):
 
         return set(ll)
 
+
     def get_context_data(self, *, object_list=None, **kwargs):
         ctx = super(MainTemplate, self).get_context_data(**kwargs)
         k_day = pendulum.now().day_of_week
@@ -72,6 +73,16 @@ class MainTemplate(LoginRequiredMixin, generic.ListView):
             ctx['late_today'] = late_today
         except:
             ctx['late_today'] = ""
+
+        try:
+            start_work = self.request.user.company.companyschedule_set.get(
+                day=self.DAYS_OF_WEEK.get(datetime.datetime.today().weekday())).start_work
+            staff_id = self.calculation_the_date_of_not_comming(today, start_work)
+            late_today = models.Staff.objects.filter(id__in=staff_id)
+            ctx['late_today'] = late_today
+        except:
+            ctx['late_today'] = ""
+
 
         ctx['late_came_person_count_per_day'] = result
         return ctx
@@ -366,7 +377,7 @@ class DepartmentUpdateView(LoginRequiredMixin, generic.UpdateView):
         self.department.save()
         questions_a = models.Question.objects.filter(department_id=self.kwargs.get('pk'))
         for pk, question in enumerate(questions_a):
-            question.question = post_questions[pk-1]
+            question.question = post_questions[pk - 1]
             question.save()
         super(DepartmentUpdateView, self).form_valid(form)
         messages.success(self.request, "Bo'lim o'zgartirildi !!!")
@@ -515,7 +526,6 @@ class VacationUpdateView(LoginRequiredMixin, generic.UpdateView):
     def get_success_url(self):
         staff_id = self.request.META['HTTP_REFERER'].split("/")[-1]
         return reverse_lazy('vacation', kwargs={'pk': staff_id})
-
 
     def form_valid(self, form):
         super(VacationUpdateView, self).form_valid(form)
@@ -702,7 +712,6 @@ class DocumentListCreateView(LoginRequiredMixin, generic.CreateView):
         messages.success(self.request, 'Xujjat biriktirildi')
         return HttpResponseRedirect(reverse_lazy('document', kwargs={'pk': staff_id}))
 
-
     def form_invalid(self, form):
         return super(DocumentListCreateView, self).form_invalid(form)
 
@@ -716,7 +725,6 @@ class DocumentDeleteView(LoginRequiredMixin, generic.DeleteView):
         staff_id = self.request.META['HTTP_REFERER'].split("/")[-1]
         messages.success(self.request, "Xujjat o'chirildi")
         return HttpResponseRedirect(reverse_lazy('document', kwargs={'pk': staff_id}))
-
 
     def get_success_url(self):
         staff_id = self.request.META['HTTP_REFERER'].split("/")[-1]
@@ -761,6 +769,7 @@ class NewTelegramStaffDetailView(LoginRequiredMixin, generic.DetailView):
         new_staff = models.NewStaff.objects.filter(company=self.request.user.company)
         ctx['answers'] = models.Answer.objects.filter(candidate__company=self.request.user.company)
         return ctx
+
 
 # -----------------------------------------------------------------------------------------
 
@@ -1111,7 +1120,7 @@ class TrainingInfoUpdateView(LoginRequiredMixin, generic.UpdateView):
     form_class = forms.TrainingInfoModelForm
     model = models.TrainingInfo
     success_url = reverse_lazy('training_info')
-    
+
     def form_valid(self, form):
         super(TrainingInfoUpdateView, self).form_valid(form)
         messages.success(self.request, "Xodim adaptatsiyasi o'zgartirildi !!!")
@@ -1167,7 +1176,7 @@ class CompanyCultureUpdateView(LoginRequiredMixin, generic.UpdateView):
     form_class = forms.CompanyCultureModelForm
     model = models.CompanyCulture
     success_url = reverse_lazy('company_culture')
-    
+
     def form_valid(self, form):
         super(CompanyCultureUpdateView, self).form_valid(form)
         messages.success(self.request, "Kompaniya madaniyati o'zgartirildi !!!")
@@ -1265,7 +1274,7 @@ class SuperStaffUpdateView(LoginRequiredMixin, generic.UpdateView):
     form_class = forms.SuperStaffsModelForm
     model = models.SuperStaffs
     success_url = reverse_lazy('super_staff')
-    
+
     def form_valid(self, form):
         super(SuperStaffUpdateView, self).form_valid(form)
         messages.success(self.request, "Shuxrat burchagi o'zgartirildi !!!")

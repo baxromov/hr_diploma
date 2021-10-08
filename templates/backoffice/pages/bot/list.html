@@ -7,120 +7,130 @@
 
 {% block content %}
     <section class="content">
-    <div class="container-fluid">
-        <div class="block-header">
-            <div class="row clearfix">
-                <div class="col-lg-12 col-md-12 col-sm-12">
-                    <h2>Bot</h2>
+        <div class="container-fluid">
+            <div class="block-header">
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <h2>Bot</h2>
                         <ul class="breadcrumb padding-0">
-                            <li class="breadcrumb-item"><a href="{% url 'backoffice-main' %}"><i class="zmdi zmdi-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="{% url 'backoffice-main' %}"><i
+                                    class="zmdi zmdi-home"></i></a></li>
                             <li class="breadcrumb-item"><a href="{% url 'search_staff' %}">Hodim qidirish</a></li>
                             <li class="breadcrumb-item"><a href="javascript:void(0);">Bot integratsiyasi</a></li>
                         </ul>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="row clearfix">
-            <div class="col-lg-12 col-md-12 col-sm-12">
-                <div class="card">
-                    <div class="header">
-                        <div class="button-demo js-modal-buttons">
-                                <button type="button" data-color="pink" data-toggle="modal" data-target="#colorModal" class="btn btn-success waves-effect"><i class="zmdi zmdi-plus"></i> Bot integratsiyasi</button>
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="card">
+                        <div class="header">
+                            <div class="button-demo js-modal-buttons">
+                                <button type="button" data-color="pink" data-toggle="modal" data-target="#colorModal"
+                                        class="btn btn-success waves-effect"><i class="zmdi zmdi-plus"></i> Bot
+                                    integratsiyasi
+                                </button>
                             </div>
-                    </div>
-                    <div class="body table-responsive">
-                        <table class="table table-hover">
-                            <thead>
+                        </div>
+                        <div class="body table-responsive">
+                            <table class="table table-hover">
+                                <thead>
                                 <tr>
                                     <th>Bot nomi</th>
                                     <th>Yaratilgan sana</th>
                                     <th>Botni o'zgartirish</th>
                                 </tr>
-                            </thead>
-                            <tbody>
+                                </thead>
+                                <tbody>
                                 <tr>
                                     <td>{{ bot_list.name }}</td>
                                     <td>{{ bot_list.created_at }}</td>
                                     <td>
-                                        <button type="button" data-color="pink" data-toggle="modal" data-target="#colorModal{{ bot_list.id }}" class="btn btn-neutral waves-effect"><i class="zmdi zmdi-edit"></i></button>
+                                        <button type="button" data-color="pink" data-toggle="modal"
+                                                data-target="#colorModal{{ bot_list.id }}"
+                                                class="btn btn-neutral waves-effect"><i class="zmdi zmdi-edit"></i>
+                                        </button>
                                     </td>
                                 </tr>
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
+
         </div>
+    </section>
 
-    </div>
-</section>
-
-<div class="modal fade" id="colorModal" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content bg-white">
+    <div class="modal fade" id="colorModal" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content bg-white">
                 <div class="modal-header">
-                    <h4 class="title text-dark">Bot integratsiyasi qoshish</h4>
+                    <h5 class="modal-title">Bot integratsiyasi qoshish</h5>
+                    <button type="button" class="btn btn-neutral" style="padding: 0 !important;" data-dismiss="modal"><i
+                            class="zmdi zmdi-close"></i></button>
                 </div>
                 {% csrf_token %}
-            <div class="modal-body">
-                        <form action="{% url 'bot_c_l' %}" method="post">
+                <div class="modal-body">
+                    <form action="{% url 'bot_c_l' %}" method="post">
+                        {% csrf_token %}
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="name" class="text-dark">Bot nomi</label>
+                                <input type="text" name="name" id="name" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="token" class="text-dark">Bot tokeni</label>
+                                <input type="text" name="token" id="token" class="form-control">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-success">Saqlash</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="modal fade" id="colorModal{{ bot_list.id }}" tabindex="-1" role="dialog" style="display: none;"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content bg-white">
+                <div class="modal-header">
+                    <h4 class="title text-dark">Bot integratsiyasini taxrirlash</h4>
+                </div>
+                <div class="modal-body">
+                    {% if bot_list %}
+                        <form action="{% url 'bot_c_u' bot_list.id %}" method="post" enctype="multipart/form-data">
                             {% csrf_token %}
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label for="name" class="text-dark">Bot nomi</label>
-                                    <input type="text" name="name" id="name" class="form-control">
+                                    <input type="text" name="name" id="name" class="form-control"
+                                           value="{{ bot_list.name }}">
                                 </div>
                             </div>
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label for="token" class="text-dark">Bot tokeni</label>
-                                    <input type="text" name="token" id="token" class="form-control">
+                                    <input type="text" name="token" id="token" class="form-control"
+                                           value="{{ bot_list.token }}">
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-success">Saqlash</button>
+                            <button type="submit" class="btn btn-success">Taxrirlashni saqlash</button>
                         </form>
-            </div>
-            <div class="modal-footer">
-                    <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal"><i class="zmdi zmdi-close"></i></button>
+                    {% endif %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-round" data-dismiss="modal"><i
+                            class="zmdi zmdi-close"></i></button>
                 </div>
             </div>
         </div>
-</div>
-
-
-
-<div class="modal fade" id="colorModal{{ bot_list.id }}" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-            <div class="modal-content bg-white">
-                    <div class="modal-header">
-                        <h4 class="title text-dark">Bot integratsiyasini taxrirlash</h4>
-                    </div>
-                    <div class="modal-body">
-                            {% if bot_list %}
-                                <form action="{% url 'bot_c_u' bot_list.id %}" method="post" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label for="name" class="text-dark">Bot nomi</label>
-                                    <input type="text" name="name" id="name" class="form-control" value="{{ bot_list.name }}">
-                                </div>
-                        </div>
-                        <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label for="token" class="text-dark">Bot tokeni</label>
-                                    <input type="text" name="token" id="token" class="form-control" value="{{ bot_list.token }}">
-                                </div>
-                        </div>
-                        <button type="submit" class="btn btn-success">Taxrirlashni saqlash</button>
-                    </form>
-                            {% endif %}
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary btn-round" data-dismiss="modal"><i class="zmdi zmdi-close"></i></button>
-                    </div>
-                </div>
-            </div>
-</div>
+    </div>
 
 {% endblock %}

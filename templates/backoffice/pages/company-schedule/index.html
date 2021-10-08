@@ -38,16 +38,16 @@
                             </button>
 
                         </div>
-                        <div class="body table-responsive">
-                            <table class="table table-hover" id="company-schedule">
+                        <div class="body">
+                            <table class="table table-borderless table-striped table-hover table-responsive" id="company-schedule">
                                 <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Day</th>
-                                    <th>Start work at</th>
-                                    <th>End work at</th>
-                                    <th>Start lunch at</th>
-                                    <th>End lunch at</th>
+                                    <th>Kun</th>
+                                    <th>Ish boshlanish vaqti</th>
+                                    <th>Ish tugash vaqti</th>
+                                    <th>Tushlik vaqti</th>
+                                    <th>Tsuhlik vaqti tugashi</th>
                                     <th>O'chirish</th>
                                     <th>Taxrirlash</th>
                                 </tr>
@@ -183,15 +183,19 @@
                     'copy', 'excel', 'pdf', 'print'
                 ],
                 "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
-                "columnDefs": [
-                    { type: "num", targets: 0 },
-                    { type: "phoneNumber", targets: 1 },
-                    { type: "phoneNumber", targets: 2 },
-                    { type: "phoneNumber", targets: 4 },
-                    { type: "phoneNumber", targets: 5 },
-                    { type: "phoneNumber", targets: 6 },
-                    { type: "phoneNumber", targets: 7 },
-                ],
+                "oLanguage": {
+                    "sEmptyTable": "Ro'yxat bo'sh",
+                    "sSearch": "Qidiruv:",
+                    "sLengthMenu": "Ko’rsatkich _MENU_ talik",
+                    "sInfo": "Sahifa _START_ dan _END_ gacha, umumiy _TOTAL_",
+                    "oPaginate": {
+                        "sFirst": "Birinchi sahifa", // This is the link to the first page
+                        "sPrevious": "Oldingi sahifa", // This is the link to the previous page
+                        "sNext": "Keyengi sahifa", // This is the link to the next page
+                        "sLast": "Oxirgi sahifa" // This is the link to the last page
+                    }
+
+                },
             });
         })
     </script>

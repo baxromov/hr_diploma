@@ -34,8 +34,8 @@
                         <a href="{% url 'staff_create' %}" class="btn btn-success">Hodim yaratish <i class="zmdi zmdi-plus"></i></a>
                     </div>
                     <div class="body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-striped table-hover" id="example_1">
+                        <div class="">
+                            <table class="table table-borderless table-striped table-hover table-responsive" id="example_1">
                                 <thead>
                                    <tr>
                                         <th>#</th>
@@ -46,16 +46,6 @@
                                         <th>O'chirish</th>
                                     </tr>
                                 </thead>
-                                <tfoot>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>To'liq ismi</th>
-                                        <th>Ish boshlagan sana</th>
-                                        <th>Bo'lim</th>
-                                        <th>Lavozim</th>
-                                        <th>O'chirish</th>
-                                    </tr>
-                                </tfoot>
                                 <tbody>
                                     {% for staff in staffs %}
                                         <tr>
@@ -88,9 +78,6 @@
 
     </div>
 </section>
-
-
-
     {% for item in staffs %}
         <div class="modal fade" id="staff-{{ item.id }}" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -123,9 +110,8 @@
 {% block js %}
      <script>
         $(function () {
-
             $('#example_1').DataTable({
-                 dom: 'Bfrtip',
+                 "dom":' <"search"f><"top"l>rt<"bottom"ip><"clear">',
                  paging: true,
                  autoWidth: true,
                  orderCellsTop: true,
@@ -142,12 +128,21 @@
                     { type: "phoneNumber", targets: 4 },
                     { type: "phoneNumber", targets: 5 },
                 ],
+                "oLanguage": {
+                    "sEmptyTable": "Ro'yxat bo'sh",
+                    "sSearch": "Qidiruv:",
+                    "sLengthMenu": "Ko’rsatkich _MENU_ talik",
+                    "sInfo": "Sahifa _START_ dan _END_ gacha, umumiy _TOTAL_",
+                    "oPaginate": {
+                        "sFirst": "Birinchi sahifa", // This is the link to the first page
+                        "sPrevious": "Oldingi sahifa", // This is the link to the previous page
+                        "sNext": "Keyengi sahifa", // This is the link to the next page
+                        "sLast": "Oxirgi sahifa" // This is the link to the last page
+                    }
+
+                },
             });
         })
-
-
-
-
     </script>
     <script>
         setTimeout(fade_out, 3000);
