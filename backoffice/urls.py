@@ -6,7 +6,7 @@ from . import views
 
 urlpatterns = [
     path('', views.MainTemplate.as_view(), name="backoffice-main"),
-    path('table', views.TableTemplate.as_view(), name="table"),
+    # path('table', views.TableTemplate.as_view(), name="table"),
     path('login', views.LoginPage.as_view(), name="login"),
     path('logout', LogoutView.as_view(), name="logout"),
     path('registration', views.Registration.as_view(), name="registration"),
@@ -117,6 +117,7 @@ urlpatterns = [
 
     # CompanySchedule
     path('company-schedule', views.CompanyScheduleCreateViewListView.as_view(), name="company_schedule"),
+    path('company-schedule/create', views.CompanyScheduleCreateView.as_view(), name="company_schedule_create"),
     path('company-schedule/delete/<int:pk>', views.CompanyScheduleDeleteView.as_view(), name="company_schedule_delete"),
     path('company-schedule/update/<int:pk>', views.CompanyScheduleUpdateView.as_view(), name="company_schedule_update"),
 

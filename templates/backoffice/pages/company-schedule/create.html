@@ -1,0 +1,77 @@
+{% extends 'backoffice/base.html' %}
+
+{% load app_tags %}
+{% block title %}
+    Kompaniya ish vaqti
+{% endblock %}
+
+{#zmdi-hc-spin#}
+{% block content %}
+    <section class="content">
+        <div class="container-fluid">
+            <div class="block-header">
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <h2>Kompaniya ish vaqti</h2>
+                        <ul class="breadcrumb padding-0">
+                            <li class="breadcrumb-item"><a href="{% url 'backoffice-main' %}"><i
+                                    class="zmdi zmdi-home"></i></a></li>
+                            <li class="breadcrumb-item active">Kompaniya ish vaqti</li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row clearfix">
+                <div class="card">
+                    <div class="body">
+                        <form method="post" id="myForm">
+                            {% csrf_token %}
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4>Create Product</h4>
+                                </div>
+                                <div class="card-body">
+                                    {{ form.non_form_errors }}
+                                    {{ form.as_p }}
+                                    <h5 class="text-info">Add time</h5>
+                                    {{ formset.non_form_errors }}
+                                    {{ formset.management_form }}
+                                    <table id="myFormset1Table" border="0" cellpadding="0">
+                                        <caption>Formset One</caption>
+                                        <tbody>
+                                        {% for form in formset.forms %}
+                                            <tr>
+                                                <td>{{ form.is_work_day }}</td>
+                                                <td>{{ form.start_work }}</td>
+                                                <td>{{ form.end_work }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+{#                                    <input type="button" value="Add More" id="add_more">#}
+
+                                </div>
+                            </div>
+                            <div class="mt-3 mb-5">
+                                <button type="submit" class="px-5 btn btn-info">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block js %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.formset/1.2.2/jquery.formset.js"></script>
+    <script>
+        $('#myFormset1Table tbody tr').formset({
+            prefix: '{{ formset.prefix }}',
+            formCssClass: 'dynamic-formset1'
+        });
+    </script>
+{% endblock %}

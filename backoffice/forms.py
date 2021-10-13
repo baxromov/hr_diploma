@@ -1,5 +1,6 @@
 from django import forms
-from mptt import forms as mppt_forms
+from django.forms import inlineformset_factory
+
 from app import models
 
 
@@ -159,14 +160,35 @@ class CompanyCultureModelForm(forms.ModelForm):
 
 class CompanyScheduleModelForm(forms.ModelForm):
     class Meta:
-        model = models.CompanySchedule
-        exclude = ('company',)
+        model = models.CompanyScheduleFreeGraph
+        exclude = ('company', 'start_work', 'end_work')
         widgets = {
-            'start_work': forms.TimeInput(attrs={'class': 'form-control', 'type': 'time'}),
+            # 'start_work': forms.TimeInput(attrs={'class': 'form-control', 'type': 'time'}),
+            'name': forms.TextInput(attrs={'class': 'form-control', 'type': 'text'}),
             'lunch_start': forms.TimeInput(attrs={'class': 'form-control', 'type': 'time'}),
             'lunch_end': forms.TimeInput(attrs={'class': 'form-control', 'type': 'time'}),
-            'end_work': forms.TimeInput(attrs={'class': 'form-control', 'type': 'time'}),
+            # 'end_work': forms.TimeInput(attrs={'class': 'form-control', 'type': 'time'}),
         }
+
+
+class CompanySchedulePerDaysgraphModelForm(forms.ModelForm):
+    class Meta:
+        model = models.CompanySchedulePerDaysgraph
+        exclude = ()
+
+
+CompanySchedulePerDaysgraphModelFormInlineFormset = inlineformset_factory(
+    models.CompanyScheduleFreeGraph,
+    models.CompanySchedulePerDaysgraph,
+    extra=1,
+    exclude=(),
+    widgets={
+        'is_work_day': forms.CheckboxInput(attrs={'class': 'form-control'}),
+        'start_work': forms.TimeInput(attrs={'class': 'form-control', 'type': 'time'}),
+        'end_work': forms.TimeInput(attrs={'class': 'form-control', 'type': 'time'}),
+    },
+    can_delete=False,
+)
 
 
 class SuperStaffsModelForm(forms.ModelForm):

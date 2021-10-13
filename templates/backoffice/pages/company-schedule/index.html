@@ -10,44 +10,42 @@
     <section class="content">
         <div class="container-fluid">
             <div class="block-header">
-            <div class="row clearfix">
-                <div class="col-lg-12 col-md-12 col-sm-12">
-                    <h2>Kompaniya ish vaqti</h2>
-                    <ul class="breadcrumb padding-0">
-                        <li class="breadcrumb-item"><a href="{% url 'backoffice-main' %}"><i class="zmdi zmdi-home"></i></a></li>
-                        <li class="breadcrumb-item active">Kompaniya ish vaqti</li>
-                    </ul>
-                    {% if messages %}
-                             {% for message in messages %}
-                                 <div class="text-center btn btn-success rounded-lg w-100 btn-{{ message.tags }} messages">
-                                     <p class="text-center">{{ message|safe }}</p>
-                                 </div>
-                             {% endfor %}
-                    {% endif %}
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <h2>Kompaniya ish vaqti</h2>
+                        <ul class="breadcrumb padding-0">
+                            <li class="breadcrumb-item"><a href="{% url 'backoffice-main' %}"><i
+                                    class="zmdi zmdi-home"></i></a></li>
+                            <li class="breadcrumb-item active">Kompaniya ish vaqti</li>
+                        </ul>
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="text-center btn btn-success rounded-lg w-100 btn-{{ message.tags }} messages">
+                                    <p class="text-center">{{ message|safe }}</p>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
                 </div>
             </div>
-        </div>
             <!-- Disabled Items -->
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="card">
                         <div class="header">
 
-                            <button type="button" data-color="pink" data-toggle="modal" data-target="#colorModal"
+                            <a href="{% url 'company_schedule_create' %}"
                                     class="btn btn-success waves-effect"><i class="zmdi zmdi-plus"></i> Biriktirish
-                            </button>
+                            </a>
 
                         </div>
-                        <div class="body">
-                            <table class="table table-borderless table-striped table-hover table-responsive" id="company-schedule">
+                        <div class="body table-responsive">
+                            <table class="table table-borderless table-striped table-hover"
+                                   id="company-schedule">
                                 <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Kun</th>
-                                    <th>Ish boshlanish vaqti</th>
-                                    <th>Ish tugash vaqti</th>
-                                    <th>Tushlik vaqti</th>
-                                    <th>Tsuhlik vaqti tugashi</th>
+                                    <th>Nomi</th>
                                     <th>O'chirish</th>
                                     <th>Taxrirlash</th>
                                 </tr>
@@ -56,31 +54,40 @@
                                 {% for item in items %}
                                     <tr>
                                         <th scope="row">{{ forloop.counter }}</th>
-                                        <td>{{ item.day }}</td>
-                                        <td>{{ item.start_work }}</td>
-                                        <td>{{ item.end_work }}</td>
-                                        <td>{{ item.lunch_start }}</td>
-                                        <td>{{ item.lunch_end }}</td>
-                                        <td>
-                                             <a href="javascript:void(0);" data-color="pink"
-                                               data-toggle="modal" data-target="#item-{{ item.id }}"
-                                               class="btn btn-neutral waves-effect">
-                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M19.3248 9.4682C19.3248 9.4682 18.7818 16.2032 18.4668 19.0402C18.3168 20.3952 17.4798 21.1892 16.1088 21.2142C13.4998 21.2612 10.8878 21.2642 8.27979 21.2092C6.96079 21.1822 6.13779 20.3782 5.99079 19.0472C5.67379 16.1852 5.13379 9.4682 5.13379 9.4682" stroke="#ED5E5E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M20.708 6.2397H3.75" stroke="#ED5E5E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M17.4406 6.2397C16.6556 6.2397 15.9796 5.6847 15.8256 4.9157L15.5826 3.6997C15.4326 3.1387 14.9246 2.7507 14.3456 2.7507H10.1126C9.53358 2.7507 9.02558 3.1387 8.87558 3.6997L8.63258 4.9157C8.47858 5.6847 7.80258 6.2397 7.01758 6.2397" stroke="#ED5E5E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-                                                </a>
-                                        </td>
+                                        <td>{{ item.name }}</td>
                                         <td>
                                             <a href="javascript:void(0);" data-color="pink"
-                                               data-toggle="modal" data-target="#staff_adaptation{{ item.id }}"
+                                               data-toggle="modal" data-target="#item-{{ item.id }}"
                                                class="btn btn-neutral waves-effect">
-                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M13.7471 20.4429H20.9997" stroke="hsla(250,43%,75%,1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M12.78 3.79479C13.5557 2.86779 14.95 2.73186 15.8962 3.49173C15.9485 3.53296 17.6295 4.83879 17.6295 4.83879C18.669 5.46719 18.992 6.80311 18.3494 7.82259C18.3153 7.87718 8.81195 19.7645 8.81195 19.7645C8.49578 20.1589 8.01583 20.3918 7.50291 20.3973L3.86353 20.443L3.04353 16.9723C2.92866 16.4843 3.04353 15.9718 3.3597 15.5773L12.78 3.79479Z" stroke="hsla(250,43%,75%,1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-<path d="M11.0205 6.00089L16.4728 10.188" stroke="hsla(250,43%,75%,1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-</svg>
+                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                     xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M19.3248 9.4682C19.3248 9.4682 18.7818 16.2032 18.4668 19.0402C18.3168 20.3952 17.4798 21.1892 16.1088 21.2142C13.4998 21.2612 10.8878 21.2642 8.27979 21.2092C6.96079 21.1822 6.13779 20.3782 5.99079 19.0472C5.67379 16.1852 5.13379 9.4682 5.13379 9.4682"
+                                                          stroke="#ED5E5E" stroke-width="1.5" stroke-linecap="round"
+                                                          stroke-linejoin="round"/>
+                                                    <path d="M20.708 6.2397H3.75" stroke="#ED5E5E" stroke-width="1.5"
+                                                          stroke-linecap="round" stroke-linejoin="round"/>
+                                                    <path d="M17.4406 6.2397C16.6556 6.2397 15.9796 5.6847 15.8256 4.9157L15.5826 3.6997C15.4326 3.1387 14.9246 2.7507 14.3456 2.7507H10.1126C9.53358 2.7507 9.02558 3.1387 8.87558 3.6997L8.63258 4.9157C8.47858 5.6847 7.80258 6.2397 7.01758 6.2397"
+                                                          stroke="#ED5E5E" stroke-width="1.5" stroke-linecap="round"
+                                                          stroke-linejoin="round"/>
+                                                </svg>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'company_schedule_update' item.id %}"
+                                               class="btn btn-neutral waves-effect">
+                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                     xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M13.7471 20.4429H20.9997" stroke="hsla(250,43%,75%,1)"
+                                                          stroke-width="1.5" stroke-linecap="round"
+                                                          stroke-linejoin="round"></path>
+                                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                                          d="M12.78 3.79479C13.5557 2.86779 14.95 2.73186 15.8962 3.49173C15.9485 3.53296 17.6295 4.83879 17.6295 4.83879C18.669 5.46719 18.992 6.80311 18.3494 7.82259C18.3153 7.87718 8.81195 19.7645 8.81195 19.7645C8.49578 20.1589 8.01583 20.3918 7.50291 20.3973L3.86353 20.443L3.04353 16.9723C2.92866 16.4843 3.04353 15.9718 3.3597 15.5773L12.78 3.79479Z"
+                                                          stroke="hsla(250,43%,75%,1)" stroke-width="1.5"
+                                                          stroke-linecap="round" stroke-linejoin="round"></path>
+                                                    <path d="M11.0205 6.00089L16.4728 10.188"
+                                                          stroke="hsla(250,43%,75%,1)" stroke-width="1.5"
+                                                          stroke-linecap="round" stroke-linejoin="round"></path>
+                                                </svg>
                                             </a>
                                         </td>
                                     </tr>
@@ -96,78 +103,35 @@
         </div>
     </section>
 
-    <div class="modal fade" id="colorModal" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Biriktirish</h5>
-                    <button type="button" class="btn btn-neutral" data-dismiss="modal"><i
-                            class="zmdi zmdi-close"></i></button>
-                </div>
-                <div class="modal-body">
-                    <div class="card">
-                        <div class="body">
-                            <form action="{% url 'company_schedule' %}" method="POST" enctype="multipart/form-data">
-                                {% csrf_token %}
-                                {{ form.as_p }}
-                                <input type="submit" class="btn btn-outline-success" value="Saqlash">
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     {% for item in items %}
-        <div class="modal fade" id="staff_adaptation{{ item.id }}" tabindex="-1" role="dialog" style="display: none;"
+        <div class="modal fade" id="item-{{ item.id }}" tabindex="-1" role="dialog" style="display: none;"
              aria-hidden="true">
             <div class="modal-dialog" role="document">
-                <div class="modal-content">
+                <div class="modal-content bg-white">
                     <div class="modal-header">
-                        <h5 class="modal-title">Taxrirlash</h5>
-                        <button type="button" class="btn btn-neutral" style="padding: 0 !important;" data-dismiss="modal"><i
-                                class="zmdi zmdi-close"></i></button>
+
                     </div>
                     <div class="modal-body">
-                        <form action="{% url 'company_schedule_update' pk=item.id %}" method="POST"
-                              enctype="multipart/form-data">
-                            {% csrf_token %}
-                            {% with form|fill_fields:item as f %}
-                                {{ f.as_p }}
-                            {% endwith %}
-                            <input type="submit" class="btn btn-info" value="Saqlash">
-                        </form>
+                        <div class="card">
+                            <div class="header">
+                                <h2>O'chirmoqchimisiz?</h2>
+                            </div>
+                            <div class="body d-flex justify-content-around">
+                                <button type="button" class="btn btn-success rounded-lg waves-effect"
+                                        data-dismiss="modal">Bekor qilish
+                                </button>
+                                <form action="{% url 'company_schedule_delete' pk=item.pk %}" method="POST">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger rounded-lg waves-effect">O'chirish
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
             </div>
         </div>
-    {% endfor %}
-    {% for item in items %}
-        <div class="modal fade" id="item-{{ item.id }}" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content bg-white">
-                <div class="modal-header">
-
-                </div>
-                <div class="modal-body">
-                    <div class="card">
-                        <div class="header">
-                            <h2>O'chirmoqchimisiz?</h2>
-                        </div>
-                        <div class="body d-flex justify-content-around">
-                            <button type="button" class="btn btn-success rounded-lg waves-effect" data-dismiss="modal">Bekor qilish</button>
-                            <form action="{% url 'company_schedule_delete' pk=item.pk %}" method="POST">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-danger rounded-lg waves-effect">O'chirish</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
     {% endfor %}
 {% endblock %}
 
@@ -176,10 +140,10 @@
         $(function () {
 
             $('#company-schedule').DataTable({
-                 dom: 'Bfrtip',
-                 paging: true,
-                 autoWidth: false,
-                 buttons: [
+                dom: 'Bfrtip',
+                paging: true,
+                autoWidth: false,
+                buttons: [
                     'copy', 'excel', 'pdf', 'print'
                 ],
                 "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
@@ -201,6 +165,7 @@
     </script>
     <script>
         setTimeout(fade_out, 3000);
+
         function fade_out() {
             $(".messages").fadeOut().empty();
         }

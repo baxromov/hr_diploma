@@ -1,7 +1,7 @@
 from django.contrib import admin
-from app import models
 from mptt.admin import DraggableMPTTAdmin
-from django.utils.html import format_html
+
+from app import models
 
 
 @admin.register(models.Company)
@@ -29,6 +29,16 @@ class PositionModelAdmin(DraggableMPTTAdmin):
 @admin.register(models.StaffORGSystem)
 class StaffORGSystemDraggableMPTTAdmin(DraggableMPTTAdmin):
     mptt_level_indent = 50
+
+
+class CompanySchedulePerDaysgraph(admin.StackedInline):
+    model = models.CompanySchedulePerDaysgraph
+    extra = 0
+
+
+@admin.register(models.CompanyScheduleFreeGraph)
+class CompanyScheduleFreeGraph(admin.ModelAdmin):
+    inlines = [CompanySchedulePerDaysgraph]
 
 
 @admin.register(models.Staff)
@@ -127,11 +137,6 @@ class FinishTextModelAdmin(admin.ModelAdmin):
 
 @admin.register(models.Admin)
 class AdminModelAdmin(admin.ModelAdmin):
-    pass
-
-
-@admin.register(models.CompanySchedule)
-class CompanyScheduleModelAdmin(admin.ModelAdmin):
     pass
 
 

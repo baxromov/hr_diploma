@@ -1,3 +1,5 @@
+import datetime
+
 from ckeditor import fields
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.contrib.auth.models import AbstractUser
@@ -54,27 +56,33 @@ class Company(models.Model):
         verbose_name_plural = "Kompaniya ma'lumotini qo'shish"
 
 
-class CompanySchedule(models.Model):
-    DAYS_OF_THE_WEEK = (
-        ('monday', 'Monday'),
-        ('tuesday', 'Tuesday'),
-        ('wednesday', 'Wednesday'),
-        ('thursday', 'Thursday'),
-        ('friday', 'Friday'),
-        ('saturday', 'Saturday'),
-        ('sunday', 'Sunday'),
-    )
+class CompanyScheduleFreeGraph(models.Model):
+
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
-    day = models.CharField(choices=DAYS_OF_THE_WEEK, max_length=15)
-    start_work = models.TimeField(verbose_name="Ish boshlanishi")
-    lunch_start = models.TimeField(verbose_name="Tushlik vaqti")
-    lunch_end = models.TimeField(verbose_name="Tushlik tugash vaqti")
-    end_work = models.TimeField(verbose_name="Ish Tugash vaqti")
+    name = models.CharField(max_length=255)
+    start_work = models.TimeField(verbose_name="Ish boshlanishi", default=datetime.time(9, 00))
+    lunch_start = models.TimeField(verbose_name="Tushlik vaqti", default=datetime.time(13, 00))
+    lunch_end = models.TimeField(verbose_name="Tushlik tugash vaqti", default=datetime.time(14, 00))
+    end_work = models.TimeField(verbose_name="Ish Tugash vaqti", default=datetime.time(18, 00))
 
     created_at = models.DateTimeField(auto_now_add=True)
 
+    @property
+    def get_days_time(self):
+        return self.companyscheduleperdaysgraph_set.filter(days_graph__id=self.id)
+
     def __str__(self):
-        return self.day
+        return self.name
+
+
+class CompanySchedulePerDaysgraph(models.Model):
+    import datetime
+    days_graph = models.ForeignKey(CompanyScheduleFreeGraph, on_delete=models.CASCADE)
+    is_work_day = models.BooleanField(default=True)
+    start_work = models.TimeField(default=datetime.time(9, 00))
+    end_work = models.TimeField(default=datetime.time(18, 00))
+
+    created_at = models.DateTimeField(auto_now_add=True)
 
 
 class Branch(models.Model):
@@ -303,7 +311,7 @@ class Staff(models.Model):
     position = models.ForeignKey(Position, on_delete=models.CASCADE, verbose_name="Lavozim")
 
     note = models.CharField(max_length=255, null=True, blank=True, verbose_name="Eslatma")
-    # work_plan = models.ForeignKey(WorkPlan, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Ish jadvali")
+    work_graph = models.ForeignKey('CompanyScheduleFreeGraph', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Ish jadvali")
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
