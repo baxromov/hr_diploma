@@ -33,7 +33,7 @@ class StaffORGSystemDraggableMPTTAdmin(DraggableMPTTAdmin):
 
 class CompanySchedulePerDaysgraph(admin.StackedInline):
     model = models.CompanySchedulePerDaysgraph
-    extra = 0
+    extra = 6
 
 
 @admin.register(models.CompanyScheduleFreeGraph)

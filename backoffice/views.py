@@ -10,10 +10,9 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.core.files import File
 from django.db.models import Count
 from django.http import HttpResponseRedirect
-from django.shortcuts import redirect
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse_lazy
 from django.views import generic
-
+from django.db.models import Q
 from app import models
 from backoffice import forms
 from project import settings
@@ -25,6 +24,7 @@ class MainTemplate(LoginRequiredMixin, generic.ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         ctx = super(MainTemplate, self).get_context_data(**kwargs)
+
         """
         k_day = pendulum.now().day_of_week
         schedules = self.request.user.company.companyschedule_set.all()
@@ -54,8 +54,14 @@ class MainTemplate(LoginRequiredMixin, generic.ListView):
 
         ctx['late_came_person_count_per_day'] = result
         """
+        shcedule = models.CompanyScheduleFreeGraph.objects.filter(company=self.request.user.company)
+        staff = models.Staff.objects.filter(company=self.request.user.company)
+        flow = models.Flow.objects.filter(staff__in=staff)
         return ctx
 
+    def get_late_amount(self):
+        company_staffs = self.request.user.company.staff_set.all()
+        flows = models.Flow.objects.filter(staff__in=company_staffs)
 
 """
     def calculation_the_date_of_late(self, that_date, start_work_time):
@@ -1189,28 +1195,23 @@ class CompanyScheduleCreateView(LoginRequiredMixin, generic.CreateView):
 
     def get_context_data(self, **kwargs):
         ctx = super(CompanyScheduleCreateView, self).get_context_data(**kwargs)
-
-        ctx['formset'] = forms.CompanySchedulePerDaysgraphModelFormInlineFormset()
+        if self.request.POST:
+            ctx['formset'] = forms.CompanySchedulePerDaysgraphModelFormInlineFormset(self.request.POST)
+        else:
+            ctx['formset'] = forms.CompanySchedulePerDaysgraphModelFormInlineFormset()
         return ctx
 
-    def post(self, request, *args, **kwargs):
-        form = self.get_form()
-        formset = forms.CompanySchedulePerDaysgraphModelFormInlineFormset(request.POST)
-        if form.is_valid() and formset.is_valid():
-            return self.form_valid(form, formset)
-        else:
-            return self.form_invalid(form, formset)
-
-    def form_valid(self, form, formset):
-        self.company = form.save(commit=False)
-        self.company.company = self.request.user.company
-        self.company.save()
-        self.object = form.save(commit=False)
-        self.object.save()
-        formset = formset.save(commit=False)
-        for meta in formset:
-            meta.days_graph = self.object
-            meta.save()
+    def form_valid(self, form):
+        # self.company = form.save(commit=False)
+        # self.company.company = self.request.user.company
+        # self.company.save()
+        # context = self.get_context_data()
+        # formset = context['formset']
+        # self.object = form.save(commit=False)
+        # self.object.save()
+        # if formset.is_valid():
+        #     formset.instance = self.object
+        #     formset.save()
 
         return super(CompanyScheduleCreateView, self).form_valid(form)
 
@@ -1239,33 +1240,24 @@ class CompanyScheduleUpdateView(LoginRequiredMixin, generic.UpdateView):
         ctx['formset'] = forms.CompanySchedulePerDaysgraphModelFormInlineFormset()
         return ctx
 
-    def post(self, request, *args, **kwargs):
-        form = self.get_form()
-        formset = forms.CompanySchedulePerDaysgraphModelFormInlineFormset(request.POST)
-        if form.is_valid() and formset.is_valid():
-            return self.form_valid(form, formset)
-        else:
-            return self.form_invalid(form, formset)
+    def form_valid(self, form):
+        from django.db import transaction
 
-    def form_valid(self, form, formset):
         self.company = form.save(commit=False)
         self.company.company = self.request.user.company
         self.company.save()
+        context = self.get_context_data()
+        formset = context['formset']
         self.object = form.save(commit=False)
         self.object.save()
-        formset = formset.save(commit=False)
-        for meta in formset:
-            meta.days_graph = self.object
-            meta.save()
+        if formset.is_valid():
+            formset.instance = self.object
+            formset.save()
 
         return super(CompanyScheduleUpdateView, self).form_valid(form)
-
-
-    # def form_valid(self, form):
-    #     super(CompanyScheduleUpdateView, self).form_valid(form)
-    #     messages.success(self.request, "Kompaniya ish vaqti o'zgartirildi !!!")
-    #     return HttpResponseRedirect(reverse_lazy('company_schedule'))
-
+    
+    def form_invalid(self, form):
+        return super(CompanyScheduleUpdateView, self).form_invalid(form)
 
 # Super Staff
 class SuperStaffCreateView(LoginRequiredMixin, generic.CreateView):

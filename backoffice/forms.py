@@ -180,13 +180,14 @@ class CompanySchedulePerDaysgraphModelForm(forms.ModelForm):
 CompanySchedulePerDaysgraphModelFormInlineFormset = inlineformset_factory(
     models.CompanyScheduleFreeGraph,
     models.CompanySchedulePerDaysgraph,
-    extra=1,
+    extra=7,
     exclude=(),
     widgets={
         'is_work_day': forms.CheckboxInput(attrs={'class': 'form-control'}),
         'start_work': forms.TimeInput(attrs={'class': 'form-control', 'type': 'time'}),
         'end_work': forms.TimeInput(attrs={'class': 'form-control', 'type': 'time'}),
     },
+    form=CompanySchedulePerDaysgraphModelForm,
     can_delete=False,
 )
 
