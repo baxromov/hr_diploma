@@ -1175,6 +1175,33 @@ class CompanyCultureUpdateView(LoginRequiredMixin, generic.UpdateView):
 
 
 # CompanySchedule
+
+from extra_views import CreateWithInlinesView, UpdateWithInlinesView
+
+
+class CompanyScheduleCreateView(LoginRequiredMixin, CreateWithInlinesView):
+    model = models.CompanyScheduleFreeGraph
+    inlines = [forms.CompanySchedulePerDaysgraphModelForm]
+    fields = ('name',)
+    template_name = 'backoffice/pages/company-schedule/create.html'
+    success_url = reverse_lazy('company_schedule')
+
+
+    def form_valid(self, form):
+        self.company = form.save(commit=False)
+        self.company.company = self.request.user.company
+        self.company.save()
+        return super().form_valid(form)
+
+
+class CompanyScheduleUpdateView(LoginRequiredMixin, UpdateWithInlinesView):
+    model = models.CompanyScheduleFreeGraph
+    inlines = [forms.CompanySchedulePerDaysgraphModelForm]
+    fields = ('name',)
+    template_name = 'backoffice/pages/company-schedule/update.html'
+    success_url = reverse_lazy('company_schedule')
+
+
 class CompanyScheduleCreateViewListView(LoginRequiredMixin, generic.ListView):
     template_name = 'backoffice/pages/company-schedule/index.html'
     model = models.CompanyScheduleFreeGraph
@@ -1185,79 +1212,93 @@ class CompanyScheduleCreateViewListView(LoginRequiredMixin, generic.ListView):
         company_schedule = models.CompanyScheduleFreeGraph.objects.filter(company=company)
         ctx['items'] = company_schedule
         return ctx
+#
+#
+# class CompanyScheduleCreateView(LoginRequiredMixin, generic.CreateView):
+#     template_name = 'backoffice/pages/company-schedule/create.html'
+#     form_class = forms.CompanyScheduleModelForm
+#     model = models.CompanyScheduleFreeGraph
+#     success_url = reverse_lazy('company_schedule')
+#
+#     def get_context_data(self, **kwargs):
+#         ctx = super(CompanyScheduleCreateView, self).get_context_data(**kwargs)
+#         if self.request.POST:
+#             ctx['formset'] = forms.CompanySchedulePerDaysgraphModelFormInlineFormset(self.request.POST)
+#         else:
+#             ctx['formset'] = forms.CompanySchedulePerDaysgraphModelFormInlineFormset()
+#         return ctx
+#
+#     def form_valid(self, form):
+#         self.company = form.save(commit=False)
+#         self.company.company = self.request.user.company
+#         self.company.save()
+#         context = self.get_context_data()
+#         formset = context['formset']
+#         self.object = form.save(commit=False)
+#         self.object.save()
+#         if formset.is_valid():
+#             formset.instance = self.object
+#             formset.save()
+#
+#         return super(CompanyScheduleCreateView, self).form_valid(form)
+#
+#
+# class CompanyScheduleDeleteView(LoginRequiredMixin, generic.DeleteView):
+#     model = models.CompanyScheduleFreeGraph
+#     form_class = forms.CompanyScheduleModelForm
+#     success_message = "deleted..."
+#     success_url = reverse_lazy('company_schedule')
+#
+#     def delete(self, request, *args, **kwargs):
+#         super(CompanyScheduleDeleteView, self).delete(request, *args, **kwargs)
+#         messages.warning(self.request, "Kompaniya ish vaqti o'chirildi !!!")
+#         return HttpResponseRedirect(reverse_lazy('company_schedule'))
 
-
-class CompanyScheduleCreateView(LoginRequiredMixin, generic.CreateView):
-    template_name = 'backoffice/pages/company-schedule/create.html'
-    form_class = forms.CompanyScheduleModelForm
-    model = models.CompanyScheduleFreeGraph
-    success_url = reverse_lazy('company_schedule')
-
-    def get_context_data(self, **kwargs):
-        ctx = super(CompanyScheduleCreateView, self).get_context_data(**kwargs)
-        if self.request.POST:
-            ctx['formset'] = forms.CompanySchedulePerDaysgraphModelFormInlineFormset(self.request.POST)
-        else:
-            ctx['formset'] = forms.CompanySchedulePerDaysgraphModelFormInlineFormset()
-        return ctx
-
-    def form_valid(self, form):
-        # self.company = form.save(commit=False)
-        # self.company.company = self.request.user.company
-        # self.company.save()
-        # context = self.get_context_data()
-        # formset = context['formset']
-        # self.object = form.save(commit=False)
-        # self.object.save()
-        # if formset.is_valid():
-        #     formset.instance = self.object
-        #     formset.save()
-
-        return super(CompanyScheduleCreateView, self).form_valid(form)
-
-
-class CompanyScheduleDeleteView(LoginRequiredMixin, generic.DeleteView):
-    model = models.CompanyScheduleFreeGraph
-    form_class = forms.CompanyScheduleModelForm
-    success_message = "deleted..."
-    success_url = reverse_lazy('company_schedule')
-
-    def delete(self, request, *args, **kwargs):
-        super(CompanyScheduleDeleteView, self).delete(request, *args, **kwargs)
-        messages.warning(self.request, "Kompaniya ish vaqti o'chirildi !!!")
-        return HttpResponseRedirect(reverse_lazy('company_schedule'))
-
-
-class CompanyScheduleUpdateView(LoginRequiredMixin, generic.UpdateView):
-    form_class = forms.CompanyScheduleModelForm
-    model = models.CompanyScheduleFreeGraph
-    template_name = 'backoffice/pages/company-schedule/update.html'
-    success_url = reverse_lazy('company_schedule')
-
-    def get_context_data(self, **kwargs):
-        ctx = super(CompanyScheduleUpdateView, self).get_context_data(**kwargs)
-
-        ctx['formset'] = forms.CompanySchedulePerDaysgraphModelFormInlineFormset()
-        return ctx
-
-    def form_valid(self, form):
-        from django.db import transaction
-
-        self.company = form.save(commit=False)
-        self.company.company = self.request.user.company
-        self.company.save()
-        context = self.get_context_data()
-        formset = context['formset']
-        self.object = form.save(commit=False)
-        self.object.save()
-        if formset.is_valid():
-            formset.instance = self.object
-            formset.save()
-
-        return super(CompanyScheduleUpdateView, self).form_valid(form)
-    
-    def form_invalid(self, form):
-        return super(CompanyScheduleUpdateView, self).form_invalid(form)
+#
+# class CompanyScheduleUpdateView(LoginRequiredMixin, generic.UpdateView):
+#     form_class = forms.CompanyScheduleModelForm
+#     model = models.CompanyScheduleFreeGraph
+#     template_name = 'backoffice/pages/company-schedule/update.html'
+#     success_url = reverse_lazy('company_schedule')
+#
+#     def get_context_data(self, **kwargs):
+#         ctx = super(CompanyScheduleUpdateView, self).get_context_data(**kwargs)
+#
+#         ctx['formset'] = self.get_named_formsets()
+#         return ctx
+#
+#     def get_named_formsets(self):
+#         return {
+#             'action': forms.CompanySchedulePerDaysgraphModelFormInlineFormset(self.request.POST or None, prefix='action'),
+#         }
+#
+#     def post(self, request, *args, **kwargs):
+#         from app import models
+#         self.object = self.get_object()
+#         form_class = self.get_form_class()
+#         form = self.get_form(form_class)
+#         qs = models.CompanySchedulePerDaysgraph.objects.filter(days_graph=self.get_object())
+#         formsets = forms.CompanySchedulePerDaysgraphModelFormInlineFormset(self.request.POST, queryset=qs)
+#
+#         if form.is_valid() and formsets.is_valid():
+#             for i in formsets:
+#                 i.instance.days_graph_id = self.object.id
+#                 i.save()
+#             return self.form_valid(form, formsets)
+#         return self.form_invalid(form)
+#
+#
+#     def form_valid(self, form):
+#         # from django.db import transaction
+#         #
+#         # self.company = form.save(commit=False)
+#         # self.company.company = self.request.user.company
+#         # self.company.save()
+#
+#         return super(CompanyScheduleUpdateView, self).form_valid(form)
+#
+#     def form_invalid(self, form):
+#         return super(CompanyScheduleUpdateView, self).form_invalid(form)
 
 # Super Staff
 class SuperStaffCreateView(LoginRequiredMixin, generic.CreateView):

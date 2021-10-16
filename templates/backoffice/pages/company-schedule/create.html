@@ -5,7 +5,6 @@
     Ish jadvali yaratish
 {% endblock %}
 
-{#zmdi-hc-spin#}
 {% block content %}
     <section class="content">
         <div class="container-fluid">
@@ -16,7 +15,8 @@
                         <ul class="breadcrumb padding-0">
                             <li class="breadcrumb-item"><a href="{% url 'backoffice-main' %}"><i
                                     class="zmdi zmdi-home"></i></a></li>
-                            <li class="breadcrumb-item"><a href="{% url 'company_schedule' %}">Kompaniya ish vaqti</a></li>
+                            <li class="breadcrumb-item"><a href="{% url 'company_schedule' %}">Kompaniya ish vaqti</a>
+                            </li>
                             <li class="breadcrumb-item active">Ish jadvali yaratish</li>
                         </ul>
 
@@ -28,30 +28,14 @@
                     <div class="body">
                         <form method="post" id="myForm">
                             {% csrf_token %}
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4>Ish jadvali yaratish</h4>
-                                </div>
-                                <div class="card-body">
-                                    {{ form.non_form_errors }}
-                                    {{ form.as_p }}
-                                    <h5 class="text-info">Add time</h5>
-                                    {{ formset.non_form_errors }}
-                                    {{ formset.management_form }}
-                                    <div id="myFormset1Table" class="row">
-                                        {% for form in formset.forms %}
-                                            {{ forloop.counter }} - day
-                                            <div class="col-md-12">
-                                                {{ form }}
-                                            </div>
-                                            <br>
-                                        {% endfor %}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mt-3 mb-5">
-                                <button type="submit" class="px-5 btn btn-info">Submit</button>
-                            </div>
+                            <form method="post">
+                                {{ form.as_p }}
+
+                                {% for formset in inlines %}
+                                    {{ formset.as_p }}
+                                {% endfor %}
+                                <input type="submit" value="Submit"/>
+                            </form>
                         </form>
                     </div>
                 </div>
@@ -62,12 +46,4 @@
 
 {% endblock %}
 
-{% block js %}
-{% comment %}    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.formset/1.2.2/jquery.formset.js"></script>
-    <script>
-        $('#myFormset1Table tbody tr').formset({
-            prefix: '{{ formset.prefix }}',
-            formCssClass: 'dynamic-formset1'
-        });
-    </script>{% endcomment %}
-{% endblock %}
+{% block js %}{% endblock %}

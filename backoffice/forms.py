@@ -1,5 +1,5 @@
 from django import forms
-from django.forms import inlineformset_factory
+from extra_views import InlineFormSetFactory
 
 from app import models
 
@@ -158,38 +158,15 @@ class CompanyCultureModelForm(forms.ModelForm):
         }
 
 
-class CompanyScheduleModelForm(forms.ModelForm):
-    class Meta:
-        model = models.CompanyScheduleFreeGraph
-        exclude = ('company', 'start_work', 'end_work')
-        widgets = {
-            # 'start_work': forms.TimeInput(attrs={'class': 'form-control', 'type': 'time'}),
-            'name': forms.TextInput(attrs={'class': 'form-control', 'type': 'text'}),
-            'lunch_start': forms.TimeInput(attrs={'class': 'form-control', 'type': 'time'}),
-            'lunch_end': forms.TimeInput(attrs={'class': 'form-control', 'type': 'time'}),
-            # 'end_work': forms.TimeInput(attrs={'class': 'form-control', 'type': 'time'}),
-        }
-
-
-class CompanySchedulePerDaysgraphModelForm(forms.ModelForm):
-    class Meta:
-        model = models.CompanySchedulePerDaysgraph
-        exclude = ()
-
-
-CompanySchedulePerDaysgraphModelFormInlineFormset = inlineformset_factory(
-    models.CompanyScheduleFreeGraph,
-    models.CompanySchedulePerDaysgraph,
-    extra=7,
-    exclude=(),
-    widgets={
-        'is_work_day': forms.CheckboxInput(attrs={'class': 'form-control'}),
-        'start_work': forms.TimeInput(attrs={'class': 'form-control', 'type': 'time'}),
-        'end_work': forms.TimeInput(attrs={'class': 'form-control', 'type': 'time'}),
-    },
-    form=CompanySchedulePerDaysgraphModelForm,
-    can_delete=False,
-)
+class CompanySchedulePerDaysgraphModelForm(InlineFormSetFactory):
+    model = models.CompanySchedulePerDaysgraph
+    fields = '__all__'
+    factory_kwargs = {
+        'can_delete': False,
+        'widgets': {'is_work_day': forms.CheckboxInput(attrs={'class': 'form-control'}),
+                    'start_work': forms.TimeInput(attrs={'class': 'form-control', 'type': 'time'}),
+                    'end_work': forms.TimeInput(attrs={'class': 'form-control', 'type': 'time'}), }
+    }
 
 
 class SuperStaffsModelForm(forms.ModelForm):

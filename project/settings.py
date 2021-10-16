@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     # 'nested_inline',
     'crispy_forms',
     'mptt',
-    'mptt_graph'
+    'mptt_graph',
+    'extra_views',
 ]
 
 # REST_AUTH_SERIALIZERS = {

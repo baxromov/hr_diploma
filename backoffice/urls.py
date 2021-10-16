@@ -118,7 +118,7 @@ urlpatterns = [
     # CompanySchedule
     path('company-schedule', views.CompanyScheduleCreateViewListView.as_view(), name="company_schedule"),
     path('company-schedule/create', views.CompanyScheduleCreateView.as_view(), name="company_schedule_create"),
-    path('company-schedule/delete/<int:pk>', views.CompanyScheduleDeleteView.as_view(), name="company_schedule_delete"),
+    # path('company-schedule/delete/<int:pk>', views.CompanyScheduleDeleteView.as_view(), name="company_schedule_delete"),
     path('company-schedule/update/<int:pk>', views.CompanyScheduleUpdateView.as_view(), name="company_schedule_update"),
 
     # TrainingAnswerListView
