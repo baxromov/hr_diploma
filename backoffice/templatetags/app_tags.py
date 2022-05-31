@@ -89,3 +89,11 @@ def earlier_delta_bool(action_time, user):
                 return False
         except:
             print("1223")
+
+
+import random
+@register.filter
+def random_int(a, b=None):
+    if b is None:
+        a, b = 0, a
+    return random.randint(a, b)

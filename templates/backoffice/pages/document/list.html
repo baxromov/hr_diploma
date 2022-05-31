@@ -1,7 +1,7 @@
 {% extends 'backoffice/base.html' %}
 
 {% block title %}
-     Kuzariladigan hujjatlar
+      Документы
 {% endblock %}
 
 
@@ -11,11 +11,11 @@
         <div class="block-header">
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12">
-                    <h2>Kuzariladigan hujjatlar</h2>
+{#                    <h2>Kuzariladigan hujjatlar</h2>#}
                     <ul class="breadcrumb padding-0">
                         <li class="breadcrumb-item"><a href="{% url 'backoffice-main' %}"><i class="zmdi zmdi-home"></i></a></li>
-                        <li class="breadcrumb-item"><a href="{% url 'staff' %}">Xodimlar</a></li>
-                        <li class="breadcrumb-item">Kuzariladigan hujjatlar</li>
+                        <li class="breadcrumb-item"><a href="{% url 'staff' %}">Сотрудники</a></li>
+                        <li class="breadcrumb-item">Документы</li>
                     </ul>
                     {% if messages %}
                              {% for message in messages %}
@@ -33,7 +33,7 @@
                 <div class="card">
                     <div class="header">
                         <div class="button-demo js-modal-buttons">
-                            <button type="button" data-color="pink" data-toggle="modal" data-target="#colorModal" class="btn btn-success waves-effect"><i class="zmdi zmdi-plus"></i> Biriktirish</button>
+                            <button type="button" data-color="pink" data-toggle="modal" data-target="#colorModal" class="btn btn-success waves-effect"><i class="zmdi zmdi-plus"></i> Создавать</button>
                         </div>
                     </div>
                     <div class="body table-responsive">
@@ -41,12 +41,12 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Nomlanishi</th>
-                                    <th>Berilgn sana</th>
-                                    <th>Tugash mudati</th>
-                                    <th>Hujjat</th>
-                                    <th>O'chirish</th>
-                                    <th>Taxrirlash</th>
+                                    <th>Название документа</th>
+{#                                    <th>Berilgn sana</th>#}
+{#                                    <th>Tugash mudati</th>#}
+                                    <th>Документ</th>
+                                    <th>Удалить</th>
+                                    <th>Редактировать</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -54,8 +54,8 @@
                                 <tr>
                                     <th scope="row">{{ document.id }}</th>
                                     <td>{{ document.name }}</td>
-                                    <td>{{ document.date_of_issue }}</td>
-                                    <td>{{ document.validity_period }}</td>
+{#                                    <td>{{ document.date_of_issue }}</td>#}
+{#                                    <td>{{ document.validity_period }}</td>#}
                                     <td><a href="{{ document.document.url }}" class="text-center"><i class="zmdi zmdi-file"></i>pdf/.doc</a></td>
                                     <td>
                                          <a href="javascript:void(0);" data-color="pink"
@@ -84,11 +84,11 @@
                             </tbody>
                         </table>
                     </div>
-                <div class="header">
-                        <div class="button-demo js-modal-buttons">
-                            <button type="button" data-color="pink" data-toggle="modal" data-target="#colorModal" class="btn btn-success waves-effect"><i class="zmdi zmdi-plus"></i> Biriktirish</button>
-                        </div>
-                    </div>
+{#                <div class="header">#}
+{#                        <div class="button-demo js-modal-buttons">#}
+{#                            <button type="button" data-color="pink" data-toggle="modal" data-target="#colorModal" class="btn btn-success waves-effect"><i class="zmdi zmdi-plus"></i> Biriktirish</button>#}
+{#                        </div>#}
+{#                    </div>#}
                 </div>
             </div>
         </div>
@@ -100,7 +100,7 @@
         <div class="modal-dialog" role="document">
         <div class="modal-content bg-white">
                 <div class="modal-header">
-                    <h4 class="title text-dark">Xujjat biriktirish</h4>
+                    <h4 class="title text-dark">Создавать</h4>
                 </div>
                 <div class="modal-body">
                     <form action="{% url 'document' staff_id %}" method="post" enctype="multipart/form-data">
@@ -108,36 +108,36 @@
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <div class="form-group">
-                                    <label for="name" class="text-dark">Nomlanishi:</label>
+                                    <label for="name" class="text-dark">Название документа:</label>
                                     <input type="text" name="name" id="name" class="form-control" required>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label for="date_of_issue" class="text-dark">Berilgan sana:</label>
-                                    <input type="date" name="date_of_issue" id="date_of_issue" class="form-control" required>
-                                </div>
-                        </div>
-                        <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label for="validity_period" class="text-dark">Tugash mudati:</label>
-                                    <input type="date" name="validity_period" id="validity_period" class="form-control" required>
-                                </div>
-                        </div>
+{#                        <div class="col-sm-12">#}
+{#                                <div class="form-group">#}
+{#                                    <label for="date_of_issue" class="text-dark">Berilgan sana:</label>#}
+{#                                    <input type="date" name="date_of_issue" id="date_of_issue" class="form-control" required>#}
+{#                                </div>#}
+{#                        </div>#}
+{#                        <div class="col-sm-12">#}
+{#                                <div class="form-group">#}
+{#                                    <label for="validity_period" class="text-dark">Tugash mudati:</label>#}
+{#                                    <input type="date" name="validity_period" id="validity_period" class="form-control" required>#}
+{#                                </div>#}
+{#                        </div>#}
                         <div class="col-sm-12">
                                 <div class="form-group">
                                 <input type="file" class="form-control-file" name="document" id="exampleInputFile" aria-describedby="fileHelp">
-                                <small id="fileHelp" class="form-text text-muted">Hujjtni yuklang</small>
+                                <small id="fileHelp" class="form-text text-muted">Загрузить документ</small>
                         </div>
                         </div>
-                        <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label for="note" class="text-dark">Ta'rifi:</label>
-                                    <input type="text" name="note" id="note" class="form-control" required>
-                                </div>
-                        </div>
-                        <button type="submit" class="btn btn-success">Biriktirish</button>
+{#                        <div class="col-sm-12">#}
+{#                                <div class="form-group">#}
+{#                                    <label for="note" class="text-dark">Ta'rifi:</label>#}
+{#                                    <input type="text" name="note" id="note" class="form-control" required>#}
+{#                                </div>#}
+{#                        </div>#}
+                        <button type="submit" class="btn btn-success">Сохранять</button>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -151,7 +151,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content bg-white">
                     <div class="modal-header">
-                        <h4 class="title text-dark">Ish haqqini biriktirish</h4>
+                        <h4 class="title text-dark">Редактировать</h4>
                     </div>
                     <div class="modal-body">
                         <form action="{% url 'document_update' item.id %}" method="post" enctype="multipart/form-data">
@@ -159,36 +159,36 @@
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <div class="form-group">
-                                    <label for="name" class="text-dark">Nomlanishi:</label>
+                                    <label for="name" class="text-dark">Название документа:</label>
                                     <input type="text" name="name" id="name" class="form-control" value="{{ item.name }}">
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label for="date_of_issue" class="text-dark">Berilgan sana:</label>
-                                    <input type="date" name="date_of_issue" id="date_of_issue" class="form-control" value="{{ item.date_of_issue|date:"Y-m-d" }}">
-                                </div>
-                        </div>
-                        <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label for="validity_period" class="text-dark">Tugash mudati:</label>
-                                    <input type="date" name="validity_period" id="validity_period" class="form-control" value="{{ item.validity_period|date:"Y-m-d" }}">
-                                </div>
-                        </div>
+{#                        <div class="col-sm-12">#}
+{#                                <div class="form-group">#}
+{#                                    <label for="date_of_issue" class="text-dark">Berilgan sana:</label>#}
+{#                                    <input type="date" name="date_of_issue" id="date_of_issue" class="form-control" value="{{ item.date_of_issue|date:"Y-m-d" }}">#}
+{#                                </div>#}
+{#                        </div>#}
+{#                        <div class="col-sm-12">#}
+{#                                <div class="form-group">#}
+{#                                    <label for="validity_period" class="text-dark">Tugash mudati:</label>#}
+{#                                    <input type="date" name="validity_period" id="validity_period" class="form-control" value="{{ item.validity_period|date:"Y-m-d" }}">#}
+{#                                </div>#}
+{#                        </div>#}
                         <div class="col-sm-12">
                                 <div class="form-group">
                                 <input type="file" class="form-control-file" name="document" id="exampleInputFile" aria-describedby="fileHelp" value="{{ item.document.url }}">
-                                <small id="fileHelp" class="form-text text-muted">Hujjtni yuklang</small>
+                                <small id="fileHelp" class="form-text text-muted">Загрузить документ</small>
                         </div>
                         </div>
-                        <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label for="note" class="text-dark">Ta'rifi:</label>
-                                    <input type="text" name="note" id="note" class="form-control" value="{{ item.note }}">
-                                </div>
-                        </div>
-                        <button type="submit" class="btn btn-success">Saqlash</button>
+{#                        <div class="col-sm-12">#}
+{#                                <div class="form-group">#}
+{#                                    <label for="note" class="text-dark">Ta'rifi:</label>#}
+{#                                    <input type="text" name="note" id="note" class="form-control" value="{{ item.note }}">#}
+{#                                </div>#}
+{#                        </div>#}
+                        <button type="submit" class="btn btn-success">Сохранять</button>
                     </form>
                     </div>
                     <div class="modal-footer">
@@ -209,13 +209,13 @@
                 <div class="modal-body">
                     <div class="card">
                         <div class="header">
-                            <h2>O'chirmoqchimisiz?</h2>
+                            <h2>Вы хотите удалить?</h2>
                         </div>
                         <div class="body d-flex justify-content-around">
-                            <button type="button" class="btn btn-success rounded-lg waves-effect" data-dismiss="modal">Bekor qilish</button>
+                            <button type="button" class="btn btn-success rounded-lg waves-effect" data-dismiss="modal">Отмена</button>
                             <form action="{% url 'document_delete' pk=item.pk %}" method="POST">
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-danger rounded-lg waves-effect">O'chirish</button>
+                                <button type="submit" class="btn btn-danger rounded-lg waves-effect">Удалить</button>
                             </form>
                         </div>
                     </div>

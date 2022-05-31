@@ -33,10 +33,11 @@ class LoginForm(forms.Form):
 class PositionModelForm(forms.ModelForm):
     class Meta:
         model = models.Position
-        exclude = ('company',)
+        exclude = ('company', 'info')
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
-            'info': forms.TextInput(attrs={'class': 'form-control'}),
+            # 'info': forms.TextInput(attrs={'class': 'form-control'}),
+            'staff_amount': forms.NumberInput(attrs={'class': 'form-control'}),
         }
 
 
@@ -49,16 +50,26 @@ class StaffORGSystemModelForm(forms.ModelForm):
 class StaffModelForm(forms.ModelForm):
     class Meta:
         model = models.Staff
-        exclude = ('company',)
+        exclude = ('company', 'tabel_number', 'account_number', 'email', 'home_phone', 'work_phone')
+
+    def clean(self):
+        position_id = self.cleaned_data['position']
+        position_staff_amount_allow = models.Position.objects.get(id=position_id.id).staff_amount
+        position_staff_count = models.Position.objects.get(id=position_id.id).get_staff_count
+        if position_staff_count >= position_staff_amount_allow:
+            raise forms.ValidationError('Недостаточно места в данной должности')
+        return self.cleaned_data
+
+
 
 
 class DepartmentsModelForm(forms.ModelForm):
     class Meta:
         model = models.Department
-        exclude = ('company',)
+        exclude = ('company','info')
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
-            'info': forms.TextInput(attrs={'class': 'form-control'}),
+            # 'info': forms.TextInput(attrs={'class': 'form-control'}),
         }
 
 
@@ -95,7 +106,7 @@ class AdditionalPaymentTypeModelForm(forms.ModelForm):
 class DocumentModelForm(forms.ModelForm):
     class Meta:
         model = models.Document
-        exclude = ('staff',)
+        exclude = ('staff','date_of_issue', 'validity_period', 'note')
 
 
 class BotModelForm(forms.ModelForm):

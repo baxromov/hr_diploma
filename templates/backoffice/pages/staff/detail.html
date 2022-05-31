@@ -1,19 +1,19 @@
 {% extends 'backoffice/base.html' %}
 {% load static %}
 {% block title %}
-    Xodimlar - {{ staff.first_name }} {{ staff.second_name }} {{ staff.last_name }}
+    Сотрудники - {{ staff.first_name }} {{ staff.second_name }} {{ staff.last_name }}
 {% endblock %}
-
+{% load rand %}
 {% block content %}
     <section class="content profile-page">
         <div class="container-fluid">
             <div class="block-header">
                 <div class="row clearfix">
                     <div class="col-lg-5 col-md-5 col-sm-12">
-                        <h2>Profile</h2>
+                        {#                        <h2>Profile</h2>#}
                         <ul class="breadcrumb padding-0">
                             <li class="breadcrumb-item"><a href="index.html"><i class="zmdi zmdi-home"></i></a></li>
-                            <li class="breadcrumb-item"><a href="{% url 'staff' %}">Xodimlar</a></li>
+                            <li class="breadcrumb-item"><a href="{% url 'staff' %}">Сотрудники</a></li>
                             <li class="breadcrumb-item active">{{ staff.first_name }} {{ staff.second_name }}</li>
                         </ul>
                     </div>
@@ -32,26 +32,25 @@
                                     <div class="detail">
                                         <div class="u_name">
                                             <h4><strong>{{ staff.second_name }}</strong> {{ staff.first_name }}</h4>
-                                            <span>Lavozim: {{ staff.position }}</span> /
-                                            <span>Bo'lim: {{ staff.department }}</span>
+                                            <span>Должность: {{ staff.position }}</span> /
+                                            <span>Отделение: {{ staff.department }}</span>
 
                                         </div>
 
                                     </div>
                                 </div>
-                                <div class="col-lg-2 col-md-12 user_earnings">
-                                    <h6>Ish haqqi(so'm)</h6>
-                                    <h4><small>{{ salary.amount }}</small></h4>
-                                    <h5><small>{{ salary.type_of_work }}</small></h5>
+                                <div class="col-lg-2 col-md-12 user_earnings" style="height: 50px">
+                                    {#                                    <h6>Ish haqqi(so'm)</h6>#}
+                                    {#                                    <h4><small>{{ salary.amount }}</small></h4>#}
+                                    {#                                    <h5><small>{{ salary.type_of_work }}</small></h5>#}
                                 </div>
                             </div>
                         </div>
                         <ul class="nav nav-tabs profile_tab">
-                            <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#overview">Xodim
-                                haqida
-                                ma'umot</a></li>
-                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#usersettings">Xodim
-                                Sozlamalari</a>
+                            <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#overview">Информация</a>
+                            </li>
+                            <li class="nav-item"><a class="nav-link" data-toggle="tab"
+                                                    href="#usersettings">Настройки</a>
                             </li>
                         </ul>
                     </div>
@@ -66,19 +65,19 @@
                                         </div>
                                         <div class="body">
                                             <img src="{{ staff.image.url }}" alt="" class="img-fluid mb-3">
-                                            <small class="text-muted">Manzil: </small>
+                                            <small class="text-muted">Адрес проживания: </small>
                                             <p>{{ staff.address }}</p>
                                             <hr>
-                                            <small class="text-muted">Email address: </small>
-                                            <p>{{ staff.email }}</p>
-                                            <hr>
-                                            <small class="text-muted">Phone: </small>
+                                            {#                                            <small class="text-muted">Email address: </small>#}
+                                            {#                                            <p>{{ staff.email }}</p>#}
+                                            {#                                            <hr>#}
+                                            <small class="text-muted">Телефон: </small>
                                             <p>{{ staff.mobile_phone }}</p>
                                             <hr>
-                                            <small class="text-muted">Mobile: </small>
-                                            <p>{{ staff.home_phone }}</p>
+                                            <small class="text-muted">Паспортные данные: </small>
+                                            <p>{{ staff.note }}</p>
                                             <hr>
-                                            <small class="text-muted">Birth Date: </small>
+                                            <small class="text-muted">Дата рождения: </small>
                                             <p class="m-b-0">{{ staff.birth_date }}</p>
                                         </div>
                                     </div>
@@ -92,43 +91,164 @@
                                         <div class="body">
 
                                             <div class="list-group">
-                                                <a href="{% url 'salary' staff.id %}" class="list-group-item">
-                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                         xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M20.25 3H0.75V18H20.25V3ZM18.75 16.5H2.25V4.5H18.75V16.5Z"
-                                                              fill="#374C72"/>
-                                                        <path d="M21.75 6.75V19.5H4.5V21H23.25V6.75H21.75Z"
-                                                              fill="#374C72"/>
-                                                        <path d="M10.5 14.1778C12.3609 14.1778 13.875 12.5308 13.875 10.5063C13.875 8.4818 12.3609 6.83475 10.5 6.83475C8.63906 6.83475 7.125 8.48175 7.125 10.5063C7.125 12.5308 8.63906 14.1778 10.5 14.1778ZM10.5 8.33475C11.5339 8.33475 12.375 9.30891 12.375 10.5063C12.375 11.7037 11.5339 12.6778 10.5 12.6778C9.46613 12.6778 8.625 11.7037 8.625 10.5063C8.625 9.30891 9.46613 8.33475 10.5 8.33475Z"
-                                                              fill="#374C72"/>
-                                                        <path d="M3.75 6.375H5.25V14.625H3.75V6.375Z" fill="#374C72"/>
-                                                        <path d="M15.75 6.375H17.25V14.625H15.75V6.375Z"
-                                                              fill="#374C72"/>
-                                                    </svg>
+                                                <input type="button" class="btn btn-info"
+                                                       onclick="printDiv('work_sprafka')"
+                                                       value="Справка от место работы (скачать)"/>
+                                                <input type="button" class="btn btn-info"
+                                                       onclick="printDiv('income_order')"
+                                                       value="Справка o приеме на работу (скачать)"/>
+                                                <div id="work_sprafka" style="display: none">
+                                                    <p align="center"><strong>СПРАВКА</strong></p>
+                                                    <p align="center"><strong>выдаваемая с основного места работы,
+                                                        для</strong></p>
+                                                    <p align="center"><strong>трудоустройства на работу по
+                                                        совместительству</strong></p>
+                                                    <p align="center"><strong>в другой организации</strong></p>
+                                                    <p>&nbsp;</p>
+                                                    <p>Информируем, что гражданин</p>
+                                                    <p>&nbsp;</p>
+                                                    <table style="width: 100%;" border="0" cellspacing="0"
+                                                           cellpadding="0">
+                                                        <tbody>
+                                                        <tr>
+                                                            <td width="754" valign="top">
+                                                                <p align="center">{{ staff.first_name }} {{ staff.second_name }} {{ staff.last_name }}</p>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="754" valign="top">
+                                                                <p align="center">
+                                                                    _________________________________________________________________________________________________________</p>
+                                                            </td>
+                                                        </tr>
 
-                                                    Ish haqqi
-                                                </a>
-                                                <a href="{% url 'additional_payment' staff.id %}"
-                                                   class="list-group-item">
-                                                    <svg width="23" height="23" viewBox="0 0 23 23" fill="none"
-                                                         xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M0 3.45H23V17.25H22.1375C22.1375 15.1915 20.4585 13.5125 18.4 13.5125C16.8935 13.5125 15.617 14.421 15.019 15.709C14.7315 15.594 14.421 15.525 14.0875 15.525C12.9605 15.525 12.0175 16.2495 11.661 17.25H0V3.45ZM9.6255 7.0265C9.5565 7.199 9.5105 7.383 9.499 7.567C9.4875 7.751 9.4875 7.9465 9.5105 8.142L9.5335 8.234C9.545 8.303 9.5565 8.395 9.591 8.4985C9.614 8.6135 9.66 8.7285 9.706 8.855C9.7405 8.9815 9.8095 9.108 9.8785 9.2345C9.959 9.3725 10.051 9.4875 10.143 9.591C10.235 9.6945 10.35 9.7865 10.4995 9.8555C10.6375 9.9245 10.787 9.959 10.9595 9.959C11.1205 9.959 11.27 9.9245 11.408 9.8555C11.546 9.7865 11.661 9.6945 11.753 9.6025C11.8565 9.499 11.937 9.3725 12.006 9.2345C12.0865 9.0965 12.144 8.97 12.19 8.855C12.236 8.74 12.2705 8.625 12.2935 8.4985C12.328 8.372 12.3395 8.2915 12.351 8.2455C12.3625 8.1995 12.3625 8.165 12.3625 8.142C12.42 7.8085 12.397 7.498 12.3165 7.199C12.236 6.9 12.075 6.647 11.845 6.44C11.6035 6.233 11.3045 6.1295 10.9365 6.1295C10.718 6.1295 10.5225 6.164 10.3385 6.2445C10.166 6.325 10.0165 6.4285 9.9015 6.5665C9.798 6.693 9.706 6.854 9.6255 7.0265ZM14.7775 13.9725V12.6615C14.7775 12.282 14.6625 11.9025 14.444 11.5345C14.2255 11.1665 13.9265 10.856 13.5585 10.626C13.1905 10.3845 12.7995 10.2695 12.3855 10.2695L10.9595 11.2355L9.4875 10.2925C9.062 10.2925 8.6595 10.4075 8.2915 10.6375C7.935 10.8675 7.6475 11.1665 7.4405 11.523C7.2335 11.891 7.13 12.2705 7.13 12.6615V13.9725L7.337 14.03C7.475 14.076 7.6705 14.122 7.9235 14.191C8.188 14.2485 8.464 14.306 8.7745 14.3635C9.0735 14.421 9.43 14.467 9.821 14.513C10.212 14.5475 10.5915 14.5705 10.9595 14.5705C11.3045 14.5705 11.684 14.5475 12.0865 14.513C12.4775 14.467 12.8225 14.421 13.11 14.3635C13.3975 14.3175 13.685 14.2485 13.984 14.1795L14.559 14.0415C14.651 14.0185 14.72 13.9955 14.7775 13.9725ZM18.4 14.0875C20.148 14.0875 21.5625 15.502 21.5625 17.25C21.5625 18.998 20.148 20.4125 18.4 20.4125C17.5605 20.4125 16.813 20.0675 16.2495 19.527C16.6242 18.9606 16.7595 18.269 16.6259 17.6032C16.4923 16.9374 16.1007 16.3515 15.5365 15.9735C16.031 14.8695 17.112 14.0875 18.4 14.0875ZM12.075 18.1125C12.075 17.0085 12.9835 16.1 14.0875 16.1C15.1915 16.1 16.1 17.0085 16.1 18.1125C16.1 19.2165 15.1915 20.125 14.0875 20.125C12.9835 20.125 12.075 19.2165 12.075 18.1125Z"
-                                                              fill="#374C72"/>
-                                                    </svg>
+                                                        </tbody>
+                                                    </table>
+                                                    <p>&nbsp;</p>
+                                                    <table style="width: 100%;" border="0" cellspacing="0"
+                                                           cellpadding="0">
+                                                        <tbody>
+                                                        <tr>
+                                                            <td width="754" valign="top">
+                                                                <p align="center">{{ staff.note }}</p>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="754" valign="top">
+                                                                <p align="center">
+                                                                    _________________________________________________________________________________________________________</p>
 
-                                                    Ushlab qolish yoki qo’shimcha
-                                                    to’lovlar
-                                                </a>
-                                                <a href="{% url 'vacation' staff.id %}" class="list-group-item">
-                                                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none"
-                                                         xmlns="http://www.w3.org/2000/svg">
-                                                        <path fill-rule="evenodd" clip-rule="evenodd"
-                                                              d="M22.75 17.5H21V21H17.5V22.75H21V26.25H22.75V22.75H26.25V21H22.75V17.5ZM14.973 3.79574C14.7819 3.66796 14.5675 3.57908 14.3421 3.53415C14.1166 3.48923 13.8845 3.48915 13.6591 3.53392C13.4336 3.57869 13.2191 3.66743 13.028 3.79508C12.8368 3.92272 12.6726 4.08677 12.5448 4.27786C12.4171 4.46895 12.3282 4.68334 12.2833 4.90878C12.2383 5.13422 12.2383 5.36631 12.283 5.59178C12.3278 5.81725 12.4165 6.0317 12.5442 6.22287C12.6718 6.41405 12.8359 6.57821 13.027 6.70599C13.4129 6.96404 13.8855 7.05822 14.3409 6.96781C14.7962 6.87739 15.197 6.60979 15.4551 6.22386C15.7131 5.83794 15.8073 5.36531 15.7169 4.90995C15.6265 4.45459 15.3589 4.05379 14.973 3.79574ZM12.0557 2.33974C12.4377 2.07492 12.8685 1.88883 13.3232 1.79232C13.7778 1.69581 14.2471 1.69082 14.7037 1.77764C15.1603 1.86445 15.595 2.04134 15.9825 2.29797C16.37 2.55461 16.7025 2.88585 16.9606 3.27236C17.2187 3.65888 17.3973 4.09293 17.4858 4.54919C17.5744 5.00545 17.5712 5.47477 17.4764 5.92978C17.3816 6.38478 17.1972 6.81636 16.9338 7.19931C16.6704 7.58226 16.3334 7.90893 15.9425 8.16024C15.1705 8.64896 14.2381 8.81646 13.3444 8.62698C12.4506 8.4375 11.6664 7.90605 11.1591 7.14615C10.6519 6.38625 10.462 5.45814 10.6298 4.56006C10.7977 3.66199 11.31 2.86515 12.0575 2.33974H12.0557ZM11.8475 9.60749H16.1525C16.974 9.60749 17.7618 9.93383 18.3427 10.5147C18.9236 11.0956 19.25 11.8835 19.25 12.705V14H17.5V12.705C17.5023 12.5274 17.4691 12.3511 17.4022 12.1866C17.3353 12.022 17.2361 11.8725 17.1105 11.7469C16.9849 11.6213 16.8355 11.5222 16.6709 11.4553C16.5064 11.3884 16.3301 11.3551 16.1525 11.3575H11.8475C11.6699 11.3551 11.4936 11.3884 11.329 11.4553C11.1645 11.5222 11.015 11.6213 10.8894 11.7469C10.7638 11.8725 10.6646 12.022 10.5977 12.1866C10.5309 12.3511 10.4976 12.5274 10.5 12.705V17.5H12.25V23.2925C12.25 23.3853 12.2868 23.4743 12.3525 23.54C12.4181 23.6056 12.5071 23.6425 12.6 23.6425H14V25.4275H12.6C12.043 25.4275 11.5089 25.2062 11.115 24.8124C10.7212 24.4186 10.5 23.8844 10.5 23.3275V19.25C10.0141 19.2228 9.55831 19.0058 9.23095 18.6457C8.90359 18.2856 8.73085 17.8113 8.74997 17.325V12.705C8.74997 11.8835 9.07631 11.0956 9.65721 10.5147C10.2381 9.93383 11.026 9.60749 11.8475 9.60749Z"
-                                                              fill="#374C72"/>
-                                                    </svg>
+                                                            </td>
+                                                        </tr>
 
-                                                    Qo’shimcha dam olish
-                                                </a>
+                                                        </tbody>
+                                                    </table>
+                                                    <p>&nbsp;</p>
+                                                    <p>с {{ staff.start_work_at }} по сегодняшний день осуществляет свою
+                                                        трудовую деятельность в</p>
+                                                    <p>&nbsp;</p>
+                                                    <table style="width: 100%;" border="0" cellspacing="0"
+                                                           cellpadding="0">
+                                                        <tbody>
+                                                        <tr>
+                                                            <td width="754" valign="top">
+                                                                <p align="center">{{ staff.company }}</p>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="754" valign="top">
+                                                                <p>
+                                                                <p align="center">
+                                                                    _________________________________________________________________________________________________________</p>
+                                                                </p>
+                                                            </td>
+                                                        </tr>
+
+                                                        </tbody>
+                                                    </table>
+                                                    <p>&nbsp;</p>
+                                                    <table style="width: 100%;" border="0" cellspacing="0"
+                                                           cellpadding="0">
+                                                        <tbody>
+                                                        <tr>
+                                                            <td width="158" valign="top">
+                                                                <p>{{ staff.position.name }} в должности</p>
+                                                            </td>
+                                                            {#                                                            <td width="596" valign="top">#}
+                                                            {#                                                                <p>#}
+                                                            {#                                                                <hr>#}
+                                                            {#                                                                </p>#}
+                                                            {#                                                            </td>#}
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <p>&nbsp;</p>
+                                                    <p>&nbsp;</p>
+                                                    <p>Настоящая справка выдана для представления при трудоустройстве на
+                                                        работу по совместительству в другую организацию в соответствии с
+                                                        Положением о порядке работы по совместительству и совмещения
+                                                        профессий и должностей, утвержденным постановлением Кабинета
+                                                        Министров Республики Узбекистан от 18 октября 2012 года N 297
+                                                        (Собрание законодательства Республики Узбекистан, 2012 г., N
+                                                        41-42, ст. 485).</p>
+                                                    <p>&nbsp;</p>
+                                                    <p>&nbsp;</p>
+                                                    <table style="width: 100%;" border="0" cellspacing="0"
+                                                           cellpadding="0">
+                                                        <tbody>
+                                                        <tr>
+                                                            <td width="300" valign="top">
+                                                                <p>Руководитель организации</p>
+                                                            </td>
+                                                            <td width="174" valign="top">
+                                                                <p>______________________________</p>
+                                                            </td>
+                                                            <td width="22" valign="top">
+                                                                <p>&nbsp;</p>
+                                                            </td>
+                                                            <td width="258" valign="top">
+                                                                <p>_________________________________________</p>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="300" valign="top">
+                                                                <p>&nbsp;</p>
+                                                            </td>
+                                                            <td width="174" valign="top">
+                                                                <p align="center">(подпись)</p>
+                                                            </td>
+                                                            <td width="22" valign="top">
+                                                                <p align="center">&nbsp;</p>
+                                                            </td>
+                                                            <td width="258" valign="top">
+                                                                <p align="center">(Ф.И.О.)</p>
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+
+                                                </div>
+                                                <div id="income_order" style="display: none">
+                                                    <p align="center">N {% random_int 1 1024 %}</p>
+                                                    <p align="center">О приеме на работу</p>
+
+                                                    <p align="center">от "___"__________ ____ г.</p>
+
+                                                    <p>
+                                                        Принять {{ staff.first_name }} {{ staff.second_name }} {{ staff.last_name }}
+                                                        на работу с
+                                                        {{ staff.start_work_at }} в {{ staff.position.name }} на
+                                                        должность в организации {{ staff.company.name }} с общим окладом
+                                                        ______________ сум в месяц. </p>
+
+
+                                                    <p>Подпись руководителя ________________</p>
+                                                    <p>С приказом ознакомлен:</p>
+                                                    <p>Подпись работника ________________</p>
+
+                                                    <p>"___"________ ____ г.</p>
+                                                </div>
+
                                                 <a href="{% url 'document' staff.id %}" class="list-group-item">
                                                     <svg width="26" height="26" viewBox="0 0 26 26" fill="none"
                                                          xmlns="http://www.w3.org/2000/svg">
@@ -136,7 +256,7 @@
                                                               fill="#374C72"/>
                                                     </svg>
 
-                                                    Hujjatlar
+                                                    Документы
                                                 </a>
                                             </div>
                                         </div>
@@ -144,88 +264,100 @@
                                 </div>
                             </div>
                         </div>
+                        <script>
+                            function printDiv(divName) {
+                                var printContents = document.getElementById(divName).innerHTML;
+                                var originalContents = document.body.innerHTML;
 
+                                document.body.innerHTML = printContents;
+
+                                window.print();
+
+                                document.body.innerHTML = originalContents;
+                            }
+                        </script>
 
                         <div role="tabpanel" class="tab-pane" id="usersettings">
                             <div class="card">
-                                <div class="header">
-                                    <h2><strong>Xodim</strong> Sozlamalari</h2>
-                                </div>
+                                {#                                <div class="header">#}
+                                {#                                    <h2><strong>Xodim</strong> Sozlamalari</h2>#}
+                                {#                                </div>#}
                                 <div class="body">
                                     <div class="row clearfix">
-                                        <form action="{% url 'staff-detail' staff.id %}" method="post" enctype="multipart/form-data" style="width: 100%;">
+                                        <form action="{% url 'staff-detail' staff.id %}" method="post"
+                                              enctype="multipart/form-data" style="width: 100%;">
                                             {% csrf_token %}
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <input type="text" name="first_name" class="form-control"
-                                                           placeholder="Ism" value="{{ staff.first_name }}">
+                                                           placeholder="Имя" value="{{ staff.first_name }}">
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <input type="text" name="second_name" class="form-control"
-                                                           placeholder="Familiya" value="{{ staff.second_name }}">
+                                                           placeholder="Фамилия" value="{{ staff.second_name }}">
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <input type="text" name="last_name" class="form-control"
-                                                           placeholder="Otasining ismi" value="{{ staff.last_name }}">
+                                                           placeholder="Отчество" value="{{ staff.last_name }}">
                                                 </div>
                                             </div>
 
                                             <div class="col-md-12">
 
                                                 <div class="form-group">
-                                                    <label for="birth-date">Tugligan sanasi</label>
+                                                    <label for="birth-date">Дата рождения</label>
                                                     <input type="date" name="birth_date" id="birth-date"
                                                            class="form-control"
-                                                           placeholder="Tugligan sanasi"
+                                                           placeholder="Дата рождения"
                                                            value="{{ staff.birth_date|date:"Y-m-d" }}">
                                                 </div>
                                             </div>
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label for="pin-code">Tabel raqami</label>
-                                                    <input type="text" name="tabel_number" id="pin-code"
-                                                           class="form-control"
-                                                           placeholder="Tabel raqami" value="{{ staff.tabel_number }}">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label for="tab-num">Hisob raqami</label>
-                                                    <input type="text" id="tab-num" name="account_number"
-                                                           class="form-control"
-                                                           placeholder="Hisob raqami"
-                                                           value="{{ staff.account_number }}">
-                                                </div>
-                                            </div>
+                                            {#                                            <div class="col-md-12">#}
+                                            {#                                                <div class="form-group">#}
+                                            {#                                                    <label for="pin-code">Tabel raqami</label>#}
+                                            {#                                                    <input type="text" name="tabel_number" id="pin-code"#}
+                                            {#                                                           class="form-control"#}
+                                            {#                                                           placeholder="Tabel raqami" value="{{ staff.tabel_number }}">#}
+                                            {#                                                </div>#}
+                                            {#                                            </div>#}
+                                            {#                                            <div class="col-md-12">#}
+                                            {#                                                <div class="form-group">#}
+                                            {#                                                    <label for="tab-num">Hisob raqami</label>#}
+                                            {#                                                    <input type="text" id="tab-num" name="account_number"#}
+                                            {#                                                           class="form-control"#}
+                                            {#                                                           placeholder="Hisob raqami"#}
+                                            {#                                                           value="{{ staff.account_number }}">#}
+                                            {#                                                </div>#}
+                                            {#                                            </div>#}
 
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <input type="text" name="email" class="form-control"
-                                                           placeholder="E-mail" value="{{ staff.email }}">
-                                                </div>
-                                            </div>
+                                            {#                                            <div class="col-md-12">#}
+                                            {#                                                <div class="form-group">#}
+                                            {#                                                    <input type="text" name="email" class="form-control"#}
+                                            {#                                                           placeholder="E-mail" value="{{ staff.email }}">#}
+                                            {#                                                </div>#}
+                                            {#                                            </div>#}
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <input type="tel" name="mobile_phone" class="form-control"
-                                                           placeholder="Mobil telefon raqam"
+                                                           placeholder="Телефон"
                                                            value="{{ staff.mobile_phone }}">
                                                 </div>
                                             </div>
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <input type="tel" name="home_phone" class="form-control"
-                                                           placeholder="Uy telefoni" value="{{ staff.home_phone }}">
-                                                </div>
-                                            </div>
+                                            {#                                            <div class="col-md-12">#}
+                                            {#                                                <div class="form-group">#}
+                                            {#                                                    <input type="tel" name="home_phone" class="form-control"#}
+                                            {#                                                           placeholder="Uy telefoni" value="{{ staff.home_phone }}">#}
+                                            {#                                                </div>#}
+                                            {#                                            </div>#}
 
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <input type="text" name="address" class="form-control"
-                                                           placeholder="Uy manzili" value="{{ staff.address }}">
+                                                           placeholder="Адрес проживания" value="{{ staff.address }}">
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
@@ -235,7 +367,7 @@
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    Bo'lim:
+                                                    Отделение:
                                                     <select name="department" id="">
                                                         {% for department in departments %}
                                                             <option value="{{ department.id }}">{{ department.name }}</option>
@@ -245,7 +377,7 @@
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    Lavozim:
+                                                    Должность:
                                                     <select name="position" id="">
                                                         {% for position in positions %}
                                                             <option value="{{ position.id }}">{{ position.name }}</option>
@@ -253,16 +385,16 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    Ish jadvali:
-                                                    {{ form.work_graph }}
-                                                </div>
-                                            </div>
+                                            {#                                            <div class="col-md-12">#}
+                                            {#                                                <div class="form-group">#}
+                                            {#                                                    Ish jadvali:#}
+                                            {#                                                    {{ form.work_graph }}#}
+                                            {#                                                </div>#}
+                                            {#                                            </div>#}
                                             <div class="col-md-12">
 
                                                 <div class="form-group">
-                                                    <label for="started-work-date">Ish boshlangan sana</label>
+                                                    <label for="started-work-date">Дата начала работы</label>
                                                     <input type="date" name="start_work_at" id="started-work-date"
                                                            class="form-control"
                                                            placeholder=""
@@ -273,29 +405,31 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <input class="form-control no-resize"
-                                                           placeholder="Izoh" type="text" name="note"
+                                                           placeholder="Паспортные данныеi" type="text" name="note"
                                                            value="{{ staff.note }}">
                                                 </div>
                                             </div>
-                                        <div class="col-sm-12">
-                                            <div class="form-group">
-                                                <label for="username">Username:</label>
-                                                <input type="text" name="username" id="username" value="{{ staff.username }}" class="form-control">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="username">Имя пользователя:</label>
+                                                    <input type="text" name="username" id="username"
+                                                           value="{{ staff.username }}" class="form-control">
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-sm-12">
-                                            <div class="form-group">
-                                                <label for="password">Password:</label>
-                                                <input type="text" name="password" id="password" value="{{ staff.password }}" class="form-control">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="password">Пароль:</label>
+                                                    <input type="text" name="password" id="password"
+                                                           value="{{ staff.password }}" class="form-control">
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-sm-12">
-                                            <div class="form-group">
-                                                {{ form.image }}
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    {{ form.image }}
+                                                </div>
                                             </div>
-                                        </div>
                                             <div class="col-md-12">
-                                                <button class="btn btn-success waves-effect" type="submit">Save Changes
+                                                <button class="btn btn-success waves-effect" type="submit">Сохранять
                                                 </button>
                                             </div>
                                         </form>
@@ -310,37 +444,37 @@
         </div>
     </section>
 
-    <!-- Default Size -->
-    <div class="modal fade" id="addevent" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="title" id="defaultModalLabel">Add Event</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <div class="form-line">
-                            <input type="number" class="form-control" placeholder="Event Date">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="form-line">
-                            <input type="text" class="form-control" placeholder="Event Title">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="form-line">
-                            <textarea class="form-control no-resize" placeholder="Event Description..."></textarea>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary btn-round waves-effect">Add</button>
-                    <button type="button" class="btn btn-simple btn-round waves-effect" data-dismiss="modal">CLOSE
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Jquery Core Js -->
+    {#    <!-- Default Size -->#}
+    {#    <div class="modal fade" id="addevent" tabindex="-1" role="dialog">#}
+    {#        <div class="modal-dialog" role="document">#}
+    {#            <div class="modal-content">#}
+    {#                <div class="modal-header">#}
+    {#                    <h4 class="title" id="defaultModalLabel">Add Event</h4>#}
+    {#                </div>#}
+    {#                <div class="modal-body">#}
+    {#                    <div class="form-group">#}
+    {#                        <div class="form-line">#}
+    {#                            <input type="number" class="form-control" placeholder="Event Date">#}
+    {#                        </div>#}
+    {#                    </div>#}
+    {#                    <div class="form-group">#}
+    {#                        <div class="form-line">#}
+    {#                            <input type="text" class="form-control" placeholder="Event Title">#}
+    {#                        </div>#}
+    {#                    </div>#}
+    {#                    <div class="form-group">#}
+    {#                        <div class="form-line">#}
+    {#                            <textarea class="form-control no-resize" placeholder="Event Description..."></textarea>#}
+    {#                        </div>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {#                <div class="modal-footer">#}
+    {#                    <button type="button" class="btn btn-primary btn-round waves-effect">Add</button>#}
+    {#                    <button type="button" class="btn btn-simple btn-round waves-effect" data-dismiss="modal">CLOSE#}
+    {#                    </button>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#        </div>#}
+    {#    </div>#}
+    {#    <!-- Jquery Core Js -->#}
 {% endblock %}

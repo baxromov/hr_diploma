@@ -1,7 +1,7 @@
 {% extends 'backoffice/base.html' %}
 
 {% block title %}
-    Lavozim - Taxrirlash
+    Должность
 {% endblock %}
 
 {% block content %}
@@ -10,11 +10,11 @@
         <div class="block-header">
             <div class="row clearfix">
                 <div class="col-lg-5 col-md-5 col-sm-12">
-                    <h2>Lavozimni taxrirlash</h2>
+{#                    <h2>Lavozimni taxrirlash</h2>#}
                     <ul class="breadcrumb padding-0">
                         <li class="breadcrumb-item"><a href="{% url 'backoffice-main' %}"><i class="zmdi zmdi-home"></i></a></li>
-                        <li class="breadcrumb-item active"><a href="{% url 'position' %}">Lavozim</a></li>
-                        <li class="breadcrumb-item active">Lavozimni taxrirlash</li>
+                        <li class="breadcrumb-item active"><a href="{% url 'position' %}">Должность</a></li>
+                        <li class="breadcrumb-item active">Редактировать</li>
                     </ul>
                 </div>
 
@@ -30,7 +30,7 @@
                         <form action="" method="post" enctype="multipart/form-data">
                             {% csrf_token %}
                             {{ form.as_p }}
-                            <button type="submit" class="btn btn-success waves-effect">O'zgarishlarni saqlash</button>
+                            <button type="submit" class="btn btn-success waves-effect">Сохранять</button>
                         </form>
                     </div>
                 </div>

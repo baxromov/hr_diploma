@@ -1,7 +1,7 @@
 {% extends 'backoffice/base.html' %}
 
 {% block title %}
-    Bo'lim
+    Отделение
 {% endblock %}
 
 {% block content %}
@@ -10,10 +10,10 @@
             <div class="block-header">
                 <div class="row clearfix">
                     <div class="col-lg-12 col-md-12 col-sm-12">
-                        <h2>Bo'lim</h2>
+{#                        <h2>Bo'lim</h2>#}
                         <ul class="breadcrumb padding-0">
                             <li class="breadcrumb-item"><a href="#"><i class="zmdi zmdi-home"></i></a></li>
-                            <li class="breadcrumb-item active">Bo'lim</li>
+                            <li class="breadcrumb-item active">Отделение</li>
                         </ul>
                         {% if messages %}
                             {% for message in messages %}
@@ -30,7 +30,7 @@
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="card">
                         <div class="header">
-                            <a href="{% url 'department_create' %}" class="btn btn-success">Bo'lim qo'shish <i
+                            <a href="{% url 'department_create' %}" class="btn btn-success">Создавать <i
                                     class="zmdi zmdi-plus"></i></a>
                         </div>
                         <div class="body">
@@ -38,9 +38,9 @@
                                 <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Bo'lim</th>
-                                    <th>O'chirish</th>
-                                    <th>Taxrirlash</th>
+                                    <th>Отделение</th>
+                                    <th>Удалить</th>
+                                    <th>Редактировать</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -97,24 +97,6 @@
         </div>
     </section>
 
-    {% for item in departments %}
-        <div class="modal fade" id="defaultModal{{ item.id }}" tabindex="-1" role="dialog" style="display: none;"
-             aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="model-title" id="defaultModalLabel">{{ item.name }}</h5>
-                        <button type="button" style="padding: 0 !important;" class="btn btn-neutral"
-                                data-dismiss="modal"><i class="zmdi zmdi-close"></i>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        {{ item.info }}
-                    </div>
-                </div>
-            </div>
-        </div>
-    {% endfor %}
 
     {% for item in departments %}
         <div class="modal fade" id="staff-{{ item.id }}" tabindex="-1" role="dialog" style="display: none;"
@@ -127,15 +109,15 @@
                     <div class="modal-body">
                         <div class="card">
                             <div class="header">
-                                <h2>O'chirmoqchimisiz?</h2>
+                                <h2>Вы хотите удалить?</h2>
                             </div>
                             <div class="body d-flex justify-content-around">
                                 <button type="button" class="btn btn-success rounded-lg waves-effect"
-                                        data-dismiss="modal">Bekor qilish
+                                        data-dismiss="modal">Отмена
                                 </button>
                                 <form action="{% url 'department_delete' pk=item.pk %}" method="POST">
                                     {% csrf_token %}
-                                    <button type="submit" class="btn btn-danger rounded-lg waves-effect">O'chirish
+                                    <button type="submit" class="btn btn-danger rounded-lg waves-effect">Удалить
                                     </button>
                                 </form>
                             </div>
@@ -161,15 +143,15 @@
                 ],
                 "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
                 "oLanguage": {
-                    "sEmptyTable": "Ro'yxat bo'sh",
-                    "sSearch": "Qidiruv:",
-                    "sLengthMenu": "Ko’rsatkich _MENU_ talik",
-                    "sInfo": "Sahifa _START_ dan _END_ gacha, umumiy _TOTAL_",
+                    "sEmptyTable": "Список пуст",
+                    "sSearch": "Поиск:",
+                    "sLengthMenu": "Индикатор _MENU_ talik",
+                    "sInfo": "Страница с  _START_ по _END_ , всего _TOTAL_",
                     "oPaginate": {
-                        "sFirst": "Birinchi sahifa", // This is the link to the first page
-                        "sPrevious": "Oldingi sahifa", // This is the link to the previous page
-                        "sNext": "Keyengi sahifa", // This is the link to the next page
-                        "sLast": "Oxirgi sahifa" // This is the link to the last page
+                        "sFirst": "Первая страница", // This is the link to the first page
+                        "sPrevious": "Предыдущая страница", // This is the link to the previous page
+                        "sNext": "Следующая страница", // This is the link to the next page
+                        "sLast": "Последняя страница" // This is the link to the last page
                     }
 
                 },

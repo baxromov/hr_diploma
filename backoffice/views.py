@@ -161,10 +161,11 @@ class StaffCreate(LoginRequiredMixin, generic.CreateView):
         staff.save()
         canvas.close()
         # *****************************************
-        messages.success(self.request, 'Xodim yaratildi !!!')
+        messages.success(self.request, 'Сотрудник создан!!!')
         return HttpResponseRedirect(reverse_lazy('staff'))
 
     def form_invalid(self, form):
+        messages.error(self.request, 'Вакансия заполнена')
         return super(StaffCreate, self).form_invalid(form)
 
 
@@ -351,11 +352,11 @@ class DepartmentUpdateView(LoginRequiredMixin, generic.UpdateView):
     context_object_name = 'department'
     success_url = reverse_lazy('department')
 
-    def get_context_data(self, **kwargs):
-        ctx = super(DepartmentUpdateView, self).get_context_data(**kwargs)
-        questions = models.Question.objects.filter(department_id=self.kwargs.get('pk'))
-        ctx['questions'] = questions
-        return ctx
+    # def get_context_data(self, **kwargs):
+    #     ctx = super(DepartmentUpdateView, self).get_context_data(**kwargs)
+    #     questions = models.Question.objects.filter(department_id=self.kwargs.get('pk'))
+    #     ctx['questions'] = questions
+    #     return ctx
 
     def form_valid(self, form):
         self.department = form.save(commit=False)
@@ -363,10 +364,10 @@ class DepartmentUpdateView(LoginRequiredMixin, generic.UpdateView):
         company = self.request.user.company
         self.department.company = company
         self.department.save()
-        questions_a = models.Question.objects.filter(department_id=self.kwargs.get('pk'))
-        for pk, question in enumerate(questions_a):
-            question.question = post_questions[pk - 1]
-            question.save()
+        # questions_a = models.Question.objects.filter(department_id=self.kwargs.get('pk'))
+        # for pk, question in enumerate(questions_a):
+        #     question.question = post_questions[pk - 1]
+        #     question.save()
         super(DepartmentUpdateView, self).form_valid(form)
         messages.success(self.request, "Bo'lim o'zgartirildi !!!")
         return HttpResponseRedirect(reverse_lazy('department'))

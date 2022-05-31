@@ -1,7 +1,7 @@
 {% extends 'backoffice/base.html' %}
 {% load static %}
 {% block title %}
-    Bo'lim - Taxrirlash
+    Отделение
 {% endblock %}
 
 
@@ -11,11 +11,11 @@
         <div class="block-header">
             <div class="row clearfix">
                 <div class="col-lg-5 col-md-5 col-sm-12">
-                    <h2>Bo'limni taxrirlash</h2>
+{#                    <h2>Bo'limni taxrirlash</h2>#}
                     <ul class="breadcrumb padding-0">
                         <li class="breadcrumb-item"><a href="{% url 'backoffice-main' %}"><i class="zmdi zmdi-home"></i></a></li>
-                        <li class="breadcrumb-item active"><a href="{% url 'department' %}">Bo'lim</a></li>
-                        <li class="breadcrumb-item active">Bo'limni taxrirlash</li>
+                        <li class="breadcrumb-item active"><a href="{% url 'department' %}">Отделение</a></li>
+                        <li class="breadcrumb-item active">Редактировать</li>
                     </ul>
                 </div>
             </div>
@@ -30,22 +30,22 @@
                         <form action="{% url 'department_update' department.id %}" method="post">
                             {% csrf_token %}
                             {{ form.as_p }}
-                                <div class="field_wrapper">
-                                <div class="mt-3">
-                                    {% for question in questions %}
-                                        <label for="explicit-label-name-1">Savol-1: </label>
-                                        <input type="text" id="explicit-label-name-1" name="field_name" class="form-control" value="{{ question.question }}" required/>
+{#                                <div class="field_wrapper">#}
+{#                                <div class="mt-3">#}
+{#                                    {% for question in questions %}#}
+{#                                        <label for="explicit-label-name-1">Savol-1: </label>#}
+{#                                        <input type="text" id="explicit-label-name-1" name="field_name" class="form-control" value="{{ question.question }}" required/>#}
 {#                                        <a href="javascript:void(0);" class="remove_button btn btn-neutral waves-effect" title="Add field">#}
 {#                                            <i class="zmdi zmdi-minus"></i>#}
 {#                                        </a>#}
-                                    {% endfor %}
+{#                                    {% endfor %}#}
 {#                                    <a href="javascript:void(0);" class="add_button btn btn-neutral waves-effect" title="Add field">#}
 {#                                        <i class="zmdi zmdi-plus"></i>#}
 {#                                    </a>#}
-                                </div>
-                            </div>
+{#                                </div>#}
+{#                            </div>#}
 
-                            <button type="submit" class="btn btn-success waves-effect">Saqlash</button>
+                            <button type="submit" class="btn btn-success waves-effect">Сохранять</button>
                         </form>
                     </div>
                 </div>
@@ -57,35 +57,35 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <script type="text/javascript">
-$(document).ready(function(){
-    let maxField = 50; //Input fields increment limitation<
-    let addButton = $('.add_button'); //Add button selector
-    let wrapper = $('.field_wrapper'); //Input field wrapper
-    let x = 1; //Initial field counter is 1
-
-
-    //Once add button is clicked
-    $(addButton).click(function(){
-        var fieldHTML = '<div class="mt-3">' +
-            '<label for="explicit-label-name' + (x+1) + '">Savol-' + (x+1) + ': </label>' +
-            '<input type="text" id="explicit-label-name' + (x+1) + '" name="field_name" class="form-control" required/>' +
-                '<a href="javascript:void(0);" class="remove_button m-l-5 btn btn-neutral waves-effect">' +
-                    '<i class="zmdi zmdi-minus"></i>' +
-                '</a>' +
-            '</div>'; //New input field html
-        if(x < maxField){
-            x++; //Increment field counter
-            $(wrapper).append(fieldHTML); //Add field html
-        }
-    });
-
-    //Once remove button is clicked
-    $(wrapper).on('click', '.remove_button', function(e){
-        e.preventDefault();
-        $(this).parent('div').remove(); //Remove field html
-        x--; //Decrement field counter
-    });
-});
+{#$(document).ready(function(){#}
+{#    let maxField = 50; //Input fields increment limitation<#}
+{#    let addButton = $('.add_button'); //Add button selector#}
+{#    let wrapper = $('.field_wrapper'); //Input field wrapper#}
+{#    let x = 1; //Initial field counter is 1#}
+{##}
+{##}
+{#    //Once add button is clicked#}
+{#    $(addButton).click(function(){#}
+{#        var fieldHTML = '<div class="mt-3">' +#}
+{#            '<label for="explicit-label-name' + (x+1) + '">Savol-' + (x+1) + ': </label>' +#}
+{#            '<input type="text" id="explicit-label-name' + (x+1) + '" name="field_name" class="form-control" required/>' +#}
+{#                '<a href="javascript:void(0);" class="remove_button m-l-5 btn btn-neutral waves-effect">' +#}
+{#                    '<i class="zmdi zmdi-minus"></i>' +#}
+{#                '</a>' +#}
+{#            '</div>'; //New input field html#}
+{#        if(x < maxField){#}
+{#            x++; //Increment field counter#}
+{#            $(wrapper).append(fieldHTML); //Add field html#}
+{#        }#}
+{#    });#}
+{##}
+{#    //Once remove button is clicked#}
+{#    $(wrapper).on('click', '.remove_button', function(e){#}
+{#        e.preventDefault();#}
+{#        $(this).parent('div').remove(); //Remove field html#}
+{#        x--; //Decrement field counter#}
+{#    });#}
+{#});#}
 
 </script>
 {% endblock %}

@@ -57,7 +57,6 @@ class Company(models.Model):
 
 
 class CompanyScheduleFreeGraph(models.Model):
-
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     start_work = models.TimeField(verbose_name="Ish boshlanishi", default=datetime.time(9, 00))
@@ -114,7 +113,7 @@ class User(AbstractUser):
 
 
 class Department(models.Model):
-    name = models.CharField(max_length=255, verbose_name="Bo'lim nomi")
+    name = models.CharField(max_length=255, verbose_name="Название отдела")
     info = models.CharField(max_length=255, null=True, blank=True, verbose_name="Bo'lim haqida")
     company = models.ForeignKey(Company, on_delete=models.CASCADE, verbose_name='Kompaniya')
     created_at = models.DateTimeField(auto_now_add=True)
@@ -128,12 +127,12 @@ class Department(models.Model):
 
 
 class Position(MPTTModel):
-    name = models.CharField(max_length=255, verbose_name="Lavozim nomi")
+    name = models.CharField(max_length=255, verbose_name="Название должности")
     info = models.CharField(max_length=255, null=True, blank=True, verbose_name='Lavozim haqida')
     company = models.ForeignKey(Company, on_delete=models.CASCADE, verbose_name='Kompaniya')
-    parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
+    parent = TreeForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, related_name='children')
     created_at = models.DateTimeField(auto_now_add=True)
-    staff_amount = models.PositiveIntegerField(null=True)
+    staff_amount = models.PositiveIntegerField(null=True, verbose_name='Количество штатов')
 
     def __str__(self):
         return self.name
@@ -141,10 +140,10 @@ class Position(MPTTModel):
     class MPTTMeta:
         ordering = ['-created_at']
         verbose_name_plural = "Lavozim"
-    #
-    # def staff_amount(self):
-    #
 
+    @property
+    def get_staff_count(self):
+        return self.staff_set.count()
 
 class Promotion(models.Model):
     surcharge = models.BooleanField(default=False, verbose_name="Jarima")
@@ -241,10 +240,10 @@ class Flow(models.Model):
 
 class Document(models.Model):
     name = models.CharField(max_length=255, verbose_name="Nomi")
-    date_of_issue = models.DateField(verbose_name="Berilgan sana")
-    validity_period = models.DateField(verbose_name="Amal qilish mudati")
+    date_of_issue = models.DateField(null=True, verbose_name="Berilgan sana")
+    validity_period = models.DateField(null=True, verbose_name="Amal qilish mudati")
     document = models.FileField(upload_to='documents/', verbose_name="Hujjat(file)")
-    note = models.CharField(max_length=255)
+    note = models.CharField(null=True, max_length=255)
     staff = models.ForeignKey("Staff", on_delete=models.CASCADE)
 
     created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
@@ -285,8 +284,8 @@ class Salary(models.Model):
 
 class Staff(models.Model):
     GENDER = (
-        ('male', 'Erkak'),
-        ('female', 'Ayol')
+        ('male', 'Mужчина'),
+        ('female', 'Женщина')
     )
     company = models.ForeignKey(Company, on_delete=models.CASCADE, verbose_name="Kompaniya")
     first_name = models.CharField(null=True, blank=True, max_length=255, verbose_name="Ism")
@@ -301,7 +300,7 @@ class Staff(models.Model):
     start_work_at = models.DateField(null=True, blank=True, verbose_name="Ish boshlagan sana")
     account_number = models.BigIntegerField(null=True, blank=True, verbose_name="Xisob raqami")
 
-    email = models.EmailField(unique=True, verbose_name="Elektron manzil")
+    email = models.EmailField(unique=True, null=True, verbose_name="Elektron manzil")
     mobile_phone = models.CharField(null=True, blank=True, max_length=15, verbose_name="Mobil telefon")
     home_phone = models.CharField(null=True, blank=True, max_length=15, verbose_name="Uy telefoni")
     work_phone = models.CharField(null=True, blank=True, max_length=15, verbose_name="Ish telefoni")
@@ -314,8 +313,9 @@ class Staff(models.Model):
     department = models.ForeignKey(Department, on_delete=models.CASCADE, verbose_name="Bo'lim")
     position = models.ForeignKey(Position, on_delete=models.CASCADE, verbose_name="Lavozim")
 
-    note = models.CharField(max_length=255, null=True, blank=True, verbose_name="Eslatma")
-    work_graph = models.ForeignKey('CompanyScheduleFreeGraph', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Ish jadvali")
+    note = models.CharField(max_length=255, null=True, blank=True, verbose_name="Паспортные данныеi")
+    work_graph = models.ForeignKey('CompanyScheduleFreeGraph', on_delete=models.CASCADE, null=True, blank=True,
+                                   verbose_name="Ish jadvali")
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

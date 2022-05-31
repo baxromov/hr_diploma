@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-    Bo'lim qo'shish
+    Отделение
 {% endblock %}
 
 {% block content %}
@@ -11,11 +11,11 @@
         <div class="block-header">
             <div class="row clearfix">
                 <div class="col-lg-5 col-md-5 col-sm-12">
-                    <h2>Bosh sahifa</h2>
+{#                    <h2>Bosh sahifa</h2>#}
                     <ul class="breadcrumb padding-0">
                         <li class="breadcrumb-item"><a href="create.html"><i class="zmdi zmdi-home"></i></a></li>
-                        <li class="breadcrumb-item active"><a href="{% url 'department' %}">Bo'lim</a></li>
-                        <li class="breadcrumb-item active">Bo'lim yaratish</li>
+                        <li class="breadcrumb-item active"><a href="{% url 'department' %}">Отделение</a></li>
+                        <li class="breadcrumb-item active">Создавать</li>
                     </ul>
                 </div>
             </div>
@@ -30,16 +30,16 @@
                         <form action="" method="post">
                             {% csrf_token %}
                             {{ form.as_p }}
-                            <div class="field_wrapper">
-                                <div class="mt-3">
-                                    <label for="explicit-label-name-1">Savol-1: </label>
-                                    <input type="text" id="explicit-label-name-1" class="form-control" name="field_name" value="" required/>
-                                    <a href="javascript:void(0);" class="add_button btn btn-neutral" title="Add field">
-                                        <i class="zmdi zmdi-plus"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <button type="submit" class="btn btn-success waves-effect">Save</button>
+{#                            <div class="field_wrapper">#}
+{#                                <div class="mt-3">#}
+{#                                    <label for="explicit-label-name-1">Savol-1: </label>#}
+{#                                    <input type="text" id="explicit-label-name-1" class="form-control" name="field_name" value="" required/>#}
+{#                                    <a href="javascript:void(0);" class="add_button btn btn-neutral" title="Add field">#}
+{#                                        <i class="zmdi zmdi-plus"></i>#}
+{#                                    </a>#}
+{#                                </div>#}
+{#                            </div>#}
+                            <button type="submit" class="btn btn-success waves-effect">Создавать</button>
                         </form>
                     </div>
                 </div>
@@ -51,36 +51,36 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <script type="text/javascript">
-$(document).ready(function(){
-    var maxField = 50;
-    var addButton = $('.add_button');
-    var wrapper = $('.field_wrapper');
-    var x = 1;
-
-
-
-    $(addButton).click(function(){
-
-        var fieldHTML = '<div class="mt-3">' +
-            '<label for="explicit-label-name' + (x+1) + '">Savol-' + (x+1) + ': </label>' +
-            '<input type="text" id="explicit-label-name' + (x+1) + '" name="field_name" class="form-control" value="" required/>' +
-                '<a href="javascript:void(0);" class="remove_button m-l-5 btn btn-neutral">' +
-                    '<i class="zmdi zmdi-minus"></i>' +
-                '</a>' +
-            '</div>';
-        if(x < maxField){
-            x++;
-            $(wrapper).append(fieldHTML);
-        }
-    });
-
-
-    $(wrapper).on('click', '.remove_button', function(e){
-        e.preventDefault();
-        $(this).parent('div').remove();
-        x--;
-    });
-});
+{#$(document).ready(function(){#}
+{#    var maxField = 50;#}
+{#    var addButton = $('.add_button');#}
+{#    var wrapper = $('.field_wrapper');#}
+{#    var x = 1;#}
+{##}
+{##}
+{##}
+{#    $(addButton).click(function(){#}
+{##}
+{#        var fieldHTML = '<div class="mt-3">' +#}
+{#            '<label for="explicit-label-name' + (x+1) + '">Savol-' + (x+1) + ': </label>' +#}
+{#            '<input type="text" id="explicit-label-name' + (x+1) + '" name="field_name" class="form-control" value="" required/>' +#}
+{#                '<a href="javascript:void(0);" class="remove_button m-l-5 btn btn-neutral">' +#}
+{#                    '<i class="zmdi zmdi-minus"></i>' +#}
+{#                '</a>' +#}
+{#            '</div>';#}
+{#        if(x < maxField){#}
+{#            x++;#}
+{#            $(wrapper).append(fieldHTML);#}
+{#        }#}
+{#    });#}
+{##}
+{##}
+{#    $(wrapper).on('click', '.remove_button', function(e){#}
+{#        e.preventDefault();#}
+{#        $(this).parent('div').remove();#}
+{#        x--;#}
+{#    });#}
+{#});#}
 
 </script>
 {% endblock %}

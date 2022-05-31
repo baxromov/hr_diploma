@@ -2,7 +2,7 @@
 {% load static %}
 {% load mptt_tags %}
 {% block title %}
-    Lavozim
+    Должность
 {% endblock %}
 
 {% block css %}
@@ -15,10 +15,10 @@
             <div class="block-header">
                 <div class="row clearfix">
                     <div class="col-lg-12 col-md-12 col-sm-12">
-                        <h2>Lavozim</h2>
+                        <h2>Должность</h2>
                         <ul class="breadcrumb padding-0">
                             <li class="breadcrumb-item"><a href="create.html"><i class="zmdi zmdi-home"></i></a></li>
-                            <li class="breadcrumb-item active">Lavozim</li>
+                            <li class="breadcrumb-item active">Должность</li>
                         </ul>
                         {% if messages %}
                             {% for message in messages %}
@@ -35,7 +35,7 @@
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="card">
                         <div class="header">
-                            <a href="{% url 'position_create' %}" class="btn btn-success">Lavozim qo'shish <i
+                            <a href="{% url 'position_create' %}" class="btn btn-success">Добавлять <i
                                     class="zmdi zmdi-plus"></i></a>
                         </div>
                         <div class="body table-responsive">
@@ -43,9 +43,10 @@
                                 <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Lavozim</th>
-                                    <th>O'shirish</th>
-                                    <th>Taxrirlash</th>
+                                    <th>Должность</th>
+                                    <th>Количество штатов</th>
+                                    <th>Удалить</th>
+                                    <th>Редактировать</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -57,6 +58,9 @@
                                                data-target="#defaultModal{{ position.id }}">
                                                 {{ position.name }}
                                             </a>
+                                        </td>
+                                        <td>
+                                            {{ position.staff_amount }}
                                         </td>
                                         <td>
                                             <!-- Button trigger modal -->
@@ -109,14 +113,14 @@
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="card">
                         <div class="header">
-                            <h2><strong>Position</strong> Tree</h2>
+                            <h2>Структура должности персонала</h2>
                             <ul class="header-dropdown">
                                 <li class="dropdown"><a href="javascript:void(0);" class="dropdown-toggle"
                                                         data-toggle="dropdown" role="button" aria-haspopup="true"
                                                         aria-expanded="false"> <i class="zmdi zmdi-more"></i> </a>
-                                    <ul class="dropdown-menu dropdown-menu-right">
-                                        <li><a href="javascript:void(0);" class="boxs-close">Hide</a></li>
-                                    </ul>
+{#                                    <ul class="dropdown-menu dropdown-menu-right">#}
+{#                                        <li><a href="javascript:void(0);" class="boxs-close">Hide</a></li>#}
+{#                                    </ul>#}
                                 </li>
                             </ul>
                         </div>
@@ -156,29 +160,6 @@
         </div>
     </section>
     {% for position in positions %}
-        <div class="modal fade" id="defaultModal{{ position.id }}" tabindex="-1" role="dialog" style="display: none;"
-             aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="title" id="defaultModalLabel">{{ position.name }}</h4>
-                        <button type="button" class="btn btn-neutral"
-                                data-dismiss="modal" style="padding: 0 !important;">
-                            <i class="zmdi zmdi-close"></i>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        {% if position.info %}
-                            {{ position.info }}
-                        {% else %}
-                            Ma'lumot yo'q
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-        </div>
-    {% endfor %}
-    {% for position in positions %}
         <div class="modal fade" id="position-{{ position.id }}" tabindex="-1" role="dialog" style="display: none;"
              aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -189,15 +170,15 @@
                     <div class="modal-body">
                         <div class="card">
                             <div class="header">
-                                <h2>O'chirmoqchimisiz?</h2>
+                                <h2>Вы удаляете?</h2>
                             </div>
                             <div class="body d-flex justify-content-around">
                                 <button type="button" class="btn btn-success rounded-lg waves-effect"
-                                        data-dismiss="modal">Bekor qilish
+                                        data-dismiss="modal">Отмена
                                 </button>
                                 <form action="{% url 'position_delete' pk=position.pk %}" method="POST">
                                     {% csrf_token %}
-                                    <button type="submit" class="btn btn-danger rounded-lg waves-effect">O'chirish
+                                    <button type="submit" class="btn btn-danger rounded-lg waves-effect">Удалить
                                     </button>
                                 </form>
                             </div>
@@ -224,15 +205,15 @@
                 ],
                 "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
                 "oLanguage": {
-                    "sEmptyTable": "Ro'yxat bo'sh",
-                    "sSearch": "Qidiruv:",
-                    "sLengthMenu": "Ko’rsatkich _MENU_ talik",
-                    "sInfo": "Sahifa _START_ dan _END_ gacha, umumiy _TOTAL_",
+                    "sEmptyTable": "Список пуст",
+                    "sSearch": "Поиск:",
+                    "sLengthMenu": "Индикатор _MENU_",
+                    "sInfo": "Страница с  _START_ по _END_ , всего _TOTAL_",
                     "oPaginate": {
-                        "sFirst": "Birinchi sahifa", // This is the link to the first page
-                        "sPrevious": "Oldingi sahifa", // This is the link to the previous page
-                        "sNext": "Keyengi sahifa", // This is the link to the next page
-                        "sLast": "Oxirgi sahifa" // This is the link to the last page
+                        "sFirst": "Первая страница", // This is the link to the first page
+                        "sPrevious": "Предыдущая страница", // This is the link to the previous page
+                        "sNext": "Следующая страница", // This is the link to the next page
+                        "sLast": "Последняя страница" // This is the link to the last page
                     }
 
                 },
