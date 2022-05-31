@@ -133,6 +133,7 @@ class Position(MPTTModel):
     company = models.ForeignKey(Company, on_delete=models.CASCADE, verbose_name='Kompaniya')
     parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
     created_at = models.DateTimeField(auto_now_add=True)
+    staff_amount = models.PositiveIntegerField(null=True)
 
     def __str__(self):
         return self.name
@@ -140,6 +141,9 @@ class Position(MPTTModel):
     class MPTTMeta:
         ordering = ['-created_at']
         verbose_name_plural = "Lavozim"
+    #
+    # def staff_amount(self):
+    #
 
 
 class Promotion(models.Model):
