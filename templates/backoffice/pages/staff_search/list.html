@@ -1,7 +1,7 @@
 {% extends 'backoffice/base.html' %}
 {% load static %}
 
-{% block title %}Hodim Qidirish{% endblock %}
+{% block title %}Поиск сотрудников{% endblock %}
 
 {% block content %}
     <!-- Main Content -->
@@ -10,7 +10,7 @@
             <div class="block-header">
                 <div class="row clearfix">
                     <div class="col-lg-5 col-md-5 col-sm-12">
-                        <h2>Hodim Qidirish</h2>
+                        <h2>Поиск сотрудников</h2>
                     </div>
                 </div>
             </div>
@@ -21,10 +21,10 @@
                             <table class="table table-borderless table-striped table-hover table-responsive" id="searching_staff">
                                 <thead>
                                     <tr>
-                                        <th>Xodim</th>
-                                        <th>Ish boshlagan sana</th>
-                                        <th>Bo'lim</th>
-                                        <th>Lavozim</th>
+                                        <th>Сотрудники</th>
+                                        <th>Дата начала работы</th>
+                                        <th>Отделение</th>
+                                        <th>Должность</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -42,23 +42,23 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="header">
-                            <h2><i class="zmdi zmdi-settings zmdi-hc-spin"></i> Bot integratsiyalari va sozlamalari</h2>
-                        </div>
-                        <div class="body">
-                            <div class="list-group">
-                                <a href="{% url 'bot_c_l' %}" class="list-group-item">Bot integratsiya</a>
-                                <a href="{% url 'admin_bot' %}" class="list-group-item">Bot Admin</a>
-                                <a href="{% url 'entry_text' %}" class="list-group-item">Bot kirish qismi texti</a>
-                                <a href="{% url 'finish_text' %}" class="list-group-item">Bot so'ngi qismi texti</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+{#            <div class="row">#}
+{#                <div class="col-12">#}
+{#                    <div class="card">#}
+{#                        <div class="header">#}
+{#                            <h2><i class="zmdi zmdi-settings zmdi-hc-spin"></i> Bot integratsiyalari va sozlamalari</h2>#}
+{#                        </div>#}
+{#                        <div class="body">#}
+{#                            <div class="list-group">#}
+{#                                <a href="{% url 'bot_c_l' %}" class="list-group-item">Bot integratsiya</a>#}
+{#                                <a href="{% url 'admin_bot' %}" class="list-group-item">Bot Admin</a>#}
+{#                                <a href="{% url 'entry_text' %}" class="list-group-item">Bot kirish qismi texti</a>#}
+{#                                <a href="{% url 'finish_text' %}" class="list-group-item">Bot so'ngi qismi texti</a>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
         </div>
     </section>
     <!-- Jquery Core Js -->
@@ -70,18 +70,18 @@
 
             var table = $('#searching_staff').DataTable({
                 "oLanguage": {
-
-                    "sSearch": "Qidiruv:",
-                    "sLengthMenu": "Ko’rsatkich _MENU_ talik",
-                    "sInfo": "Sahifa _START_ dan _END_ gacha, umumiy _TOTAL_",
+                    "sEmptyTable": "Список пуст",
+                    "sSearch": "Поиск:",
+                    "sLengthMenu": "Индикатор _MENU_",
+                    "sInfo": "Страница с  _START_ по _END_ , всего _TOTAL_",
                     "oPaginate": {
-                        "sFirst": "Birinchi sahifa", // This is the link to the first page
-                        "sPrevious": "Oldingi sahifa", // This is the link to the previous page
-                        "sNext": "Keyengi sahifa", // This is the link to the next page
-                        "sLast": "Oxirgi sahifa" // This is the link to the last page
+                        "sFirst": "Первая страница", // This is the link to the first page
+                        "sPrevious": "Предыдущая страница", // This is the link to the previous page
+                        "sNext": "Следующая страница", // This is the link to the next page
+                        "sLast": "Последняя страница" // This is the link to the last page
                     }
 
-                }
+                },
             });
         })
     </script>

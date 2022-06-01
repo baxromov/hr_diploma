@@ -79,6 +79,7 @@ TEMPLATES = [
                 'backoffice.context_processors.department_amount',
                 'backoffice.context_processors.bot_user_list_counter',
                 'backoffice.context_processors.staff_gender_statistic',
+                'backoffice.context_processors.vacancy_amount',
             ],
         },
     },

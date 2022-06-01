@@ -70,3 +70,11 @@ def staff_gender_statistic(request):
         "width_male": '',
         "width_female": '',
     }
+
+
+def vacancy_amount(request):
+    position_staff = sum(list(map(lambda x: x.get_staff_count, models.Position.objects.all())))
+    position = sum(list(map(lambda x: x.staff_amount if x.staff_amount else 0, models.Position.objects.all())))
+    return {
+        'vacancy_amount': int(position - position_staff)
+    }

@@ -24,60 +24,18 @@ class MainTemplate(LoginRequiredMixin, generic.ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         ctx = super(MainTemplate, self).get_context_data(**kwargs)
+        ctx['positions'] = []
+        positions = models.Position.objects.all()
+        for position in positions:
+            if position.staff_amount:
+                position.staff_amount = position.staff_amount
+            else:
+                position.staff_amount = 0
 
-        """
-        k_day = pendulum.now().day_of_week
-        schedules = self.request.user.company.companyschedule_set.all()
-
-        # user count by date
-        result = [0, 0, 0, 0, 0, 0, 0]
-        if schedules:
-            for i in range(k_day, 0, -1):
-                that_day = pendulum.now().subtract(days=k_day - i).strftime('%Y-%m-%d')
-                start_work_time = self.request.user.company.companyschedule_set.get(
-                    day=self.DAYS_OF_WEEK.get(i - 1)).start_work
-                late_count = len(self.calculation_the_date_of_late(that_day, start_work_time))
-                result[i - 1] = late_count
-        print(result)
-        import datetime
-        today = datetime.datetime.today().date()
-        try:
-            start_work = self.request.user.company.companyschedule_set.get(
-                day=self.DAYS_OF_WEEK.get(datetime.datetime.today().weekday())).start_work
-            staff_id = self.calculation_the_date_of_late(today, start_work)
-            late_today = models.Staff.objects.filter(id__in=staff_id)
-            ctx['late_today'] = late_today
-            ctx['absent_today'] = [i for i in models.Staff.objects.filter(~Q(id__in=staff_id), company=self.request.user.company)]
-        except:
-            ctx['late_today'] = ""
-            ctx['absent_today'] = ""
-
-        ctx['late_came_person_count_per_day'] = result
-        """
-        shcedule = models.CompanyScheduleFreeGraph.objects.filter(company=self.request.user.company)
-        staff = models.Staff.objects.filter(company=self.request.user.company)
-        flow = models.Flow.objects.filter(staff__in=staff)
+            if position.staff_amount > position.get_staff_count:
+                ctx['positions'].append(position)
         return ctx
 
-    def get_late_amount(self):
-        company_staffs = self.request.user.company.staff_set.all()
-        flows = models.Flow.objects.filter(staff__in=company_staffs)
-
-"""
-    def calculation_the_date_of_late(self, that_date, start_work_time):
-        company_staffs = self.request.user.company.staff_set.all()
-        flows = models.Flow.objects.filter(staff__in=company_staffs, created_at__startswith=that_date)
-        flows_all = flows.filter(came__time__lte=start_work_time)
-        flow_list = []
-        for flow in flows_all:
-            flow_list.append(flow.staff.id)
-
-        flows.exclude(id__in=flows)
-        ll = models.Flow.objects.filter(staff__in=company_staffs, created_at__startswith=that_date).exclude(
-            staff__in=flow_list).values_list('staff__pk', flat=True)
-
-        return set(ll)
-"""
 
 
 # Staff

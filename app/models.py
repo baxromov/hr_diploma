@@ -145,6 +145,14 @@ class Position(MPTTModel):
     def get_staff_count(self):
         return self.staff_set.count()
 
+    @property
+    def count_vacancy(self):
+        if self.staff_amount:
+            return self.staff_amount - self.get_staff_count
+        else:
+            return 0
+
+
 class Promotion(models.Model):
     surcharge = models.BooleanField(default=False, verbose_name="Jarima")
     reward = models.BooleanField(default=False, verbose_name="Mukofot")

@@ -1,7 +1,7 @@
 {% extends 'backoffice/base.html' %}
 {% load static %}
 {% load app_tags %}
-{% block title %}Main{% endblock %}
+{% block title %}Главный{% endblock %}
 
 {% block content %}
     <section class="content home">
@@ -9,11 +9,11 @@
             <div class="block-header">
                 <div class="row clearfix">
                     <div class="col-lg-5 col-md-5 col-sm-12">
-                        <h2>Bosh sahifa</h2>
+                        {#                        <h2>Главная страница</h2>#}
                         <ul class="breadcrumb padding-0">
                             <li class="breadcrumb-item"><a href="{% url 'backoffice-main' %}"><i
                                     class="zmdi zmdi-home"></i></a></li>
-                            <li class="breadcrumb-item active">Bosh sahifa</li>
+                            <li class="breadcrumb-item active">Главная страница</li>
                         </ul>
                     </div>
                 </div>
@@ -23,7 +23,7 @@
                     <div class="card text-center">
                         <div class="body">
                             <p class="m-b-20"><i class="zmdi zmdi-balance zmdi-hc-3x col-amber"></i></p>
-                            <span>Bo'limlar</span>
+                            <span>Отделение</span>
                             <h3 class="m-b-10"><span class="number count-to" data-from="0"
                                                      data-to="{{ department_amounts }}" data-speed="2000"
                                                      data-fresh-interval="700">{{ department_amounts }}</span></h3>
@@ -35,7 +35,7 @@
                     <div class="card text-center">
                         <div class="body">
                             <p class="m-b-20"><i class="zmdi zmdi-folder-person zmdi-hc-3x col-blue"></i></p>
-                            <span>Lavozim</span>
+                            <span>Должность</span>
                             <h3 class="m-b-10 number count-to" data-from="0" data-to="{{ position_amounts }}"
                                 data-speed="2000" data-fresh-interval="700">{{ position_amounts }}</h3>
                             {#                        <small class="text-muted">88% lower growth</small>#}
@@ -46,7 +46,7 @@
                     <div class="card text-center">
                         <div class="body">
                             <p class="m-b-20"><i class="zmdi zmdi-account zmdi-hc-3x"></i></p>
-                            <span>Hodimlar</span>
+                            <span>Сотрудники</span>
                             <h3 class="m-b-10 number count-to" data-from="0" data-to="{{ amount_staff }}"
                                 data-speed="2000" data-fresh-interval="700">{{ amount_staff }}</h3>
                             {#                        <small class="text-muted">38% lower growth</small>#}
@@ -57,9 +57,9 @@
                     <div class="card text-center">
                         <div class="body">
                             <p class="m-b-20"><i class="zmdi zmdi-account-box zmdi-hc-3x col-green"></i></p>
-                            <span>Kondidatlar</span>
-                            <h3 class="m-b-10 number count-to" data-from="0" data-to="{{ bot_user_list_counter }}"
-                                data-speed="2000" data-fresh-interval="700">{{ bot_user_list_counter }}</h3>
+                            <span>Количество вакансий</span>
+                            <h3 class="m-b-10 number count-to" data-from="0" data-to="{{ vacancy_amount }}"
+                                data-speed="2000" data-fresh-interval="700">{{ vacancy_amount }}</h3>
                             {#                        <small class="text-muted">78% lower growth</small>#}
                         </div>
                     </div>
@@ -70,19 +70,10 @@
                     <div class="card">
                         <div class="header">
                             <h2><strong>Hodim</strong> Statistikasi</h2>
-                            <ul class="header-dropdown">
-                                <li class="dropdown"><a href="javascript:void(0);" class="dropdown-toggle"
-                                                        data-toggle="dropdown" role="button" aria-haspopup="true"
-                                                        aria-expanded="false"> <i class="zmdi zmdi-more"></i> </a>
-                                    <ul class="dropdown-menu slideUp">
-                                        <li><a href="javascript:void(0);" class="boxs-close">Hide</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
                         </div>
                         <div class="body m-b-10">
                             <div class="progress-container progress-info">
-                                <span class="progress-badge">Male</span>
+                                <span class="progress-badge">Мужчины</span>
                                 <div class="progress">
                                     <div class="progress-bar" role="progressbar" aria-valuenow="{{ male_count }}"
                                          aria-valuemin="0" aria-valuemax="{{ company_staff_count }}"
@@ -94,7 +85,7 @@
                         </div>
                         <div class="body m-b-20">
                             <div class="progress-container progress-warning">
-                                <span class="progress-badge">Female</span>
+                                <span class="progress-badge">Женщины</span>
                                 <div class="progress">
                                     <div class="progress-bar" role="progressbar" aria-valuenow="{{ female_count }}"
                                          aria-valuemin="0" aria-valuemax="{{ company_staff_count }}"
@@ -103,146 +94,38 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="body m-b-20 table-responsive">
-                            <h3>Kech qolganlar</h3>
-                            <table class="table table-borderless table-striped table-hover" id="late_staff">
-                                <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>FISH</th>
-                                    <th>Lavozim</th>
-                                    <th>Telefon</th>
-                                </tr>
-                                </thead>
-                                <tfoot>
-                                </tfoot>
-                                <tbody>
-                                    {% for item in late_today %}
-                                        <tr>
-                                            <td>{{ forloop.counter }}</td>
-                                            <td>{{ item.first_name }} {{ item.second_name }} {{ item.last_name }}</td>
-                                            <td>{{ item.position.name }}</td>
-                                            <td>{{ item.mobile_phone }}</td>
-                                        </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div><div class="col-lg-12 col-md-12">
-                    <div class="card">
-                        <div class="header">
-                            <h2><strong>Hodim</strong> Statistikasi</h2>
-                            <ul class="header-dropdown">
-                                <li class="dropdown"><a href="javascript:void(0);" class="dropdown-toggle"
-                                                        data-toggle="dropdown" role="button" aria-haspopup="true"
-                                                        aria-expanded="false"> <i class="zmdi zmdi-more"></i> </a>
-                                    <ul class="dropdown-menu slideUp">
-                                        <li><a href="javascript:void(0);" class="boxs-close">Hide</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="body m-b-10">
-                            <div class="progress-container progress-info">
-                                <span class="progress-badge">Male</span>
-                                <div class="progress">
-                                    <div class="progress-bar" role="progressbar" aria-valuenow="{{ male_count }}"
-                                         aria-valuemin="0" aria-valuemax="{{ company_staff_count }}"
-                                         style="width: {{ width_male }}%;">
-                                        <span class="progress-value">{{ male_count }}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="body m-b-20">
-                            <div class="progress-container progress-warning">
-                                <span class="progress-badge">Female</span>
-                                <div class="progress">
-                                    <div class="progress-bar" role="progressbar" aria-valuenow="{{ female_count }}"
-                                         aria-valuemin="0" aria-valuemax="{{ company_staff_count }}"
-                                         style="width: {{ width_female }}%;">
-                                        <span class="progress-value">{{ female_count }}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="body m-b-20 table-responsive">
-                            <h3>Kech qolganlar</h3>
-                            <table class="table table-borderless table-striped table-hover" id="late_staff">
-                                <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>FISH</th>
-                                    <th>Lavozim</th>
-                                    <th>Telefon</th>
-                                </tr>
-                                </thead>
-                                <tfoot>
-                                </tfoot>
-                                <tbody>
-                                    {% for item in late_today %}
-                                        <tr>
-                                            <td>{{ forloop.counter }}</td>
-                                            <td>{{ item.first_name }} {{ item.second_name }} {{ item.last_name }}</td>
-                                            <td>{{ item.position.name }}</td>
-                                            <td>{{ item.mobile_phone }}</td>
-                                        </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                    <div class="body m-b-20 table-responsive">
-                            <h3>Kemaganlar</h3>
-                            <table class="table table-borderless table-striped table-hover" id="late_staff">
-                                <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>FISH</th>
-                                    <th>Lavozim</th>
-                                    <th>Telefon</th>
-                                </tr>
-                                </thead>
-                                <tfoot>
-                                </tfoot>
-                                <tbody>
-                                    {% for item in absent_today %}
-                                        <tr>
-                                            <td>{{ forloop.counter }}</td>
-                                            <td>{{ item.first_name }} {{ item.second_name }} {{ item.last_name }}</td>
-                                            <td>{{ item.position.name }}</td>
-                                            <td>{{ item.mobile_phone }}</td>
-                                        </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-12 col-md-12">
-                    <div class="card">
-                        <div class="header">
-                            <h2>Kunlar bo’yicha tashriflar statistikasi</h2>
-                            <ul class="header-dropdown">
-                                <li class="dropdown"><a href="javascript:void(0);" class="dropdown-toggle"
-                                                        data-toggle="dropdown" role="button" aria-haspopup="true"
-                                                        aria-expanded="false"> <i class="zmdi zmdi-more"></i> </a>
-                                    <ul class="dropdown-menu dropdown-menu-right" x-placement="bottom-end"
-                                        style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(32px, 32px, 0px);">
-                                        <li><a href="javascript:void(0);" class="boxs-close">Hide</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="body">
-                            <div class="e_chart" id="echart-rainfall"
-                                 style="height: 400px; -webkit-tap-highlight-color: transparent; user-select: none; position: relative;"></div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="row clearfix">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="body">
+                        <div class="table-responsive">
+                            <table class="table table-borderless table-striped table-hover" id="late_staff">
+                                <thead>
+                                   <tr>
+                                        <th>#</th>
+                                        <th>Должность</th>
+                                        <th>Количество вакансий</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for position in positions %}
+                                        <tr>
+                                            <td>{{ forloop.counter }}</td>
+                                            <td>{{ position.name }}</td>
+                                            <td>{{ position.count_vacancy }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         </div>
     </section>
 {% endblock %}
@@ -263,98 +146,21 @@
                 responsive: true,
                 "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
                 "oLanguage": {
-                    "sEmptyTable": "Ro'yxat bo'sh",
-                    "sSearch": "Qidiruv:",
-                    "sLengthMenu": "Ko’rsatkich _MENU_ talik",
-                    "sInfo": "Sahifa _START_ dan _END_ gacha, umumiy _TOTAL_",
+                    "sEmptyTable": "Список пуст",
+                    "sSearch": "Поиск:",
+                    "sLengthMenu": "Индикатор _MENU_",
+                    "sInfo": "Страница с  _START_ по _END_ , всего _TOTAL_",
                     "oPaginate": {
-                        "sFirst": "Birinchi sahifa", // This is the link to the first page
-                        "sPrevious": "Oldingi sahifa", // This is the link to the previous page
-                        "sNext": "Keyengi sahifa", // This is the link to the next page
-                        "sLast": "Oxirgi sahifa" // This is the link to the last page
+                        "sFirst": "Первая страница", // This is the link to the first page
+                        "sPrevious": "Предыдущая страница", // This is the link to the previous page
+                        "sNext": "Следующая страница", // This is the link to the next page
+                        "sLast": "Последняя страница" // This is the link to the last page
                     }
 
-                }
+                },
             });
         })
     </script>
-    <script>
-        // Kechikanlar soni
-        (function () {
-            let chart = document.getElementById("echart-rainfall");
-            let myChart = echarts.init(chart);
 
-            let option = {
-                legend: {
-                    data: ['Kech qolganlar'],
-                    bottom: '0',
-                },
-                grid: {
-                    left: '5%',
-                    right: '0%',
-                    top: '2%',
-                    bottom: '15%',
-                },
-                tooltip: {
-                    trigger: 'axis'
-                },
-                calculable: true,
-
-
-                xAxis: [{
-                    type: 'category',
-                    data: ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Satur', 'Sun'],
-                    axisLine: {
-                        lineStyle: {
-                            color: '#f8f9fa',
-                        }
-                    },
-                    axisLabel: {
-                        color: '#4D5052',
-                    }
-                }],
-
-
-                yAxis: [{
-                    type: 'value',
-                    splitLine: {
-                        lineStyle: {
-                            color: '#f8f9fa',
-                        }
-                    },
-                    axisLine: {
-                        lineStyle: {
-                            color: '#f8f9fa',
-                        }
-                    },
-                    axisLabel: {
-                        color: '#4D5052',
-                    }
-                }],
-
-
-                series: [{
-                    name: "Kech qolganlar",
-                    type: "bar",
-                    color: '#45e5c3',
-                    data: {{ late_came_person_count_per_day }},
-                    markPoint: {
-                        data: [
-                            {type: 'max', name: 'Max'},
-                            {type: 'min', name: 'Min'}
-                        ]
-                    },
-                    markLine: {
-                        data: [
-                            {type: 'average', name: 'Average'}
-                        ]
-                    }
-                }],
-            }
-
-            myChart.setOption(option, true)
-        })()
-
-    </script>
 
 {% endblock %}
