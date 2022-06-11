@@ -4,6 +4,7 @@ CairoSVG==2.5.2
 certifi==2020.12.5
 cffi==1.14.5
 chardet==4.0.0
+charset-normalizer==2.0.12
 coreapi==2.3.3
 coreschema==0.0.4
 cryptography==3.4.7
@@ -14,6 +15,7 @@ django-allauth==0.44.0
 django-ckeditor==6.0.0
 django-cors-headers==3.7.0
 django-crispy-forms==1.11.2
+django-extra-views==0.14.0
 django-js-asset==1.2.2
 django-mptt==0.12.0
 django-mptt-graph==0.3
