@@ -7,16 +7,20 @@
 
 {% block content %}
     <div class="authentication">
-    <div class="container">
-        <div class="col-md-12 content-center">
-            <div class="row">
-                <div class="col-lg-6 col-md-12">
-                    <div class="company_detail">
-                        <h4 class="logo"><img src="assets/images/logo.svg" alt=""> HRM yoki HR</h4>
-                        <h3>Inson <strong>resurslarini</strong> boshqarish</h3>
-                        <p>Inson resurslarini boshqarish ( HRM yoki HR ) - bu kompaniya yoki tashkilotdagi odamlarni o'z biznesiga raqobatbardosh ustunlikka ega bo'lishiga yordam beradigan darajada samarali va samarali boshqarish bo'yicha strategik yondashuv . U ish beruvchining strategik maqsadlariga xizmat qilishda xodimlarning ish faoliyatini maksimal darajada oshirish uchun mo'ljallangan</p>
-                        <div class="footer">
-                            {% comment %}<ul  class="social_link list-unstyled">
+        <div class="container">
+            <div class="col-md-12 content-center">
+                <div class="row">
+                    <div class="col-lg-6 col-md-12">
+                        <div class="company_detail">
+                            {#                        <h4 class="logo"><img src="assets/images/logo.svg" alt=""> Отдел кадр</h4>#}
+                            <h3>Отдел кадров</h3>
+                            <p>
+                                Отдел кадров - это структура в организации, которая занимается управлением персоналом.
+                                Отдел кадров является не только функциональной единицей, это еще и лицом компании, так
+                                как именно в отделе кадров любой соискатель начинает знакомиться с организацией.
+                            </p>
+                            <div class="footer">
+                                {% comment %}<ul  class="social_link list-unstyled">
                                 <li><a href="https://thememakker.com" title="ThemeMakker"><i class="zmdi zmdi-globe"></i></a></li>
                                 <li><a href="https://themeforest.net/user/thememakker" title="Themeforest"><i class="zmdi zmdi-shield-check"></i></a></li>
                                 <li><a href="https://www.linkedin.com/company/thememakker/" title="LinkedIn"><i class="zmdi zmdi-linkedin"></i></a></li>
@@ -25,35 +29,38 @@
                                 <li><a href="http://plus.google.com/+thememakker" title="Google plus"><i class="zmdi zmdi-google-plus"></i></a></li>
                                 <li><a href="https://www.behance.net/thememakker" title="Behance"><i class="zmdi zmdi-behance"></i></a></li>
                             </ul>{% endcomment %}
-                            <hr>
+                                <hr>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-5 col-md-12 offset-lg-1">
-                    <div class="card-plain">
-                        <div class="header">
-                            <h5>Kirish</h5>
-                        </div>
-                        <form class="form" action="" method="POST">
-                            {% csrf_token %}
-                            <div class="input-group">
-                                <input type="text" class="form-control" name="username" placeholder="User Name" required>
-                                <span class="input-group-addon"><i class="zmdi zmdi-account-circle"></i></span>
+                    <div class="col-lg-5 col-md-12 offset-lg-1">
+                        <div class="card-plain">
+                            <div class="header">
+{#                                <h5>Войти</h5>#}
                             </div>
-                            <div class="input-group">
-                                <input type="password" name="password" placeholder="Password" class="form-control" required/>
-                                <span class="input-group-addon"><i class="zmdi zmdi-lock"></i></span>
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-round btn-block">Kirish</button>
+                            <form class="form" action="" method="POST">
+                                {% csrf_token %}
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="username" placeholder="Логин"
+                                           required>
+                                    <span class="input-group-addon"><i class="zmdi zmdi-account-circle"></i></span>
+                                </div>
+                                <div class="input-group">
+                                    <input type="password" name="password" placeholder="Парол" class="form-control"
+                                           required/>
+                                    <span class="input-group-addon"><i class="zmdi zmdi-lock"></i></span>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-round btn-block">Войти</button>
 
-                        </form>
-                        <div class="footer">
-                            <a href="{% url 'registration' %}" class="btn btn-primary btn-simple btn-round btn-block">Ro'yxatdan o'tish</a>
+                            </form>
+{#                            <div class="footer">#}
+{#                                <a href="{% url 'registration' %}"#}
+{#                                   class="btn btn-primary btn-simple btn-round btn-block">Ro'yxatdan o'tish</a>#}
+{#                            </div>#}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 {% endblock %}
